@@ -1,7 +1,7 @@
 package org.fairysoftw.fairyhr.service;
 
 import lombok.RequiredArgsConstructor;
-import org.fairysoftw.fairyhr.entity.User;
+import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

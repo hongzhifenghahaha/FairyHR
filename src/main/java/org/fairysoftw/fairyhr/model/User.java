@@ -1,14 +1,12 @@
-package org.fairysoftw.fairyhr.entity;
+package org.fairysoftw.fairyhr.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(includeFieldNames = false)
 public class User {
     private String id;
     private String name;
@@ -18,4 +16,5 @@ public class User {
     private String emailAddr;
     private String address;
     private String position;
+    private AttendanceRecord checkTable;
 }

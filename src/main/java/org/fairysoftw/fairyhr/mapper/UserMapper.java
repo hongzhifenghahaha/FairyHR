@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
-import org.fairysoftw.fairyhr.entity.User;
+import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
