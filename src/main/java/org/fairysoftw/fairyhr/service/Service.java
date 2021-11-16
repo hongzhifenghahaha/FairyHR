@@ -15,8 +15,9 @@ public class Service {
     public boolean save(User user) {
         String id = user.getId();
         User currentUser = select(id);
-        if (currentUser != null)
+        if (currentUser != null){
             return mapper.update(user) == 1;
+        }
         return mapper.insert(user) == 1;
     }
 
