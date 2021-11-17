@@ -20,7 +20,7 @@ public class FairyHRApplication {
 		SpringApplication.run(FairyHRApplication.class, args);
 		log.info("\n----------------------------------------------------------\n\t" +
 				"Application  is running! Access URLs:\n\t" +
-				"Local访问网址: \t\thttp://localhost:" + 8080 + "\n" +
+				"Local访问网址: http://localhost:" + 8080 + "\n" +
 				"----------------------------------------------------------");
 	}
 

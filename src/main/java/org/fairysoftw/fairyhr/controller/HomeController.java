@@ -1,15 +1,20 @@
 package org.fairysoftw.fairyhr.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+import java.io.IOException;
+
+@Controller
 @RequestMapping("/")
 public class HomeController {
-    @GetMapping("/")
-    public String getHome()
+    @RequestMapping("/")
+    public ModelAndView getHome(ModelAndView view)
     {
-        return "test get home";
+        view.setViewName("index");
+        return view;
     }
 }
