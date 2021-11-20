@@ -12,9 +12,8 @@ import java.io.IOException;
 @RequestMapping("/")
 public class HomeController {
     @RequestMapping("/")
-    public ModelAndView getHome(ModelAndView view)
+    public String getHome()
     {
-        view.setViewName("index");
-        return view;
+        return "index";
     }
 }
