@@ -10,7 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Department {
+    private String id;
     private String name;
+    private boolean deleted;
     private List<User> managers;
     private List<User> users;
     private List<LeaveRequest> leaveRequests;
