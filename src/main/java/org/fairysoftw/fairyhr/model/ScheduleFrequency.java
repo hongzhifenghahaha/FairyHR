@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
@@ -14,5 +15,5 @@ public enum ScheduleFrequency {
     YEARLY(4);
 
     @Getter
-    private Integer value;
+    private final Integer value;
 }

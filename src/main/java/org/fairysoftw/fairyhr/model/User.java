@@ -11,6 +11,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +26,8 @@ public class User {
     private String emailAddr;
     private String address;
     private String position;
-    private AttendanceRecord checkTable;
+    private List<Schedule> schedules;
+    private List<Date> attendancesTime;
+    private List<Schedule> leaves;
+    private boolean deleted;
 }

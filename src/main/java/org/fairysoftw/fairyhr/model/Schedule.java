@@ -3,6 +3,7 @@ package org.fairysoftw.fairyhr.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.Period;
 import java.util.Date;
@@ -10,10 +11,13 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Schedule {
-    private Long start_time;
-    private Long end_time;
-    private Date start_date;
-    private Date end_date;
+    private String id;
+    private Long startTime;
+    private Long endTime;
+    private Date startDate;
+    private Date endDate;
     private ScheduleFrequency frequency;
+    private int frequencyValue;
 }
