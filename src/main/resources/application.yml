@@ -16,7 +16,14 @@ spring:
       prefix: /WEB-INF/view/
       suffix: .jsp
 
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl:
   mapper-locations: classpath:mappers/*.xml
+
+#logging:
+#  level:
+#    org.fairysoftw.fairyhr.mapper: debug
+
