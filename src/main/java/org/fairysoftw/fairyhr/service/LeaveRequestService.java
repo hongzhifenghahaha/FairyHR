@@ -12,7 +12,7 @@ public interface LeaveRequestService {
      *
      * @return 包含所有请假申请实例的列表
      */
-    List<LeaveRequestService> selectAll();
+    List<LeaveRequest> selectAll();
 
     /**
      * 查询id符合的请假申请
