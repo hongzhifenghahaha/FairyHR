@@ -5,9 +5,11 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.fairysoftw.fairyhr.model.Schedule;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserAttendanceScheduleMapper {
     @Select("SELECT * FROM schedule JOIN " +
             "(SELECT * " +
@@ -22,5 +24,5 @@ public interface UserAttendanceScheduleMapper {
             @Result(property = "frequency", column = "frequency", typeHandler = org.apache.ibatis.type.EnumOrdinalTypeHandler.class, javaType = org.fairysoftw.fairyhr.model.ScheduleFrequency.class),
             @Result(property = "frequencyValue", column = "frequency_value")
     })
-    List<Schedule> selectScheduleByUserId(@Param("user_id") String user_id);
+    List<Schedule> selectByUserId(@Param("user_id") String user_id);
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface UserMapper {
     @Select("SELECT * FROM user")
     @Results({
@@ -19,9 +19,9 @@ public interface UserMapper {
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
-            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
             @Result(property = "attendancesTime", column = "attendanceTime", typeHandler = DatetimeTypeHandler.class),
-            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     List<User> selectAll();
 
@@ -32,15 +32,21 @@ public interface UserMapper {
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
-            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
-            @Result(property = "attendancesTime", column = "attendanceTime", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectAttendanceTimeByUserId", fetchType = FetchType.LAZY)),
-            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "attendancesTime", column = "attendanceTime", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     User selectById(@Param("id") String id);
-//
-//    int insert(@Param("user") User user);
-//
-//    int deleteById(@Param("id") String id);
-//
-//    int update(@Param("user") User user);
+
+    @Insert("INSERT INTO user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)" +
+            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
+    int insert(@Param("user") User user);
+
+    @Update("UPDATE user SET deleted = TRUE " +
+            "WHERE id = #{id}")
+    int deleteById(@Param("id") String id);
+
+    @Update("UPDATE user SET user_name = #{name}, phone_number = #{phoneNumber}, passwd = #{password}, resident_id = #{residentId}, email_addr = #{emailAddr}, address = #{address}, position = #{position}, deleted = #{deleted} " +
+            "WHERE id = #{id}")
+    int update(@Param("user") User user);
 }
