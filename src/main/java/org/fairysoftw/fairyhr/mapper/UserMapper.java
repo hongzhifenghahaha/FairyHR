@@ -42,8 +42,7 @@ public interface UserMapper {
             "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
     int insert(@Param("user") User user);
 
-    @Update("UPDATE user SET deleted = TRUE " +
-            "WHERE id = #{id}")
+    @Delete("DELETE FROM user WHERE id = #{id}")
     int deleteById(@Param("id") String id);
 
     @Update("UPDATE user SET user_name = #{name}, phone_number = #{phoneNumber}, passwd = #{password}, resident_id = #{residentId}, email_addr = #{emailAddr}, address = #{address}, position = #{position}, deleted = #{deleted} " +

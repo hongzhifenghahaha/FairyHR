@@ -32,6 +32,14 @@ public interface LeaveRequestService {
     int insert(LeaveRequest leaveRequest);
 
     /**
+     * 插入新的请假申请
+     *
+     * @param leaveRequests 请假申请实例列表
+     * @return 插入的记录条数
+     */
+    int insert(List<LeaveRequest> leaveRequests);
+
+    /**
      * 更新请假申请
      *
      * @param leaveRequest 请假申请实例

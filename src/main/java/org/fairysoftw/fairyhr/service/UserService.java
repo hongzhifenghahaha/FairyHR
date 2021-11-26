@@ -39,6 +39,14 @@ public interface UserService {
     int insert(User user);
 
     /**
+     * 插入新的用户，同时插入新的时间表、请假时间和打卡时间
+     *
+     * @param users 用户实例列表
+     * @return 插入的记录条数
+     */
+    int insert(List<User> users);
+
+    /**
      * 更新用户，也可用于向用户插入时间表、请假时间和打卡时间
      *
      * @param user 用户实例

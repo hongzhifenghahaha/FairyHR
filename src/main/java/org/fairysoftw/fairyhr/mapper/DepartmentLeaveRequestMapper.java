@@ -22,4 +22,7 @@ public interface DepartmentLeaveRequestMapper {
             @Result(property = "checkTime", column = "check_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
     })
     List<User> selectByDepartmentId(@Param("d_id") String d_id);
+
+    @Insert("INSERT IGNORE INTO department_leave_request(d_id, request_id) VALUES(#{d_id}, #{request_id})")
+    int insert(@Param("d_id") String d_id, @Param("request_id") String request_id);
 }

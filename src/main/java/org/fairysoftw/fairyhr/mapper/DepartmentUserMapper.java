@@ -23,4 +23,7 @@ public interface DepartmentUserMapper {
             @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
     })
     List<User> selectByDepartmentId(@Param("d_id") String d_id);
+
+    @Insert("INSERT IGNORE INTO department_user VALUES(#{user_id}, #{d_id})")
+    int insert(@Param("user_id") String user_id, @Param("d_id") String d_id);
 }
