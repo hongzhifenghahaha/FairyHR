@@ -1,12 +1,10 @@
 package org.fairysoftw.fairyhr.mapper;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.fairysoftw.fairyhr.model.AttendanceTime;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -16,4 +14,9 @@ public interface UserAttendanceTimeMapper {
             @Result(property = "time", column = "time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class)
     })
     List<AttendanceTime> selectByUserId(@Param("user_id") String user_id);
+
+    @Insert("INSERT IGNORE INTO user_attendance_time(user_id, time) " +
+            "VALUES(#{user_id}, " +
+            "#{time, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler})")
+    int insert(@Param("user_id") String user_id, @Param("time") LocalDateTime time);
 }
