@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
 public interface DepartmentUserMapper {
     @Select("SELECT * FROM user JOIN " +
             "(SELECT * FROM department_user " +

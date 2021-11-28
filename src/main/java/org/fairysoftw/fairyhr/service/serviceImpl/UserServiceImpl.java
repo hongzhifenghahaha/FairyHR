@@ -9,9 +9,11 @@ import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.ScheduleService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     private UserAttendanceScheduleMapper userAttendanceScheduleMapper;

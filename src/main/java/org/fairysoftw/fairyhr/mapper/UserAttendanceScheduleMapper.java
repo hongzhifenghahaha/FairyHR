@@ -2,11 +2,9 @@ package org.fairysoftw.fairyhr.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.fairysoftw.fairyhr.model.Schedule;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface UserAttendanceScheduleMapper {
     @Select("SELECT * FROM schedule JOIN " +
             "(SELECT * " +

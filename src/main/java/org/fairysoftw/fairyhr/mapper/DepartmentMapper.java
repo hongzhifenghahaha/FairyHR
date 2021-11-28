@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
 public interface DepartmentMapper {
     @Select("SELECT * FROM department")
     @Results({

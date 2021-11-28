@@ -6,7 +6,6 @@ import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
-@Mapper
 public interface DepartmentManagerMapper {
     @Select("SELECT * FROM user JOIN " +
             "(SELECT * FROM department_manager " +

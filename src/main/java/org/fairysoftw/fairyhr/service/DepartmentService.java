@@ -2,9 +2,11 @@ package org.fairysoftw.fairyhr.service;
 
 import org.fairysoftw.fairyhr.model.Department;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DepartmentService {
     /**
      * 查询所有的部门

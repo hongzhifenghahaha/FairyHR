@@ -5,9 +5,11 @@ import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final LeaveRequestMapper leaveRequestMapper;
     private final UserService userService;

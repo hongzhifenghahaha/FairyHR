@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
 public interface UserMapper {
     @Select("SELECT * FROM user")
     @Results({

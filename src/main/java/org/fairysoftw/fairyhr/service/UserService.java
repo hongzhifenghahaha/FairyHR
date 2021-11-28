@@ -2,9 +2,11 @@ package org.fairysoftw.fairyhr.service;
 
 import org.fairysoftw.fairyhr.model.User;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserService {
     /**
      * 查询所有的用户

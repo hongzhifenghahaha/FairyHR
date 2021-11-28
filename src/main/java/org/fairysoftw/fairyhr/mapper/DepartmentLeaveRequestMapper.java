@@ -6,7 +6,6 @@ import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
-@Mapper
 public interface DepartmentLeaveRequestMapper {
     @Select("SELECT * FROM leave_request JOIN " +
             "(SELECT * FROM department_leave_request " +

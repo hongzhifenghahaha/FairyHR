@@ -2,9 +2,11 @@ package org.fairysoftw.fairyhr.service;
 
 import org.fairysoftw.fairyhr.model.Schedule;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ScheduleService {
     /**
      * 查询所有的时间表

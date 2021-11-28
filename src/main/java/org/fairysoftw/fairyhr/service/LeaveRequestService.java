@@ -2,9 +2,11 @@ package org.fairysoftw.fairyhr.service;
 
 import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface LeaveRequestService {
 
     /**

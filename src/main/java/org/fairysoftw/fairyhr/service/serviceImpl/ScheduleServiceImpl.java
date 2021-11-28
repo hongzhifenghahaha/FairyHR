@@ -5,9 +5,11 @@ import org.fairysoftw.fairyhr.model.Schedule;
 import org.fairysoftw.fairyhr.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleMapper scheduleMapper;
 
