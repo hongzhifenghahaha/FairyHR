@@ -32,7 +32,7 @@ VALUES (0, '张三', 'zs', '12345678901', '234667199701010000', 'zs@gmail.com', 
         FALSE);
 
 -- leave_request
-INSERT INTO leave_request(id, user_id, start_time, end_time, summit_time, reason, status, checker_id)
+INSERT INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id)
 VALUES (0, 5, '2021-11-22 09:00:00', '2021-11-22 17:00:00', '2021-11-20 22:00:00', '参加朋友婚宴', '待审核', NULL);
 
 -- department_user

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS leave_request
     user_id       VARCHAR(30) not null,
     start_time    DATETIME    not null,
     end_time      DATETIME    not null,
-    summit_time   DATETIME    not null,
+    submit_time   DATETIME    not null,
     reason        TEXT,
     status        TINYTEXT,
     checker_id    VARCHAR(30),
