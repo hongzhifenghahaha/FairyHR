@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class User {
     private String address;
     private String position;
     private List<Schedule> schedules;
-    private List<Date> attendancesTime;
+    private List<AttendanceTime> attendanceTimes;
     private List<Schedule> leaves;
     private boolean deleted;
 }

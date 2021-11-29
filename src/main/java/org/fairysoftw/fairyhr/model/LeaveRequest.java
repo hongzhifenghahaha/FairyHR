@@ -10,13 +10,14 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LeaveRequest {
+    private String id;
     private User user;
-    private Date start_time;
-    private Date end_time;
-    private Date summit_time;
+    private Date startTime;
+    private Date endTime;
+    private Date summitTime;
     private String reason;
     private String status;
     private User checker;
-    private Date check_time;
-    private String check_opinion;
+    private Date checkTime;
+    private String checkOpinion;
 }

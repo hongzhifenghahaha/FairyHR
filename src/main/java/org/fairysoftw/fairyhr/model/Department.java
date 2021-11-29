@@ -12,6 +12,7 @@ import java.util.List;
 public class Department {
     private String id;
     private String name;
+    private Department department;
     private boolean deleted;
     private List<User> managers;
     private List<User> users;

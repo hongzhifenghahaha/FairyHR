@@ -8,9 +8,8 @@ import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
-@Mapper
 public interface ScheduleMapper {
-    @Select("select * from schedule")
+    @Select("SELECT * FROM schedule")
     @Results({
             @Result(property = "startTime", column = "start_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
             @Result(property = "endTime", column = "end_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
@@ -30,7 +29,7 @@ public interface ScheduleMapper {
             @Result(property = "frequency", column = "frequency", typeHandler = org.apache.ibatis.type.EnumOrdinalTypeHandler.class, javaType = org.fairysoftw.fairyhr.model.ScheduleFrequency.class),
             @Result(property = "frequencyValue", column = "frequency_value")
     })
-    User selectById(@Param("id") String id);
+    Schedule selectById(@Param("id") String id);
 
     @Insert("INSERT INTO schedule(id, start_time, end_time, start_date, end_date, frequency, frequency_value)" +
             "VALUES(#{id}, " +

@@ -1,12 +1,6 @@
 CREATE
 DATABASE IF NOT EXISTS fairyhr;
 
-CREATE
-USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
-
-GRANT ALL
-ON fairyhr.* to 'admin'@'localhost';
-
 USE
 fairyhr;
 
