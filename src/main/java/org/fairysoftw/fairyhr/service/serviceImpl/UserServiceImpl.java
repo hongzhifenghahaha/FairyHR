@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-        if(user == null) {
+        if (user == null) {
             return 0;
         }
         int ret = userMapper.insert(user);
@@ -59,15 +59,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(List<User> users) {
         int i = 0;
-        for (var user : users) {
-            i += insert(user);
+        if(users != null) {
+            for (var user : users) {
+                i += insert(user);
+            }
         }
         return i;
     }
 
     @Override
     public int update(User user) {
-        if(user == null) {
+        if (user == null) {
             return 0;
         }
         int ret = userMapper.update(user);
@@ -76,19 +78,25 @@ public class UserServiceImpl implements UserService {
     }
 
     private void insertCascade(User user) {
-        if(user == null) {
+        if (user == null) {
             return;
         }
-        for (var schedule: user.getSchedules()) {
-            scheduleService.insert(schedule);
-            userAttendanceScheduleMapper.insert(user.getId(), schedule.getId());
+        if (user.getSchedules() != null) {
+            for (var schedule : user.getSchedules()) {
+                scheduleService.insert(schedule);
+                userAttendanceScheduleMapper.insert(user.getId(), schedule.getId());
+            }
         }
-        for (var leave: user.getLeaves()) {
-            scheduleService.insert(leave);
-            userAttendanceLeaveMapper.insert(user.getId(), leave.getId());
+        if (user.getLeaves() != null) {
+            for (var leave : user.getLeaves()) {
+                scheduleService.insert(leave);
+                userAttendanceLeaveMapper.insert(user.getId(), leave.getId());
+            }
         }
-        for(var attendance: user.getAttendanceTimes()) {
-            userAttendanceTimeMapper.insert(user.getId(), attendance.getTime());
+        if (user.getAttendanceTimes() != null) {
+            for (var attendance : user.getAttendanceTimes()) {
+                userAttendanceTimeMapper.insert(user.getId(), attendance.getTime());
+            }
         }
     }
 }
