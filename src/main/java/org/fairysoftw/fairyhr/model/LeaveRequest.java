@@ -14,7 +14,7 @@ public class LeaveRequest {
     private User user;
     private Date startTime;
     private Date endTime;
-    private Date summitTime;
+    private Date submitTime;
     private String reason;
     private String status;
     private User checker;

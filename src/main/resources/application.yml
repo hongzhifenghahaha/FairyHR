@@ -1,7 +1,7 @@
 spring:
   flyway:
     url: jdbc:mysql://127.0.0.1:3306/fairyhr?serverTimezone=UTC&useSSL=false
-    user: root
+    user: admin
     password: admin
     enabled: true
     baseline-on-migrate: true
