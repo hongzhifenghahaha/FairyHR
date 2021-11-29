@@ -9,10 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface DepartmentMapper {
     @Select("SELECT * FROM department")
     @Results({
             @Result(id = true, property = "id", column = "id"),
+            @Result(property = "name", column = "d_name"),
             @Result(property = "department", column = "d_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.DepartmentMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "managers", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentManagerMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),
             @Result(property = "users", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentUserMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),
@@ -24,6 +26,7 @@ public interface DepartmentMapper {
             "WHERE id = #{id}")
     @Results({
             @Result(id = true, property = "id", column = "id"),
+            @Result(property = "name", column = "d_name"),
             @Result(property = "department", column = "d_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.DepartmentMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "managers", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentManagerMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),
             @Result(property = "users", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentUserMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),

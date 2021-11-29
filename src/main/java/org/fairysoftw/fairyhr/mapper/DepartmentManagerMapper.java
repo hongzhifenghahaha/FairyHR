@@ -6,6 +6,7 @@ import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
+@Mapper
 public interface DepartmentManagerMapper {
     @Select("SELECT * FROM user JOIN " +
             "(SELECT * FROM department_manager " +
@@ -13,12 +14,13 @@ public interface DepartmentManagerMapper {
             "ON d_manager.manager_id = user.id")
     @Results({
             @Result(id = true, property = "id", column = "id"),
+            @Result(property = "name", column = "user_name"),
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
-            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
-            @Result(property = "attendancesTime", column = "attendanceTime", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectAttendanceTimeByUserId", fetchType = FetchType.LAZY)),
-            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectScheduleByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "attendancesTime", column = "attendanceTime", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     List<User> selectByDepartmentId(@Param("d_id") String d_id);
 

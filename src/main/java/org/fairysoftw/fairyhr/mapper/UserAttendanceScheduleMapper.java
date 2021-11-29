@@ -5,6 +5,7 @@ import org.fairysoftw.fairyhr.model.Schedule;
 
 import java.util.List;
 
+@Mapper
 public interface UserAttendanceScheduleMapper {
     @Select("SELECT * FROM schedule JOIN " +
             "(SELECT * " +
