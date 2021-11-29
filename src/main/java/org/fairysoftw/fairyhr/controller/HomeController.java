@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.controller;
 
 import org.fairysoftw.fairyhr.model.Department;
 import org.fairysoftw.fairyhr.model.User;
+import org.fairysoftw.fairyhr.service.DepartmentService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ import java.util.List;
 @RequestMapping("/")
 public class HomeController {
     private final UserService userService;
+    private final DepartmentService departmentService;
 
     @Autowired
-    HomeController(UserService userService){
-        this.userService=userService;
+    HomeController(UserService userService, DepartmentService departmentService){
+        this.userService = userService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping("/")
@@ -44,6 +47,7 @@ public class HomeController {
             if(user.getPassword().equals(password)){
                 session.setAttribute("id",id);
                 session.setAttribute("userName",user.getName());
+                session.setAttribute("position",user.getPosition());
                 Cookie cookieId = new Cookie("id", id);
                 Cookie cookieName = new Cookie("userName", user.getName());
                 cookieId.setMaxAge(60*60*2);
@@ -67,11 +71,6 @@ public class HomeController {
             userService.insert(user);
         }
         return "sign";
-    }
-
-    @RequestMapping(value = "/homePage", method = RequestMethod.GET)
-    public String gotoHomePage(){
-        return "homePage";
     }
 
 

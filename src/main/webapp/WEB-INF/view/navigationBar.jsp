@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 86183
-  Date: 2021/11/29
-  Time: 2:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -17,15 +10,15 @@
 
 <c:set var="userName" value="${sessionScope.userName}"/>
 <header class="header">
-    <h1 class="logo"><a href="/homePage?">FairyHR</a></h1>
+    <h1 class="logo"><a href="<c:url value="/homePage?"/>">FairyHR</a></h1>
     <ul class="main-nav">
-        <li><a href="/homePage?">Home</a></li>
-        <li><a href="/about?">About</a></li>
+        <li><a href="<c:url value="/homePage?"/>">Home</a></li>
+        <li><a href="<c:url value="/about?"/>">About</a></li>
         <c:if test = "${empty sessionScope.id }">
-            <li><a href="/?">Sign In/Sign Up</a></li>
+            <li><a href="<c:url value="/?"/>">Sign In/Sign Up</a></li>
         </c:if>
         <c:if test = "${not empty sessionScope.id }">
-            <li><a href="/?">${userName}</a></li>
+            <li><a href="<c:url value="/?"/>">${userName}</a></li>
         </c:if>
     </ul>
 </header>
