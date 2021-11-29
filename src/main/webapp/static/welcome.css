@@ -1,0 +1,44 @@
+body, html {
+    background-color: black;
+    color: white;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 100px;
+}
+
+h2, h3 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 50px;
+}
+
+.overall-container {
+    display:table;
+    width: 100%;
+    padding: 0 0 0 0; /*set left/right padding according to needs*/
+    box-sizing: border-box;
+}
+
+.row {
+    height: 100%;
+    display: table-row;
+}
+
+.row .cell {
+    display: table-cell;
+    float: none;
+}
+
+/* Navigation - left side */
+.cell-1 {
+    background: #009999;
+    height: 700px;
+    padding-top: 30px;
+}

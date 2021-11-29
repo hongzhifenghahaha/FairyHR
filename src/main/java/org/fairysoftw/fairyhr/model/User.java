@@ -31,4 +31,9 @@ public class User {
     private List<AttendanceTime> attendanceTimes;
     private List<Schedule> leaves;
     private boolean deleted;
+
+    public User(String id, String name, String password, String email){
+        this(id,name,null,password,null,email,
+                null,null,null,null,null,false);
+    }
 }

@@ -28,6 +28,8 @@ public interface UserMapper {
             "WHERE id = #{id}")
     @Results({
             @Result(id = true, property = "id", column = "id"),
+            @Result(property = "name", column = "user_name"),
+            @Result(property = "password", column = "passwd"),
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
@@ -38,7 +40,7 @@ public interface UserMapper {
     User selectById(@Param("id") String id);
 
     @Insert("INSERT INTO user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)" +
-            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
+            "VALUES #{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
     int insert(@Param("user") User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")

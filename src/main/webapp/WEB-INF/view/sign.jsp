@@ -17,7 +17,7 @@
     <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
     <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
     <div class="login-form">
-      <form action="/login" class="sign-in-htm">
+      <form action="/login" class="sign-in-htm" method="post">
         <div class="group">
           <label>Id</label>
           <input name="id" type="text" class="input">
@@ -27,7 +27,7 @@
           <input name="password" type="password" class="input" data-type="password">
         </div>
         <div class="group">
-          <input id="check" name="Manager" type="checkbox" class="check" checked>
+          <input id="check" name="manager" type="checkbox" class="check" checked>
           <label for="check"><span class="icon"></span> 我是管理员</label>
         </div>
         <div class="group">
@@ -38,7 +38,11 @@
           <a href="#forgot">Forgot Password?</a>
         </div>
       </form>
-      <form action="/register" class="sign-up-htm">
+      <form action="/register" class="sign-up-htm" method="post">
+        <div class="group">
+          <label>Id</label>
+          <input name="id" type="text" class="input">
+        </div>
         <div class="group">
           <label>UserName</label>
           <input name="userName" type="text" class="input">
@@ -46,10 +50,6 @@
         <div class="group">
           <label>Password</label>
           <input name="password" type="password" class="input" data-type="password">
-        </div>
-        <div class="group">
-          <label>Repeat Password</label>
-          <input type="password" class="input" data-type="password">
         </div>
         <div class="group">
           <label>Email</label>
@@ -60,7 +60,7 @@
         </div>
         <div class="hr"></div>
         <div class="foot-lnk">
-          <label for="tab-1">Already Member?</a>
+          <label for="tab-1">Already Member?</label>
         </div>
       </form>
     </div>

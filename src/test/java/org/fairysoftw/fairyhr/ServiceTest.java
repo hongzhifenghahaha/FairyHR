@@ -31,6 +31,8 @@ class ServiceTest {
     @Test
     void contextLoads() {
         assertNotEquals(0, departmentService.selectAll().size());
+        departmentService.selectAll().size();
+        userService.selectById("0");
     }
 
 }

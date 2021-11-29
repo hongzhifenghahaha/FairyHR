@@ -8,6 +8,7 @@ import org.fairysoftw.fairyhr.model.Schedule;
 import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.ScheduleService;
 import org.fairysoftw.fairyhr.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,18 @@ public class UserServiceImpl implements UserService {
     private UserAttendanceLeaveMapper userAttendanceLeaveMapper;
     private UserAttendanceTimeMapper userAttendanceTimeMapper;
     private ScheduleService scheduleService;
+
+    @Autowired
+    UserServiceImpl(UserMapper userMapper,
+         UserAttendanceScheduleMapper userAttendanceScheduleMapper,
+         UserAttendanceLeaveMapper userAttendanceLeaveMapper,
+         UserAttendanceTimeMapper userAttendanceTimeMapper,
+         ScheduleService scheduleService){
+        this.userMapper = userMapper;
+        this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
+        this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
+        this.userAttendanceTimeMapper = userAttendanceTimeMapper;
+    }
 
     @Override
     public List<User> selectAll() {
