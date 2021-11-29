@@ -40,8 +40,10 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     @Override
     public int insert(List<LeaveRequest> leaveRequests) {
         int i = 0;
-        for(var leaveRequest: leaveRequests) {
-            i += insert(leaveRequest);
+        if (leaveRequests != null) {
+            for (var leaveRequest : leaveRequests) {
+                i += insert(leaveRequest);
+            }
         }
         return i;
     }

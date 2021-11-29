@@ -37,10 +37,10 @@ public interface DepartmentMapper {
     @Insert("<script>" +
             "INSERT INTO department(id, d_name, d_id, deleted) " +
             "VALUES(#{id}, #{name}, " +
-            "<if test='department=null'> NULL </if> <if test='department!=null'>#{department.id}</if>, " +
+            "<if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>, " +
             "#{deleted})" +
             "</script>")
-    int insert(@Param("department") Department department);
+    int insert(Department department);
 
     @Delete("DELETE FROM department WHERE id = #{id}")
     int deleteById(@Param("id") String id);
@@ -48,9 +48,9 @@ public interface DepartmentMapper {
     @Update("<script>" +
             "UPDATE user " +
             "SET d_name = #{name}, " +
-            "d_id = <if test='department=null'> NULL </if> <if test='department!=null'>#{department.id}</if>, " +
+            "d_id = <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>, " +
             "deleted = #{deleted}, " +
             "WHERE id = #{id}" +
             "</script>")
-    int update(@Param("user") Department department);
+    int update(Department department);
 }

@@ -42,11 +42,11 @@ public interface LeaveRequestMapper {
             "#{endTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}," +
             "#{submitTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}," +
             "#{reason}, #{status}, " +
-            "<if test='checker=null'> NULL </if> <if test='checker!=null'>#{checker.id}</if>," +
+            "<if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>," +
             "#{checkTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}," +
             "#{checkOpinion})" +
             "</script>")
-    int insert(@Param("leaveRequest") LeaveRequest leaveRequest);
+    int insert(LeaveRequest leaveRequest);
 
     @Delete("DELETE FROM leave_request WHERE id = #{id}")
     int deleteById(@Param("id") String id);
@@ -58,9 +58,9 @@ public interface LeaveRequestMapper {
             "end_time = #{endTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}, " +
             "submit_time = #{submitTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}, " +
             "reason = #{reason}, status = #{status}, " +
-            "checker_id = <if test='checker=null'> NULL </if> <if test='checker!=null'>#{checker.id}</if>, " +
+            "checker_id = <if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>, " +
             "check_time = #{checkTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}, " +
             "check_opinion = #{checkOpinion}" +
             "</script>")
-    int update(@Param("leaveRequest") LeaveRequest leaveRequest);
+    int update(LeaveRequest leaveRequest);
 }
