@@ -69,6 +69,16 @@ public class HomeController {
         return "sign";
     }
 
+    @RequestMapping(value = "/homePage", method = RequestMethod.GET)
+    public String gotoHomePage(){
+        return "homePage";
+    }
+
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String gotoAbout(){
+        return "about";
+    }
 
 
 }

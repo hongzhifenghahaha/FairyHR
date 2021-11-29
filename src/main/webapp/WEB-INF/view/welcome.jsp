@@ -38,7 +38,13 @@
                 Welcome ${userName}
             </td></h2>
 
-            <a href="homePage.jsp"><h3><button class="btn btn-primary" style="font-size: 80px; border-radius: 40px;" id="start">Enter</button></h3></a>
+
+                <form action="/homePage">
+                    <input type="submit" class="button btn btn-primary"
+                           style="font-size: 80px; border-radius: 40px;" id="start" value="Enter">
+                    </input>
+                </form>
+
         </div>
 
     </div>

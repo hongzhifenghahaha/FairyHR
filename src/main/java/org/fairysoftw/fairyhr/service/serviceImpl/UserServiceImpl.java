@@ -21,14 +21,6 @@ public class UserServiceImpl implements UserService {
     private final UserAttendanceTimeMapper userAttendanceTimeMapper;
     private final ScheduleService scheduleService;
 
-    @Autowired
-    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, ScheduleService scheduleService) {
-        this.userMapper = userMapper;
-        this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
-        this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
-        this.userAttendanceTimeMapper = userAttendanceTimeMapper;
-        this.scheduleService = scheduleService;
-    }
 
     @Autowired
     UserServiceImpl(UserMapper userMapper,
@@ -40,6 +32,7 @@ public class UserServiceImpl implements UserService {
         this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
         this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
         this.userAttendanceTimeMapper = userAttendanceTimeMapper;
+        this.scheduleService = scheduleService;
     }
 
     @Override
