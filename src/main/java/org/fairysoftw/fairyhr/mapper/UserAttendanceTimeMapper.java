@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Mapper
 public interface UserAttendanceTimeMapper {
     @Select("SELECT * FROM user_attendance_time JOIN WHERE user_id = #{user_id}")
     @Results({

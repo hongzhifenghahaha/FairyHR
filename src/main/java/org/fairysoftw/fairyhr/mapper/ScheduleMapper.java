@@ -8,6 +8,7 @@ import org.fairysoftw.fairyhr.model.User;
 
 import java.util.List;
 
+@Mapper
 public interface ScheduleMapper {
     @Select("SELECT * FROM schedule")
     @Results({

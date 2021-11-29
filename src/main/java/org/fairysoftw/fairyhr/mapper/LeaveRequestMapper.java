@@ -8,16 +8,17 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface LeaveRequestMapper {
     @Select("SELECT * FROM leave_request")
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "user", column = "user_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
-            @Result(property = "startTime", column = "start_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "endTime", column = "end_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "submitTime", column = "submit_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "startTime", column = "start_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "endTime", column = "end_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "submitTime", column = "submit_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
-            @Result(property = "checkTime", column = "check_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "checkTime", column = "check_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
     })
     List<LeaveRequest> selectAll();
 
@@ -26,11 +27,11 @@ public interface LeaveRequestMapper {
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "user", column = "user_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
-            @Result(property = "startTime", column = "start_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "endTime", column = "end_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "submitTime", column = "submit_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "startTime", column = "start_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "endTime", column = "end_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "submitTime", column = "submit_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
-            @Result(property = "checkTime", column = "check_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "checkTime", column = "check_time"),// typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
     })
     LeaveRequest selectById(@Param("id") String id);
 

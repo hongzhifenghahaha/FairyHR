@@ -4,10 +4,10 @@ import org.fairysoftw.fairyhr.mapper.UserAttendanceLeaveMapper;
 import org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper;
 import org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper;
 import org.fairysoftw.fairyhr.mapper.UserMapper;
-import org.fairysoftw.fairyhr.model.Schedule;
 import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.ScheduleService;
 import org.fairysoftw.fairyhr.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,20 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserMapper userMapper;
-    private UserAttendanceScheduleMapper userAttendanceScheduleMapper;
-    private UserAttendanceLeaveMapper userAttendanceLeaveMapper;
-    private UserAttendanceTimeMapper userAttendanceTimeMapper;
-    private ScheduleService scheduleService;
+    private final UserMapper userMapper;
+    private final UserAttendanceScheduleMapper userAttendanceScheduleMapper;
+    private final UserAttendanceLeaveMapper userAttendanceLeaveMapper;
+    private final UserAttendanceTimeMapper userAttendanceTimeMapper;
+    private final ScheduleService scheduleService;
+
+    @Autowired
+    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, ScheduleService scheduleService) {
+        this.userMapper = userMapper;
+        this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
+        this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
+        this.userAttendanceTimeMapper = userAttendanceTimeMapper;
+        this.scheduleService = scheduleService;
+    }
 
     @Override
     public List<User> selectAll() {
