@@ -42,7 +42,7 @@ public interface ScheduleMapper {
     @Delete("DELETE FROM schedule WHERE id = #{id}")
     int deleteById(@Param("id") String id);
 
-    @Update("UPDATE schedule SET" +
+    @Update("UPDATE schedule SET " +
             "start_time = #{startTime}, " +
             "end_time = #{endTime}, " +
             "frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
