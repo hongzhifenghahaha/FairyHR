@@ -1,5 +1,8 @@
 package org.fairysoftw.fairyhr;
 
+import org.fairysoftw.fairyhr.model.AttendanceTime;
+import org.fairysoftw.fairyhr.model.Department;
+import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.DepartmentService;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.ScheduleService;
@@ -10,6 +13,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
+
+import java.util.ArrayList;
 
 @SpringBootTest()
 @Profile("test")
@@ -31,8 +36,15 @@ class ServiceTest {
     @Test
     void contextLoads() {
         assertNotEquals(0, departmentService.selectAll().size());
-        departmentService.selectAll().size();
-        userService.selectById("0");
+        User user = userService.selectById("0");
+        if(user.getAttendanceTimes()==null){
+            ArrayList<AttendanceTime> times = new ArrayList<AttendanceTime>();
+            times.add(new AttendanceTime());
+            user.setAttendanceTimes(times);
+        } else {
+            user.getAttendanceTimes().add(new AttendanceTime());
+        }
+        userService.update(user);
     }
 
 }
