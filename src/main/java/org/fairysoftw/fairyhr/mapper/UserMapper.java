@@ -17,6 +17,7 @@ public interface UserMapper {
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "user_name"),
+            @Result(property = "password", column = "passwd"),
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
