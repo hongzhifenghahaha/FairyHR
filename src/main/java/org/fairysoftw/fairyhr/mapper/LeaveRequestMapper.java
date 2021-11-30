@@ -54,7 +54,7 @@ public interface LeaveRequestMapper {
             "status = #{status}, " +
             "checker_id = <if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>, " +
             "check_time = #{checkTime}, " +
-            "check_opinion = #{checkOpinion}" +
+            "check_opinion = #{checkOpinion} " +
             "WHERE id = #{id} " +
             "</script>")
     int update(LeaveRequest leaveRequest);
