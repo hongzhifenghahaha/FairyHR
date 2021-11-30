@@ -55,6 +55,16 @@
                 <li><a href="<c:url value="/leaveRecord?"/>">请假记录</a> <span>Leave Record</span></li>
             </ul>
         </c:if>
+        <c:if test = "${not empty sessionScope.manager}">
+            <ul class="statsLeft">
+                <li><a href="<c:url value="/checkIn?"/>" class="yellow">今日签到</a> <span>Check In</span></li>
+                <li><a href="<c:url value="/attendanceRecord?"/>" class="red">签到记录</a> <span>Attendance Record</span></li>
+            </ul>
+            <ul class="statsRight">
+                <li><a href="<c:url value="/askForLeave?"/>" >发起请假</a> <span>Ask for Leave</span></li>
+                <li><a href="<c:url value="/leaveRecord?"/>">请假记录</a> <span>Leave Record</span></li>
+            </ul>
+        </c:if>
     </div>
 
 </div>

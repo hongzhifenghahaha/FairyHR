@@ -39,10 +39,10 @@ public class AttendanceController {
     @RequestMapping(value = "/myCheckIn", method = RequestMethod.GET)
     public String processMyCheckIn(HttpSession session, HttpServletResponse response) throws IOException {
         if(session.getAttribute("id")==null){
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.flush();
-            out.println("alert('您尚未登录，请先登录');");
+            //response.setContentType("text/html; charset=UTF-8");
+            //PrintWriter out = response.getWriter();
+            //out.flush();
+            //out.println("alert('您尚未登录，请先登录');");
             return "sign";
         }
         User user = userService.selectById((String) session.getAttribute("id"));
@@ -54,10 +54,10 @@ public class AttendanceController {
             user.getAttendanceTimes().add(new AttendanceTime(LocalDateTime.now()));
         }
         userService.update(user);
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.flush();
-        out.println("alert('签到成功');");
+        //response.setContentType("text/html; charset=UTF-8");
+        //PrintWriter out = response.getWriter();
+        //out.flush();
+        //out.println("alert('签到成功');");
         return "attendance/attendanceRecord";
     }
 

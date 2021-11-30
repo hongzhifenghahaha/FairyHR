@@ -36,15 +36,8 @@ class ServiceTest {
     @Test
     void contextLoads() {
         assertNotEquals(0, departmentService.selectAll().size());
-        User user = userService.selectById("0");
-        if(user.getAttendanceTimes()==null){
-            ArrayList<AttendanceTime> times = new ArrayList<AttendanceTime>();
-            times.add(new AttendanceTime());
-            user.setAttendanceTimes(times);
-        } else {
-            user.getAttendanceTimes().add(new AttendanceTime());
-        }
-        userService.update(user);
+        Department myDepartment = departmentService.selectById("2");
+        int i = 1;
     }
 
 }

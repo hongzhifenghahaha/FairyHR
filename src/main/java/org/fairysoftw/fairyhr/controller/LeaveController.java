@@ -1,7 +1,7 @@
 package org.fairysoftw.fairyhr.controller;
 
-import org.fairysoftw.fairyhr.model.AttendanceTime;
-import org.fairysoftw.fairyhr.model.LeaveRequest;
+import org.fairysoftw.fairyhr.model.*;
+import org.fairysoftw.fairyhr.service.DepartmentService;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +22,13 @@ import java.util.List;
 public class LeaveController {
     private final LeaveRequestService leaveRequestService;
     private final UserService userService;
+    private final DepartmentService departmentService;
 
     @Autowired
-    LeaveController(LeaveRequestService leaveRequestService, UserService userService){
+    LeaveController(LeaveRequestService leaveRequestService, UserService userService,DepartmentService departmentService){
         this.leaveRequestService =leaveRequestService;
         this.userService = userService;
+        this.departmentService = departmentService;
     }
 
     @RequestMapping(value = "/askForLeave", method = RequestMethod.GET)
@@ -68,6 +71,16 @@ public class LeaveController {
                 userService.selectById((String)session.getAttribute("id")),
                 startDate,endDate,new Date(), reason, "unreviewed" , null, null, null);
         leaveRequestService.insert(leaveRequest);
+
+        Department department = (Department) session.getAttribute("department");
+        if(department.getLeaveRequests()==null){
+            ArrayList<LeaveRequest> myLeaveRequest = new ArrayList<LeaveRequest>();
+            leaveRequests.add(leaveRequest);
+            department.setLeaveRequests((List)myLeaveRequest);
+        } else {
+            department.getLeaveRequests().add(leaveRequest);
+        }
+        departmentService.update(department);
 
         return "leave/leaveRecord";
     }
