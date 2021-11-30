@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +48,10 @@ public class AttendanceController {
         User user = userService.selectById((String) session.getAttribute("id"));
         if(user.getAttendanceTimes()==null){
             ArrayList<AttendanceTime> times = new ArrayList<AttendanceTime>();
-            times.add(new AttendanceTime());
+            times.add(new AttendanceTime(LocalDateTime.now()));
             user.setAttendanceTimes(times);
         } else {
-            user.getAttendanceTimes().add(new AttendanceTime());
+            user.getAttendanceTimes().add(new AttendanceTime(LocalDateTime.now()));
         }
         userService.update(user);
         response.setContentType("text/html; charset=UTF-8");
@@ -65,5 +66,4 @@ public class AttendanceController {
     {
         return "attendance/attendanceRecord";
     }
-
 }
