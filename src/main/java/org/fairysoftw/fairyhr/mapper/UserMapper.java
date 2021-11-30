@@ -21,8 +21,8 @@ public interface UserMapper {
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
             @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
-            @Result(property = "attendancesTime", column = "attendanceTime", typeHandler = DatetimeTypeHandler.class),
-            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "attendancesTime", column = "attendanceTime", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceLeaveMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     List<User> selectAll();
 
@@ -42,8 +42,8 @@ public interface UserMapper {
     User selectById(@Param("id") String id);
 
     @Insert("INSERT INTO user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)" +
-            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
-    int insert(@Param("user") User user);
+            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted})")
+    int insert(User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     int deleteById(@Param("id") String id);

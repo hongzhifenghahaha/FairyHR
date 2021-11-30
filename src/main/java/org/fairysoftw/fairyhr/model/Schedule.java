@@ -11,8 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class Schedule {
     private String id;
-    private Long startTime;
-    private Long endTime;
+    private Date startTime;
+    private Date endTime;
     private Date startDate;
     private Date endDate;
     private ScheduleFrequency frequency;

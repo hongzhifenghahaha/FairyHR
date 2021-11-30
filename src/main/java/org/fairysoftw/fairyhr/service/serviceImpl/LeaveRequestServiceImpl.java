@@ -32,9 +32,8 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     @Override
     public int insert(LeaveRequest leaveRequest) {
-        var ret = leaveRequestMapper.insert(leaveRequest);
         userService.insert(leaveRequest.getUser());
-        return ret;
+        return leaveRequestMapper.insert(leaveRequest);
     }
 
     @Override
@@ -50,9 +49,8 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     @Override
     public int update(LeaveRequest leaveRequest) {
-        var ret = leaveRequestMapper.update(leaveRequest);
         userService.insert(leaveRequest.getUser());
-        return ret;
+        return leaveRequestMapper.update(leaveRequest);
     }
 
     @Override
