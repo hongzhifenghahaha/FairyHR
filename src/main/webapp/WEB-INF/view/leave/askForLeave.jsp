@@ -6,7 +6,7 @@
     <title>FairyHR</title>
 </head>
 <body>
-    <c:import url="navigationBar.jsp"/>
-    <h1>AttendanceRecord TODO</h1>
+    <c:import url="../navigationBar.jsp"/>
+    <h1>AskForLeave TODO</h1>
 </body>
 </html>
