@@ -41,8 +41,8 @@ public interface UserMapper {
     User selectById(@Param("id") String id);
 
     @Insert("INSERT INTO user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)" +
-            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted}")
-    int insert(@Param("user") User user);
+            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted})")
+    int insert(User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     int deleteById(@Param("id") String id);
