@@ -50,5 +50,5 @@ public interface UserMapper {
 
     @Update("UPDATE user SET user_name = #{name}, phone_number = #{phoneNumber}, passwd = #{password}, resident_id = #{residentId}, email_addr = #{emailAddr}, address = #{address}, position = #{position}, deleted = #{deleted} " +
             "WHERE id = #{id}")
-    int update(@Param("user") User user);
+    int update(User user);
 }

@@ -38,7 +38,7 @@ public interface ScheduleMapper {
             "#{endTime, typeHandler=org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler}," +
             "#{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
             "#{startDate}, #{endDate}, #{frequencyValue})")
-    int insert(@Param("schedule") Schedule schedule);
+    int insert(Schedule schedule);
 
     @Delete("DELETE FROM schedule WHERE id = #{id}")
     int deleteById(@Param("id") String id);
@@ -49,5 +49,5 @@ public interface ScheduleMapper {
             "frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
             "start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue}" +
             "WHERE id = #{id}")
-    int update(@Param("schedule") Schedule schedule);
+    int update(Schedule schedule);
 }

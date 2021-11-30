@@ -72,14 +72,20 @@ public class DepartmentServiceImpl implements DepartmentService {
         leaveRequestService.insert(department.getLeaveRequests());
         userService.insert(department.getUsers());
         userService.insert(department.getManagers());
-        for(var user: department.getUsers()) {
-            departmentUserMapper.insert(user.getId(), department.getId());
+        if (department.getUsers() != null) {
+            for (var user : department.getUsers()) {
+                departmentUserMapper.insert(user.getId(), department.getId());
+            }
         }
-        for(var manager: department.getManagers()) {
-            departmentManagerMapper.insert(manager.getId(), department.getId());
+        if (department.getManagers() != null) {
+            for (var manager : department.getManagers()) {
+                departmentManagerMapper.insert(manager.getId(), department.getId());
+            }
         }
-        for(var leaveRequest: department.getLeaveRequests()) {
-            departmentLeaveRequestMapper.insert(leaveRequest.getId(), department.getId());
+        if (department.getLeaveRequests() != null) {
+            for (var leaveRequest : department.getLeaveRequests()) {
+                departmentLeaveRequestMapper.insert(leaveRequest.getId(), department.getId());
+            }
         }
     }
 }
