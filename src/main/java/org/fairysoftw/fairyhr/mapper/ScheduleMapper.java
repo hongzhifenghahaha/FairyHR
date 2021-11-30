@@ -46,7 +46,7 @@ public interface ScheduleMapper {
             "start_time = #{startTime}, " +
             "end_time = #{endTime}, " +
             "frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
-            "start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue}" +
+            "start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue} " +
             "WHERE id = #{id}")
     int update(Schedule schedule);
 }
