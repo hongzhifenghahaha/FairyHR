@@ -43,8 +43,8 @@ public interface ScheduleMapper {
     int deleteById(@Param("id") String id);
 
     @Update("UPDATE schedule SET" +
-            "#{startTime}, " +
-            "#{endTime}, " +
+            "start_time = #{startTime}, " +
+            "end_time = #{endTime}, " +
             "frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
             "start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue}" +
             "WHERE id = #{id}")
