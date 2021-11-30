@@ -33,7 +33,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     @Override
     public int insert(LeaveRequest leaveRequest) {
         userService.insert(leaveRequest.getUser());
-        return leaveRequestMapper.update(leaveRequest);
+        return leaveRequestMapper.insert(leaveRequest);
     }
 
     @Override
