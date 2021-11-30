@@ -34,7 +34,7 @@ public interface LeaveRequestMapper {
     LeaveRequest selectById(@Param("id") String id);
 
     @Insert("<script>" +
-            "INSERT INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id, check_time, check_opinion) " +
+            "INSERT IGNORE INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id, check_time, check_opinion) " +
             "VALUES(#{id}, #{user.id},#{startTime}, #{endTime}, #{submitTime}, #{reason}, #{status}, " +
             "<if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>," +
             "#{checkTime}, #{checkOpinion})" +
@@ -45,7 +45,7 @@ public interface LeaveRequestMapper {
     int deleteById(@Param("id") String id);
 
     @Update("<script>" +
-            "UPDATE leave_request SET" +
+            "UPDATE leave_request SET " +
             "id = #{id}, " +
             "user_id = #{user.id}, " +
             "start_time = #{startTime}, " +
