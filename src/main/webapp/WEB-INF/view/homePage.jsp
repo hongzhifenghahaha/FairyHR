@@ -31,10 +31,10 @@
             <div class="ppc-percents">
                 <div class="pcc-percents-wrapper">
                     <c:if test = "${not empty sessionScope.manager}">
-                        <span>Manager</span>
+                        <span>管理员</span>
                     </c:if>
                     <c:if test = "${empty sessionScope.manager}">
-                        <span>User</span>
+                        <span>成员</span>
                     </c:if>
                 </div>
             </div>
@@ -59,10 +59,12 @@
             <ul class="statsLeft">
                 <li><a href="<c:url value="/checkIn?"/>" class="yellow">今日签到</a> <span>Check In</span></li>
                 <li><a href="<c:url value="/attendanceRecord?"/>" class="red">签到记录</a> <span>Attendance Record</span></li>
+                <li><a href="<c:url value="/userList?"/>" class="yellow">管理员工</a> <span>Manage Teammates</span></li>
             </ul>
             <ul class="statsRight">
                 <li><a href="<c:url value="/askForLeave?"/>" >发起请假</a> <span>Ask for Leave</span></li>
                 <li><a href="<c:url value="/leaveRecord?"/>">请假记录</a> <span>Leave Record</span></li>
+                <li><a href="<c:url value="/reviewLeave?"/>">审核假条</a> <span>Review Leave Request</span></li>
             </ul>
         </c:if>
     </div>

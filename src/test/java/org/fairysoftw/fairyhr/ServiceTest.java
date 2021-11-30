@@ -37,7 +37,7 @@ class ServiceTest {
     void contextLoads() {
         assertNotEquals(0, departmentService.selectAll().size());
         Department myDepartment = departmentService.selectById("2");
-        int i = 1;
+        departmentService.update(myDepartment);
     }
 
 }
