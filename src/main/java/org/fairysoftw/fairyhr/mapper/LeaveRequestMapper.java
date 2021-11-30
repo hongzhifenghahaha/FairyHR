@@ -46,7 +46,6 @@ public interface LeaveRequestMapper {
 
     @Update("<script>" +
             "UPDATE leave_request SET " +
-            "id = #{id}, " +
             "user_id = #{user.id}, " +
             "start_time = #{startTime}, " +
             "end_time = #{endTime}, " +
@@ -56,6 +55,7 @@ public interface LeaveRequestMapper {
             "checker_id = <if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>, " +
             "check_time = #{checkTime}, " +
             "check_opinion = #{checkOpinion}" +
+            "WHERE id = #{id} " +
             "</script>")
     int update(LeaveRequest leaveRequest);
 }
