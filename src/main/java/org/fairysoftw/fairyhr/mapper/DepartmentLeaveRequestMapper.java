@@ -16,11 +16,11 @@ public interface DepartmentLeaveRequestMapper {
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "user", column = "user_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById")),
-            @Result(property = "startTime", column = "start_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "endTime", column = "end_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
-            @Result(property = "submitTime", column = "submit_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "startTime", column = "start_time"),
+            @Result(property = "endTime", column = "end_time"),
+            @Result(property = "submitTime", column = "submit_time"),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById")),
-            @Result(property = "checkTime", column = "check_time", typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.TimeTypeHandler.class),
+            @Result(property = "checkTime", column = "check_time"),
     })
     List<LeaveRequest> selectByDepartmentId(@Param("d_id") String d_id);
 
