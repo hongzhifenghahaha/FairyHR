@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface UserAttendanceTimeMapper {
-    @Select("SELECT * FROM user_attendance_time JOIN WHERE user_id = #{user_id}")
+    @Select("SELECT * FROM user_attendance_time WHERE user_id = #{user_id}")
     @Results({
             @Result(property = "time", column = "time",
                     typeHandler = org.fairysoftw.fairyhr.mapper.typeHandler.DatetimeTypeHandler.class)
