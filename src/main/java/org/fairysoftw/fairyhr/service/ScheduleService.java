@@ -25,7 +25,7 @@ public interface ScheduleService {
     Schedule selectById(String id);
 
     /**
-     * 根据id删除时间表
+     * 根据id删除时间表，若不存在id相同的请假申请，则不执行任何操作。
      *
      * @param id 时间表id
      * @return 删除的记录条数
@@ -33,7 +33,9 @@ public interface ScheduleService {
     int deleteById(String id);
 
     /**
-     * 插入新的时间表
+     * 插入新的时间表，参数中的{@link org.fairysoftw.fairyhr.model.Schedule#id}、
+     * {@link org.fairysoftw.fairyhr.model.Schedule#startTime}、
+     * {@link org.fairysoftw.fairyhr.model.Schedule#endTime}不为null
      *
      * @param schedule 新的时间表实例
      * @return 插入的记录条数
@@ -41,7 +43,11 @@ public interface ScheduleService {
     int insert(Schedule schedule);
 
     /**
-     * 更新时间表
+     * 根据id更新时间表，若不存在id相同的请假申请，则不执行任何操作。
+     * <br><br>
+     * 参数中的{@link org.fairysoftw.fairyhr.model.Schedule#id}、
+     * {@link org.fairysoftw.fairyhr.model.Schedule#startTime}、
+     * {@link org.fairysoftw.fairyhr.model.Schedule#endTime}不为null
      *
      * @param schedule 时间表实例
      * @return 更新的记录条数

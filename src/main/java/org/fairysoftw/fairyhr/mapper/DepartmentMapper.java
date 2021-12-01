@@ -22,8 +22,7 @@ public interface DepartmentMapper {
     })
     List<Department> selectAll();
 
-    @Select("SELECT * FROM department " +
-            "WHERE id = #{id}")
+    @Select("SELECT * FROM department WHERE id = #{id}")
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "d_name"),
@@ -34,23 +33,25 @@ public interface DepartmentMapper {
     })
     Department selectById(@Param("id") String id);
 
-    @Insert("<script>" +
-            "INSERT INTO department(id, d_name, d_id, deleted) " +
-            "VALUES(#{id}, #{name}, " +
-            "<if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>, " +
-            "#{deleted})" +
-            "</script>")
+    @Insert("""
+            <script>
+            INSERT IGNORE INTO department(id, d_name, d_id, deleted)
+            VALUES(#{id}, #{name},
+            <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>,
+            #{deleted})
+            </script>""")
     int insert(Department department);
 
     @Delete("DELETE FROM department WHERE id = #{id}")
     int deleteById(@Param("id") String id);
 
-    @Update("<script>" +
-            "UPDATE user " +
-            "SET d_name = #{name}, " +
-            "d_id = <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>, " +
-            "deleted = #{deleted}, " +
-            "WHERE id = #{id}" +
-            "</script>")
+    @Update("""
+            <script>
+            UPDATE user
+            SET d_name = #{name},
+            d_id = <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>,
+            deleted = #{deleted},
+            WHERE id = #{id}
+            </script>""")
     int update(Department department);
 }

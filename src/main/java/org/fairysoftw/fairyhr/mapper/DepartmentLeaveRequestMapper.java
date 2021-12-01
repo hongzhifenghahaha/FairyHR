@@ -9,10 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentLeaveRequestMapper {
-    @Select("SELECT * FROM leave_request JOIN " +
-            "(SELECT * FROM department_leave_request " +
-            "WHERE d_id = #{d_id}) AS d_leave_request " +
-            "ON d_leave_request.request_id = leave_request.id")
+    @Select("""
+            SELECT * FROM leave_request JOIN
+            (SELECT * FROM department_leave_request
+            WHERE d_id = #{d_id}) AS d_leave_request
+            ON d_leave_request.request_id = leave_request.id""")
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "user", column = "user_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById")),
@@ -26,4 +27,7 @@ public interface DepartmentLeaveRequestMapper {
 
     @Insert("INSERT IGNORE INTO department_leave_request(d_id, request_id) VALUES(#{d_id}, #{request_id})")
     int insert(@Param("d_id") String d_id, @Param("request_id") String request_id);
+
+    @Delete("DELETE FROM department_leave_request WHERE d_id = #{d_id} AND request_id = #{request_id}")
+    int delete(@Param("d_id") String d_id, @Param("request_id") String request_id);
 }

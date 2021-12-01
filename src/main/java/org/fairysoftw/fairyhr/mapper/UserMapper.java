@@ -2,12 +2,8 @@ package org.fairysoftw.fairyhr.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
-import org.fairysoftw.fairyhr.mapper.typeHandler.DatetimeTypeHandler;
-import org.fairysoftw.fairyhr.model.Schedule;
-import org.springframework.stereotype.Component;
 
 import org.fairysoftw.fairyhr.model.User;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -27,8 +23,7 @@ public interface UserMapper {
     })
     List<User> selectAll();
 
-    @Select("SELECT * FROM user " +
-            "WHERE id = #{id}")
+    @Select("SELECT * FROM user WHERE id = #{id}")
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "user_name"),
@@ -42,14 +37,25 @@ public interface UserMapper {
     })
     User selectById(@Param("id") String id);
 
-    @Insert("INSERT INTO user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)" +
-            "VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted})")
+    @Insert("""
+            INSERT IGNORE INTO
+            user(id, user_name, phone_number, passwd, resident_id, email_addr, address, position, deleted)
+            VALUES(#{id}, #{name}, #{phoneNumber}, #{password}, #{residentId}, #{emailAddr}, #{address}, #{position}, #{deleted})""")
     int insert(User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     int deleteById(@Param("id") String id);
 
-    @Update("UPDATE user SET user_name = #{name}, phone_number = #{phoneNumber}, passwd = #{password}, resident_id = #{residentId}, email_addr = #{emailAddr}, address = #{address}, position = #{position}, deleted = #{deleted} " +
-            "WHERE id = #{id}")
+    @Update("""
+            UPDATE user SET
+            user_name = #{name},
+            phone_number = #{phoneNumber},
+            passwd = #{password},
+            resident_id = #{residentId},
+            email_addr = #{emailAddr},
+            address = #{address},
+            position = #{position},
+            deleted = #{deleted}
+            WHERE id = #{id}""")
     int update(User user);
 }

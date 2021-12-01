@@ -31,22 +31,24 @@ public interface ScheduleMapper {
     })
     Schedule selectById(@Param("id") String id);
 
-    @Insert("INSERT INTO schedule(id, start_time, end_time, frequency, start_date, end_date,  frequency_value)" +
-            "VALUES(#{id}, " +
-            "#{startTime}, " +
-            "#{endTime}, " +
-            "#{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
-            "#{startDate}, #{endDate}, #{frequencyValue})")
+    @Insert("""
+            INSERT IGNORE INTO schedule(id, start_time, end_time, frequency, start_date, end_date,  frequency_value)
+            VALUES(#{id},
+            #{startTime},
+            #{endTime},
+            #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+            #{startDate}, #{endDate}, #{frequencyValue})""")
     int insert(Schedule schedule);
 
     @Delete("DELETE FROM schedule WHERE id = #{id}")
     int deleteById(@Param("id") String id);
 
-    @Update("UPDATE schedule SET " +
-            "start_time = #{startTime}, " +
-            "end_time = #{endTime}, " +
-            "frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
-            "start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue} " +
-            "WHERE id = #{id}")
+    @Update("""
+            UPDATE schedule SET
+            start_time = #{startTime},
+            end_time = #{endTime},
+            frequency = #{frequency, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+            start_date = #{startDate}, end_date = #{endDate}, frequency_value = #{frequencyValue}
+            WHERE id = #{id}""")
     int update(Schedule schedule);
 }

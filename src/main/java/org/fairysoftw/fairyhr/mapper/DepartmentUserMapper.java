@@ -9,10 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentUserMapper {
-    @Select("SELECT * FROM user JOIN " +
-            "(SELECT * FROM department_user " +
-            "WHERE d_id = #{d_id}) AS d_user " +
-            "ON d_user.user_id = user.id")
+    @Select("""
+            SELECT * FROM user JOIN
+            (SELECT * FROM department_user
+            WHERE d_id = #{d_id}) AS d_user
+            ON d_user.user_id = user.id""")
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "user_name"),
@@ -27,4 +28,7 @@ public interface DepartmentUserMapper {
 
     @Insert("INSERT IGNORE INTO department_user VALUES(#{user_id}, #{d_id})")
     int insert(@Param("user_id") String user_id, @Param("d_id") String d_id);
+
+    @Delete("DELETE FROM department_user WHERE user_id = #{user_id} AND d_id = #{d_id}")
+    int delete(@Param("user_id") String user_id, @Param("d_id") String d_id);
 }
