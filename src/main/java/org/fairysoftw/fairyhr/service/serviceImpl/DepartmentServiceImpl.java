@@ -48,6 +48,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public List<Department> selectByUserId(String user_id) {
+        return departmentUserMapper.selectByUserId(user_id);
+    }
+
+    @Override
     public int insert(Department department) {
         var ret = departmentMapper.insert(department);
         insertCascade(department);
@@ -80,6 +85,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (department.getManagers() != null) {
             for (var manager : department.getManagers()) {
                 departmentManagerMapper.insert(manager.getId(), department.getId());
+                departmentUserMapper.insert(manager.getId(), department.getId());
             }
         }
         if (department.getLeaveRequests() != null) {

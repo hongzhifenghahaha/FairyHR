@@ -25,7 +25,7 @@ public interface DepartmentManagerMapper {
     })
     List<User> selectByDepartmentId(@Param("d_id") String d_id);
 
-    @Select("INSERT IGNORE INTO department_manager(manager_id, d_id) VALUES(#{manager_id}, #{d_id})")
+    @Insert("INSERT IGNORE INTO department_manager(manager_id, d_id) VALUES(#{manager_id}, #{d_id})")
     int insert(@Param("manager_id") String manager_id, @Param("d_id") String d_id);
 
     @Select("DELETE FROM department_manager WHERE manager_id = #{manager_id} AND d_id = #{d_id}")
