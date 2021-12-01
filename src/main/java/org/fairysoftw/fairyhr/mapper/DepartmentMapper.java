@@ -47,7 +47,7 @@ public interface DepartmentMapper {
 
     @Update("""
             <script>
-            UPDATE user
+            UPDATE department
             SET d_name = #{name},
             d_id = <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>,
             deleted = #{deleted}
