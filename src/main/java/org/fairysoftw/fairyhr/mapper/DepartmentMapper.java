@@ -50,7 +50,7 @@ public interface DepartmentMapper {
             UPDATE user
             SET d_name = #{name},
             d_id = <if test='#{department}==null'> NULL </if> <if test='#{department}!=null'>#{department.id}</if>,
-            deleted = #{deleted},
+            deleted = #{deleted}
             WHERE id = #{id}
             </script>""")
     int update(Department department);
