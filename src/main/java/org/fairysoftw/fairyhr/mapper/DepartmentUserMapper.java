@@ -18,6 +18,7 @@ public interface DepartmentUserMapper {
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "user_name"),
+            @Result(property = "password", column = "passwd"),
             @Result(property = "phoneNumber", column = "phone_number"),
             @Result(property = "residentId", column = "resident_id"),
             @Result(property = "emailAddr", column = "email_addr"),
@@ -35,6 +36,7 @@ public interface DepartmentUserMapper {
     @Results({
             @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "d_name"),
+            @Result(property = "password", column = "passwd"),
             @Result(property = "department", column = "d_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.DepartmentMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "managers", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentManagerMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),
             @Result(property = "users", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.DepartmentUserMapper.selectByDepartmentId", fetchType = FetchType.LAZY)),
