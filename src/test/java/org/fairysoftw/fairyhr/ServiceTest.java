@@ -95,7 +95,7 @@ class ServiceTest {
 
     @Test
     void leaveRequestServiceInsertCascadeTest() throws ParseException {
-        User user1 = new User("6","zs2","12345","zs2","54321","zs2@gmail.com","ShangHai","研发部成员",null,null,null,false);
+        User user1 = new User("6","zs2","12345","zs2","54321","zs2@gmail.com","ShangHai","研发部成员",null,null,null,null, false);
         LeaveRequest leaveRequest2 = new LeaveRequest("2",user1, sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2","待审核",null,null,null);
         assertEquals(1, leaveRequestService.insert(leaveRequest2));
@@ -111,11 +111,11 @@ class ServiceTest {
     void leaveRequestServiceInsertListTest() throws ParseException {
         ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
 
-        User user2 = new User("7","zs3","12345","zs3","54321","zs3@gmail.com","ShangHai","研发部成员",null,null,null,false);
+        User user2 = new User("7","zs3","12345","zs3","54321","zs3@gmail.com","ShangHai","研发部成员",null,null,null,null,false);
         LeaveRequest leaveRequest3 = new LeaveRequest("3", user2, sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick3", "待审核", null, null, null);
 
-        User user3 = new User("8","zs4","12345","zs4","54321","zs4@gmail.com","ShangHai","研发部成员",null,null,null,false);
+        User user3 = new User("8","zs4","12345","zs4","54321","zs4@gmail.com","ShangHai","研发部成员",null,null,null,null,false);
         LeaveRequest leaveRequest4 = new LeaveRequest("4", user3, sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick4", "待审核", null, null, null);
         leaveRequests.add(leaveRequest3);
@@ -167,7 +167,7 @@ class ServiceTest {
 
     @Test
     void userServiceInsertOnceTest(){
-        User user2 = new User("9","ls2","12345","ls2","54321","ls2@gmail.com","Beijing","宣发部成员",null,null,null,false);
+        User user2 = new User("9","ls2","12345","ls2","54321","ls2@gmail.com","Beijing","宣发部成员",null,null,null,null,false);
         assertEquals(1, userService.insert(user2));
         assertEquals("ls2@gmail.com", userService.selectById("9").getEmailAddr());
 //        assertEquals(user2, userService.selectById("9"));
@@ -194,7 +194,11 @@ class ServiceTest {
         leaves.add(leave1);
         leaves.add(leave2);
 
-        User user1 = new User("10","ls3","12345","ls3","54321","ls3@gmail.com","Beijing","宣发部成员",schedules,attendanceTimes,leaves,false);
+//        ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
+//        LeaveRequest leaveRequest1 = new LeaveRequest();
+
+
+        User user1 = new User("10","ls3","12345","ls3","54321","ls3@gmail.com","Beijing","宣发部成员",schedules,attendanceTimes,leaves,null,false);
         assertEquals(1, userService.insert(user1));
 //        assertEquals(0, userService.insert(user1));
         assertEquals(sdf3.parse("10:00:00"), scheduleService.selectById("11").getStartTime());
@@ -213,8 +217,8 @@ class ServiceTest {
     @Test
     void userServiceInsertListTest(){
         ArrayList<User> users = new ArrayList<>();
-        User user3 = new User("11","ls4","12345","ls4","54321","ls4@gmail.com","Beijing","宣发部成员",null,null,null,false);
-        User user4 = new User("12","ls5","12345","ls5","54321","ls5@gmail.com","Beijing","宣发部成员",null,null,null,false);
+        User user3 = new User("11","ls4","12345","ls4","54321","ls4@gmail.com","Beijing","宣发部成员",null,null,null,null,false);
+        User user4 = new User("12","ls5","12345","ls5","54321","ls5@gmail.com","Beijing","宣发部成员",null,null,null,null,false);
         users.add(user3);
         users.add(user4);
         assertEquals(2, userService.insert(users));
@@ -268,22 +272,22 @@ class ServiceTest {
         Department parentDepartment1 = departmentService.selectById("6");
 
         ArrayList<User> managers = new ArrayList<>();
-        User manager1 = new User("14","ww2","22345","ww2","12432","ww2@gmail.com","Guangzhou","调研部经理",null,null,null,false);
-        User manager2 = new User("15","ww3","22345","ww3","12432","ww3@gmail.com","Guangzhou","调研部经理",null,null,null,false);
+        User manager1 = new User("14","ww2","22345","ww2","12432","ww2@gmail.com","Guangzhou","调研部经理",null,null,null,null,false);
+        User manager2 = new User("15","ww3","22345","ww3","12432","ww3@gmail.com","Guangzhou","调研部经理",null,null,null,null,false);
         managers.add(manager1);
         managers.add(manager2);
 
         ArrayList<User> users = new ArrayList<>();
-        User user1 = new User("16","ww4","22345","ww4","12432","ww4@gmail.com","Guangzhou","调研部成员",null,null,null,false);
-        User user2 = new User("17","ww5","22345","ww5","12432","ww5@gmail.com","Guangzhou","调研部成员",null,null,null,false);
+        User user1 = new User("16","ww4","22345","ww4","12432","ww4@gmail.com","Guangzhou","调研部成员",null,null,null,null,false);
+        User user2 = new User("17","ww5","22345","ww5","12432","ww5@gmail.com","Guangzhou","调研部成员",null,null,null,null,false);
         users.add(user1);
         users.add(user2);
 
         ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
-        User user3 = new User("18","ww6","22345","ww6","12432","ww6@gmail.com","Guangzhou","调研部成员",null,null,null,false);
+        User user3 = new User("18","ww6","22345","ww6","12432","ww6@gmail.com","Guangzhou","调研部成员",null,null,null,null,false);
         LeaveRequest leaveRequest1 = new LeaveRequest("6", user3, sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick6", "待审核", null, null, null);
-        User user4 = new User("19","ww7","22345","ww7","12432","ww7@gmail.com","Guangzhou","调研部成员",null,null,null,false);
+        User user4 = new User("19","ww7","22345","ww7","12432","ww7@gmail.com","Guangzhou","调研部成员",null,null,null,null,false);
         LeaveRequest leaveRequest2 = new LeaveRequest("7", user4, sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick7", "待审核", null, null, null);
         leaveRequests.add(leaveRequest1);
