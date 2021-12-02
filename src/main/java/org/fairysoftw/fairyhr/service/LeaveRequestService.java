@@ -1,5 +1,6 @@
 package org.fairysoftw.fairyhr.service;
 
+import org.fairysoftw.fairyhr.model.Department;
 import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
@@ -65,10 +66,20 @@ public interface LeaveRequestService {
     int update(LeaveRequest leaveRequest);
 
     /**
-     * 根据id删除请假申请，不会删除该请假申请对应的用户
+     * 根据id删除请假申请，不会删除该请假申请对应的用户。
+     * 删除的同时接触与部门的关联。
      *
      * @param id 请假申请id
      * @return 删除的记录条数
      */
     int deleteById(String id);
+
+    /**
+     * 删除某个用户发出的请假申请，不会删除该请假申请对应的用户。
+     * 删除的同时接触与部门的关联。
+     *
+     * @param user_id 用户id
+     * @return 删除的记录条数
+     */
+    int deleteByUserId(String user_id);
 }

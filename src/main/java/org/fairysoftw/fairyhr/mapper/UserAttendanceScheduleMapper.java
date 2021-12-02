@@ -27,6 +27,9 @@ public interface UserAttendanceScheduleMapper {
     @Insert("INSERT IGNORE INTO user_attendance_schedule(user_id, schedule_id) VALUES(#{user_id}, #{schedule_id})")
     int insert(@Param("user_id") String user_id, @Param("schedule_id") String schedule_id);
 
-    @Insert("DELETE FROM user_attendance_schedule WHERE user_id = #{user_id} AND schedule_id = #{schedule_id}")
+    @Delete("DELETE FROM user_attendance_schedule WHERE user_id = #{user_id} AND schedule_id = #{schedule_id}")
     int delete(@Param("user_id") String user_id, @Param("schedule_id") String schedule_id);
+
+    @Delete("DELETE FROM user_attendance_schedule WHERE user_id = #{user_id}")
+    int deleteByUserId(@Param("user_id") String user_id);
 }

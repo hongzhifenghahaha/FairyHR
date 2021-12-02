@@ -1,5 +1,6 @@
 package org.fairysoftw.fairyhr.service.serviceImpl;
 
+import org.fairysoftw.fairyhr.mapper.DepartmentLeaveRequestMapper;
 import org.fairysoftw.fairyhr.mapper.LeaveRequestMapper;
 import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
@@ -12,11 +13,13 @@ import java.util.List;
 @Service
 public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final LeaveRequestMapper leaveRequestMapper;
+    private final DepartmentLeaveRequestMapper departmentLeaveRequestMapper;
     private final UserService userService;
 
     @Autowired
-    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, UserService userService) {
+    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, UserService userService) {
         this.leaveRequestMapper = leaveRequestMapper;
+        this.departmentLeaveRequestMapper = departmentLeaveRequestMapper;
         this.userService = userService;
     }
 
@@ -32,7 +35,6 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     @Override
     public int insert(LeaveRequest leaveRequest) {
-        userService.insert(leaveRequest.getUser());
         return leaveRequestMapper.insert(leaveRequest);
     }
 
@@ -49,12 +51,22 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     @Override
     public int update(LeaveRequest leaveRequest) {
-        userService.insert(leaveRequest.getUser());
         return leaveRequestMapper.update(leaveRequest);
     }
 
     @Override
     public int deleteById(String id) {
+        departmentLeaveRequestMapper.deleteByRequestId(id);
         return leaveRequestMapper.deleteById(id);
+    }
+
+    @Override
+    public int deleteByUserId(String user_id) {
+        var requests = leaveRequestMapper.selectByUserId(user_id);
+        int ret = 0;
+        for (var request: requests) {
+            ret += deleteById(request.getId());
+        }
+        return ret;
     }
 }

@@ -36,11 +36,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public int insert(Schedule schedule) {
-        return scheduleMapper.insert(schedule);
+        if (schedule != null) {
+            return scheduleMapper.insert(schedule);
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
     public int update(Schedule schedule) {
-        return scheduleMapper.update(schedule);
+        if (schedule != null) {
+            return scheduleMapper.update(schedule);
+        }
+        else {
+            return 0;
+        }
     }
 }

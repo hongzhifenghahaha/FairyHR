@@ -74,11 +74,15 @@ public interface UserService {
      * 新的{@link org.fairysoftw.fairyhr.model.Schedule}, 并且在数据库中关联新的用户与时间表;
      * <br>
      * 若参数{@link org.fairysoftw.fairyhr.model.User#schedules}中存在已存在的时间表,
-     * 则直接关联该用户和时间表，但并不会更新时间表的内容。
+     * 则直接关联该用户和时间表，但并不会更新时间表的内容;
+     * <br>
+     * 对于参数中的{@link org.fairysoftw.fairyhr.model.User#schedules}中数据库中不存在的，将解除与用户的关联。
      * <br><br>
      * 对于参数中的{@link org.fairysoftw.fairyhr.model.User#attendanceTimes}中数据库中不存在的，将全部新建并与用户关联;
      * <br>
      * 对于缺失的，将从数据库中删除。
+     * <br><br>
+     * 对于参数中的{@link org.fairysoftw.fairyhr.model.User#leaveRequests}，将不进行任何操作。
      * <br><br>
      * 对于{@link org.fairysoftw.fairyhr.model.User#leaves}采取与
      * {@link org.fairysoftw.fairyhr.model.User#schedules}相同的策略。

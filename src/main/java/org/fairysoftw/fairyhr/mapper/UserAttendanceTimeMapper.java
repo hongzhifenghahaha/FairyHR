@@ -26,4 +26,9 @@ public interface UserAttendanceTimeMapper {
             WHERE user_id = #{user_id} AND
                 time = #{time}""")
     int delete(@Param("user_id") String user_id, @Param("time") Date time);
+
+    @Delete("""
+            DELETE FROM user_attendance_time
+            WHERE user_id = #{user_id}""")
+    int deleteByUserId(@Param("user_id") String user_id);
 }

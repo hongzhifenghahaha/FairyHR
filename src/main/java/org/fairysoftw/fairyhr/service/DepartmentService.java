@@ -34,6 +34,14 @@ public interface DepartmentService {
     List<Department> selectByUserId(String user_id);
 
     /**
+     * 查询某个请假申请属于哪个部门
+     *
+     * @param request_id 申请id
+     * @return 符合的部门，若没有符合的部门，则返回null
+     */
+    Department selectByLeaveRequestId(String request_id);
+
+    /**
      * 插入新的部门, 若已存在相同{@link org.fairysoftw.fairyhr.model.Department#id}的部门则不执行任何操作。<br>
      * 若参数{@link org.fairysoftw.fairyhr.model.Department#users}中存在新的用户,
      * 则使用{@link org.fairysoftw.fairyhr.service.UserService#insert(User)}插入新的user, 并且在数据库中关联新的用户与部门;

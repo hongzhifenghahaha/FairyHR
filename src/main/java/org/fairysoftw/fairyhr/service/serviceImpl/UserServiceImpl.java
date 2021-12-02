@@ -1,9 +1,6 @@
 package org.fairysoftw.fairyhr.service.serviceImpl;
 
-import org.fairysoftw.fairyhr.mapper.UserAttendanceLeaveMapper;
-import org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper;
-import org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper;
-import org.fairysoftw.fairyhr.mapper.UserMapper;
+import org.fairysoftw.fairyhr.mapper.*;
 import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.ScheduleService;
@@ -20,18 +17,21 @@ public class UserServiceImpl implements UserService {
     private final UserAttendanceScheduleMapper userAttendanceScheduleMapper;
     private final UserAttendanceLeaveMapper userAttendanceLeaveMapper;
     private final UserAttendanceTimeMapper userAttendanceTimeMapper;
+    private final DepartmentUserMapper departmentUserMapper;
     private final ScheduleService scheduleService;
     private final LeaveRequestService leaveRequestService;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, ScheduleService scheduleService, LeaveRequestService leaveRequestService) {
+    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, DepartmentUserMapper departmentUserMapper, ScheduleService scheduleService, LeaveRequestService leaveRequestService) {
         this.userMapper = userMapper;
         this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
         this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
         this.userAttendanceTimeMapper = userAttendanceTimeMapper;
+        this.departmentUserMapper = departmentUserMapper;
         this.scheduleService = scheduleService;
         this.leaveRequestService = leaveRequestService;
     }
+
 
     @Override
     public List<User> selectAll() {
@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteById(String id) {
+        leaveRequestService.deleteByUserId(id);
+        userAttendanceTimeMapper.deleteByUserId(id);
+        userAttendanceScheduleMapper.deleteByUserId(id);
+        userAttendanceLeaveMapper.deleteByUserId(id);
+        departmentUserMapper.deleteByUserId(id);
         return userMapper.deleteById(id);
     }
 
@@ -55,7 +60,9 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
         int ret = userMapper.insert(user);
-        insertCascade(user);
+        if(ret != 0) {
+            insertCascade(user);
+        }
         return ret;
     }
 
@@ -76,7 +83,7 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
         int ret = userMapper.update(user);
-        insertCascade(user);
+        updateCascade(user);
         return ret;
     }
 
@@ -101,9 +108,41 @@ public class UserServiceImpl implements UserService {
                 userAttendanceTimeMapper.insert(user.getId(), attendance.getTime());
             }
         }
-        if (user.getLeaveRequests() != null) {
-            for (var leaveRequest: user.getLeaveRequests()) {
-                leaveRequestService.insert(leaveRequest);
+    }
+
+    private void updateCascade(User user) {
+        if (user == null) {
+            return;
+        }
+        if (user.getSchedules() != null) {
+            var origin_schedules = userAttendanceScheduleMapper.selectByUserId(user.getId());
+            var now_schedules = user.getSchedules();
+            for (var schedule : now_schedules) {
+                scheduleService.insert(schedule);
+                userAttendanceScheduleMapper.insert(user.getId(), schedule.getId());
+            }
+            for (var schedule: origin_schedules) {
+                if(!now_schedules.contains(schedule)) {
+                    userAttendanceScheduleMapper.delete(user.getId(), schedule.getId());
+                }
+            }
+        }
+        if (user.getLeaves() != null) {
+            for (var leave : user.getLeaves()) {
+                scheduleService.insert(leave);
+                userAttendanceLeaveMapper.insert(user.getId(), leave.getId());
+            }
+        }
+        if (user.getAttendanceTimes() != null) {
+            var origin_attendances = userAttendanceTimeMapper.selectByUserId(user.getId());
+            var now_attendances = user.getAttendanceTimes();
+            for (var attendance: now_attendances) {
+                userAttendanceTimeMapper.insert(user.getId(), attendance.getTime());
+            }
+            for (var attendance : origin_attendances) {
+                if(!now_attendances.contains(attendance)) {
+                    userAttendanceTimeMapper.delete(user.getId(), attendance.getTime());
+                }
             }
         }
     }

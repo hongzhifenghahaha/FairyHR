@@ -49,4 +49,7 @@ public interface DepartmentUserMapper {
 
     @Delete("DELETE FROM department_user WHERE user_id = #{user_id} AND d_id = #{d_id}")
     int delete(@Param("user_id") String user_id, @Param("d_id") String d_id);
+
+    @Delete("DELETE FROM department_user WHERE user_id = #{user_id}")
+    int deleteByUserId(@Param("user_id") String user_id);
 }

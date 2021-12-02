@@ -53,16 +53,29 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public Department selectByLeaveRequestId(String request_id) {
+        return departmentLeaveRequestMapper.selectByLeaveRequestId(request_id);
+    }
+
+    @Override
     public int insert(Department department) {
+        if (department == null) {
+            return 0;
+        }
         var ret = departmentMapper.insert(department);
-        insertCascade(department);
+        if (ret != 0) {
+            insertCascade(department);
+        }
         return ret;
     }
 
     @Override
     public int update(Department department) {
+        if (department == null) {
+            return 0;
+        }
         var ret = departmentMapper.update(department);
-        insertCascade(department);
+        updateCascade(department);
         return ret;
     }
 
@@ -74,23 +87,65 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     private void insertCascade(Department department) {
-        leaveRequestService.insert(department.getLeaveRequests());
-        userService.insert(department.getUsers());
-        userService.insert(department.getManagers());
         if (department.getUsers() != null) {
             for (var user : department.getUsers()) {
+                if (userService.insert(user) == 0) {
+                    userService.update(user);
+                }
                 departmentUserMapper.insert(user.getId(), department.getId());
             }
         }
         if (department.getManagers() != null) {
             for (var manager : department.getManagers()) {
                 departmentManagerMapper.insert(manager.getId(), department.getId());
-                departmentUserMapper.insert(manager.getId(), department.getId());
             }
         }
         if (department.getLeaveRequests() != null) {
             for (var leaveRequest : department.getLeaveRequests()) {
+                if (leaveRequestService.insert(leaveRequest) == 0) {
+                    leaveRequestService.update(leaveRequest);
+                }
                 departmentLeaveRequestMapper.insert(leaveRequest.getId(), department.getId());
+            }
+        }
+    }
+
+    private void updateCascade(Department department) {
+        if (department.getUsers() != null) {
+            var originUsers = departmentUserMapper.selectByDepartmentId(department.getId());
+            var nowUsers = department.getUsers();
+            for (var user : nowUsers) {
+                if (userService.insert(user) == 0) {
+                    userService.update(user);
+                }
+                departmentUserMapper.insert(user.getId(), department.getId());
+            }
+            for (var user : originUsers) {
+                if (nowUsers.stream().noneMatch((u) -> u.getId().equals(user.getId()))) {
+                    departmentUserMapper.delete(user.getId(), department.getId());
+                }
+            }
+        }
+
+        if (department.getManagers() != null) {
+            for (var manager : department.getManagers()) {
+                departmentManagerMapper.insert(manager.getId(), department.getId());
+            }
+        }
+
+        if (department.getLeaveRequests() != null) {
+            var originLeaveRequests = departmentLeaveRequestMapper.selectByDepartmentId(department.getId());
+            var nowLeaveRequests = department.getLeaveRequests();
+            for (var leaveRequest : nowLeaveRequests) {
+                if (leaveRequestService.insert(leaveRequest) == 0) {
+                    leaveRequestService.update(leaveRequest);
+                }
+                departmentLeaveRequestMapper.insert(leaveRequest.getId(), department.getId());
+            }
+            for (var request : originLeaveRequests) {
+               if ( nowLeaveRequests.stream().noneMatch((r)->r.getId().equals(request.getId()))) {
+                   leaveRequestService.deleteById(request.getId());
+               }
             }
         }
     }
