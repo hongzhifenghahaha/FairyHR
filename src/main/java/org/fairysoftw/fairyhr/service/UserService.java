@@ -46,6 +46,8 @@ public interface UserService {
      * <br><br>
      * 对于参数中的{@link org.fairysoftw.fairyhr.model.User#attendanceTimes}，将全部新建并与用户关联。
      * <br><br>
+     * 对于参数中的{@link org.fairysoftw.fairyhr.model.User#leaveRequests}，将不进行任何操作。
+     * <br><br>
      * 对于{@link org.fairysoftw.fairyhr.model.User#leaves}采取与
      * {@link org.fairysoftw.fairyhr.model.User#schedules}相同的策略。
      *

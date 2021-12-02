@@ -43,6 +43,8 @@ public class User {
     private List<AttendanceTime> attendanceTimes;
     @Nullable
     private List<Schedule> leaves;
+    @Nullable
+    private List<LeaveRequest> leaveRequests;
     @NonNull
     private boolean deleted;
 }

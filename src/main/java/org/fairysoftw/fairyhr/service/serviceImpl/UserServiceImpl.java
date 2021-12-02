@@ -5,6 +5,7 @@ import org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper;
 import org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper;
 import org.fairysoftw.fairyhr.mapper.UserMapper;
 import org.fairysoftw.fairyhr.model.User;
+import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.ScheduleService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,16 @@ public class UserServiceImpl implements UserService {
     private final UserAttendanceLeaveMapper userAttendanceLeaveMapper;
     private final UserAttendanceTimeMapper userAttendanceTimeMapper;
     private final ScheduleService scheduleService;
+    private final LeaveRequestService leaveRequestService;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, ScheduleService scheduleService) {
+    public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, ScheduleService scheduleService, LeaveRequestService leaveRequestService) {
         this.userMapper = userMapper;
         this.userAttendanceScheduleMapper = userAttendanceScheduleMapper;
         this.userAttendanceLeaveMapper = userAttendanceLeaveMapper;
         this.userAttendanceTimeMapper = userAttendanceTimeMapper;
         this.scheduleService = scheduleService;
+        this.leaveRequestService = leaveRequestService;
     }
 
     @Override
@@ -96,6 +99,11 @@ public class UserServiceImpl implements UserService {
         if (user.getAttendanceTimes() != null) {
             for (var attendance : user.getAttendanceTimes()) {
                 userAttendanceTimeMapper.insert(user.getId(), attendance.getTime());
+            }
+        }
+        if (user.getLeaveRequests() != null) {
+            for (var leaveRequest: user.getLeaveRequests()) {
+                leaveRequestService.insert(leaveRequest);
             }
         }
     }

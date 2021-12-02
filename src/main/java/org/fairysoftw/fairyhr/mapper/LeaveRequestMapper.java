@@ -32,6 +32,18 @@ public interface LeaveRequestMapper {
     })
     LeaveRequest selectById(@Param("id") String id);
 
+    @Select("SELECT * FROM leave_request WHERE user_id = #{user_id}")
+    @Results({
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "user", column = "user_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
+            @Result(property = "startTime", column = "start_time"),
+            @Result(property = "endTime", column = "end_time"),
+            @Result(property = "submitTime", column = "submit_time"),
+            @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
+            @Result(property = "checkTime", column = "check_time"),
+    })
+    List<LeaveRequest> selectByUserId(@Param("user_id") String user_id);
+
     @Insert("""
             <script>
             INSERT IGNORE INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id, check_time, check_opinion)

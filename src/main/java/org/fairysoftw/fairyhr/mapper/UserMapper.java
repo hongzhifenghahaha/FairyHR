@@ -20,6 +20,7 @@ public interface UserMapper {
             @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
             @Result(property = "attendanceTimes", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectByUserId", fetchType = FetchType.LAZY)),
             @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceLeaveMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaveRequests", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.LeaveRequestMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     List<User> selectAll();
 
@@ -34,6 +35,7 @@ public interface UserMapper {
             @Result(property = "schedules", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceScheduleMapper.selectByUserId", fetchType = FetchType.LAZY)),
             @Result(property = "attendanceTimes", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceTimeMapper.selectByUserId", fetchType = FetchType.LAZY)),
             @Result(property = "leaves", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.UserAttendanceLeaveMapper.selectByUserId", fetchType = FetchType.LAZY)),
+            @Result(property = "leaveRequests", column = "id", many = @Many(select = "org.fairysoftw.fairyhr.mapper.LeaveRequestMapper.selectByUserId", fetchType = FetchType.LAZY)),
     })
     User selectById(@Param("id") String id);
 
