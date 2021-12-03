@@ -321,6 +321,10 @@ class ServiceTest {
         assertEquals(sdf2.parse("2021-11-23 10:00:00"), leaveRequestService.selectById("7").getStartTime());
         assertEquals("调研部", departmentService.selectById("7").getName());
         assertEquals(departmentService.selectById("6"), departmentService.selectById("7").getDepartment());
+        assertEquals(departmentService.selectById("7"), departmentService.selectByLeaveRequestId("6"));
+        assertEquals(departmentService.selectById("7"), departmentService.selectByLeaveRequestId("7"));
+        assertTrue(departmentService.selectByUserId("14").contains(departmentService.selectById("7")) && departmentService.selectByUserId("14").size() == 1);
+        assertTrue(departmentService.selectByUserId("15").contains(departmentService.selectById("7")) && departmentService.selectByUserId("14").size() == 1);
 
 //        void departmentServiceUpdateTest
         Department department3 = departmentService.selectById("6");
