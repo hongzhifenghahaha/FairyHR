@@ -5,6 +5,7 @@ import org.fairysoftw.fairyhr.mapper.DepartmentManagerMapper;
 import org.fairysoftw.fairyhr.mapper.DepartmentMapper;
 import org.fairysoftw.fairyhr.mapper.DepartmentUserMapper;
 import org.fairysoftw.fairyhr.model.Department;
+import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.fairysoftw.fairyhr.service.DepartmentService;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -82,8 +84,22 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public int deleteById(String id) {
         var department = departmentMapper.selectById(id);
-        department.setDeleted(true);
-        return this.update(department);
+        if(department != null) {
+            var leaveRequestsId = department.getLeaveRequests().
+                    stream().
+                    map(LeaveRequest::getId).
+                    collect(Collectors.toList());
+            for(var requestId: leaveRequestsId) {
+                leaveRequestService.deleteById(requestId);
+            }
+            departmentUserMapper.deleteByDepartmentId(id);
+            departmentManagerMapper.deleteByDepartmentId(id);
+            department.setDeleted(true);
+            return this.update(department);
+        }
+        else {
+            return 0;
+        }
     }
 
     private void insertCascade(Department department) {
