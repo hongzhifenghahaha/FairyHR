@@ -6,6 +6,7 @@ import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final UserService userService;
 
     @Autowired
-    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, UserService userService) {
+    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, @Lazy UserService userService) {
         this.leaveRequestMapper = leaveRequestMapper;
         this.departmentLeaveRequestMapper = departmentLeaveRequestMapper;
         this.userService = userService;
