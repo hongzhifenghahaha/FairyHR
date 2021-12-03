@@ -104,7 +104,6 @@
 </span>
                     <span class="title">请假管理</span>
                     <span class="arrow">
-<i class="lni-chevron-right"></i>
 </span>
                 </a>
             </li>
@@ -118,7 +117,6 @@
 </span>
                     <span class="title">部门管理</span>
                     <span class="arrow">
-<i class="lni-chevron-right"></i>
 </span>
                 </a>
             </li>
