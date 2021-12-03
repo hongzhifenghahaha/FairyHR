@@ -1,11 +1,9 @@
 spring:
-  profiles:
-    active: test
   flyway:
     url: jdbc:mysql://127.0.0.1:3306/fairyhr?serverTimezone=UTC&useSSL=false
     user: admin
     password: admin
-    enabled: false
+    enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration,classpath:db/migration/mysql
     clean-disabled: true
@@ -17,7 +15,6 @@ spring:
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp
-
 
 mybatis:
   configuration:
@@ -33,14 +30,10 @@ spring:
     activate:
       on-profile: "test"
   flyway:
-    url: jdbc:mysql://git.npu5v5.cn:3307/fairyhr_test?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=True
-    username: root
-    password: admin
+    url: jdbc:mysql://127.0.0.1:3306/fairyhr_test?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=True
     locations: classpath:db/test/migration,classpath:db/test/migration/mysql
   datasource:
     url: jdbc:mysql://git.npu5v5.cn:3307/fairyhr_test
-    username: root
-    password: admin
 
 logging:
   level:
