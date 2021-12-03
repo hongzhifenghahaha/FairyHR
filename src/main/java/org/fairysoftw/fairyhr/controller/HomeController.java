@@ -43,8 +43,6 @@ public class HomeController {
                                 @RequestParam(value = "password",defaultValue = "") String password,
                                 HttpSession session,
                                 HttpServletResponse response) throws IOException {
-        System.out.println(userid);
-        System.out.println(password);
         User user =  userService.selectById(userid);
 
         if (user!=null && user.getPassword()!=null){

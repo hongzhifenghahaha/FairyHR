@@ -22,7 +22,16 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
 </head>
 <body>
-<c:import url="navigation.jsp" />
+<div class="app header-default side-nav-dark">
+    <div class="layout">
+        <c:import url="navigation.jsp"/>
+        <div class="page-container">
+            <%--todo:main content--%>
+            <c:import url="footer.jsp"/>
+        </div>
+    </div>
+</div>
+
 <script src="/assets/js/jquery-min.js"></script>
 <script src="/assets/js/popper.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>

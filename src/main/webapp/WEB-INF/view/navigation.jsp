@@ -21,7 +21,6 @@
 
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
 </head>
-<body>
 
 <div class="header navbar">
     <div class="header-container">
@@ -101,7 +100,7 @@
                 </a>
                 <ul class="dropdown-menu sub-down">
                     <li>
-                        <a href="index.html">签到考勤</a>
+                        <a href="/attendance/checkin">签到考勤</a>
                     </li>
                     <li>
                         <a href="index-2.html">历史记录</a>
@@ -141,5 +140,4 @@
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.app.js"></script>
 <script src="/assets/js/main.js"></script>
-</body>
 </html>
