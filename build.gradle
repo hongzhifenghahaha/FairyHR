@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core:8.0.2'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 	implementation 'junit:junit:4.13.1'
+	implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.78'
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.6'
 //	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre16'

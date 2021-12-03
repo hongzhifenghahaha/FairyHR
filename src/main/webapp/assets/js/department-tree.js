@@ -1,17 +1,3 @@
-var model =
-    {
-        "class": "go.TreeModel",
-        "nodeDataArray": [
-            {"key": 0, "name": "青青有限股份公司", "enable": false},
-            {"key": 1, "name": "研发部", "enable": true, "parent": 0},
-            {"key": 2, "name": "宣发部", "enable": true, "parent": 0},
-            {"key": 3, "name": "法务部", "enable": false, "parent": 0},
-            {"key": 4, "name": "财务部", "enable": false, "parent": 0},
-            {"key": 5, "name": "人事部", "enable": true, "parent": 0},
-        ]
-    };
-
-
 function init() {
     var $ = go.GraphObject.make;  // for conciseness in defining templates
 
@@ -65,7 +51,7 @@ function init() {
         myDiagram.layout.network.vertexes.each(function (v) {
             if (v.node) {
                 var color = levelColors[0];
-                if(v.node.ob.enable) {
+                if (v.node.ob.enable) {
                     color = levelColors[1];
                 }
                 var shape = v.node.findObject("SHAPE");
@@ -84,7 +70,7 @@ function init() {
         var clicked = obj.part;
         if (clicked !== null) {
             var thisemp = clicked.data;
-            if ( thisemp.enable) {
+            if (thisemp.enable) {
                 let root = "department/" + thisemp.key;
                 window.location.href = root;
             }
@@ -203,12 +189,12 @@ SideTreeLayout.prototype.assignTreeVertexValues = function (v) {
 
 // Show the diagram's model in JSON format
 function save() {
-    model = JSON.parse(myDiagram.model.toJSON());
+    document.getElementById("model").value = myDiagram.model.toJSON();
     myDiagram.isModified = false;
 }
 
 function load() {
-    myDiagram.model = go.Model.fromJson(JSON.stringify(model));
+    myDiagram.model = go.Model.fromJson(document.getElementById("model").value);
     // make sure new data keys are unique positive integers
     var lastkey = 1;
     myDiagram.model.makeUniqueKeyFunction = function (model, data) {

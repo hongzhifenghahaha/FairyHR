@@ -111,7 +111,7 @@
 
             </c:if>
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="#">
+                <a class="dropdown-toggle" href="/department">
 <span class="icon-holder">
 <i class="lni-layers"></i>
 </span>
