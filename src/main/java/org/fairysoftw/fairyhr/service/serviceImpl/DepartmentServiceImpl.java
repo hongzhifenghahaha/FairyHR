@@ -85,15 +85,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int deleteById(String id) {
         var department = departmentMapper.selectById(id);
         if(department != null) {
-            var leaveRequestsId = department.getLeaveRequests().
-                    stream().
-                    map(LeaveRequest::getId).
-                    collect(Collectors.toList());
-            for(var requestId: leaveRequestsId) {
-                leaveRequestService.deleteById(requestId);
-            }
-            departmentUserMapper.deleteByDepartmentId(id);
-            departmentManagerMapper.deleteByDepartmentId(id);
+            department.getLeaveRequests().clear();
+            department.getUsers().clear();
+            department.getManagers().clear();
             department.setDeleted(true);
             return this.update(department);
         }
