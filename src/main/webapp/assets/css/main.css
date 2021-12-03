@@ -453,6 +453,7 @@ hr {
     background-color: #fff;
     border-bottom: 1px solid #e9eaec;
     margin-bottom: 0;
+    margin-top: 10px;
     transition: all .2s ease;
     -webkit-transition: all .2s ease;
     -moz-transition: all .2s ease;
@@ -1556,7 +1557,7 @@ hr {
 }
 
 .list-media .info {
-    padding-left: 55px;
+    padding-left: 0px;
     min-height: 40px;
     height: auto;
     position: relative
