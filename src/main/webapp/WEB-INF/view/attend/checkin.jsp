@@ -36,8 +36,10 @@
                                 <div class="card-body">
                                     <p class="card-description">click the button to check in</p>
                                     <div class="m-t-20">
-                                        <button type="button" class="btn btn-outline-primary btn-rounded">CHECK IN
+                                        <form action="/attendance/checkin" method="post">
+                                        <button type="submit" class="btn btn-outline-primary btn-rounded">CHECK IN
                                         </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -6,7 +6,6 @@ import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +55,7 @@ public class HomeController {
                 cookieName.setMaxAge(60*60*2);
                 response.addCookie(cookieId);
                 response.addCookie(cookieName);
-                return "home";
+                return "redirect:/";
             }
         }
         response.setCharacterEncoding("utf-8");
@@ -65,5 +64,10 @@ public class HomeController {
         out.flush();
         out.close();
         return "login";
+    }
+
+    @RequestMapping(value = "/error",method = RequestMethod.GET)
+    public String getErrorPage(){
+        return "nonuse";
     }
 }

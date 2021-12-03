@@ -39,5 +39,46 @@ public class AttendanceController {
    @RequestMapping(value = "/checkin",method = RequestMethod.GET)
     public String getCheckInPage(){
         return "attend/checkin";
-   }
+    }
+
+    @RequestMapping(value = "/checkin", method = RequestMethod.POST)
+    public void userCheckIn(HttpSession session, HttpServletResponse response) throws IOException {//不作跳转
+        User user = userService.selectById((String) session.getAttribute("id"));
+        if (user.getAttendanceTimes() == null) {
+            ArrayList<AttendanceTime> times = new ArrayList<AttendanceTime>();
+            times.add(new AttendanceTime(new Date()));
+            user.setAttendanceTimes(times);
+        } else {
+            user.getAttendanceTimes().add(new AttendanceTime(new Date()));
+        }
+        userService.update(user);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = response.getWriter();
+        out.print("<script>alert('checkin success'); window.location='/attendance/checkin' </script>");
+        out.flush();
+        out.close();
+    }
+
+    @RequestMapping(value = "/record", method = RequestMethod.GET)
+    public String gotoAttendanceRecord(HttpSession session) {
+
+        User user = userService.selectById((String) session.getAttribute("id"));
+//        System.out.println(user);
+        List<String[]> attendences = new ArrayList<>();
+        List<User> managingUser = new ArrayList<>();
+
+        if (user != null) {
+            user = userService.selectById(user.getId());
+            if (user.getAttendanceTimes() != null) {
+                for (AttendanceTime at : user.getAttendanceTimes())
+                    attendences.add(new String[]{user.getId(), user.getName(),
+                            new SimpleDateFormat("yyyy-MM-dd").format(at.getTime()),
+                            new SimpleDateFormat("HH:mm:ss").format(at.getTime())});
+            }//改为十二小时制
+
+        }
+        session.setAttribute("attendances", attendences);
+
+        return "attend/attendanceRecords";
+    }
 }

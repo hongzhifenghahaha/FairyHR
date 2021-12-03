@@ -7,20 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>FairyHR</title>
 
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="/assets/fonts/line-icons.css">
-
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-
-    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-</head>
 
 <div class="header navbar">
     <div class="header-container">
@@ -31,17 +18,20 @@
         </div>
         <ul class="nav-right">
             <li class="user-profile dropdown dropdown-animated scale-left">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <c:choose>
-                        <c:when test="${user.name eq null}">
-                            sign in
-                        </c:when>
-                        <c:otherwise>
-                            ${user.name}
-                        </c:otherwise>
-                    </c:choose>
 
-                </a>
+                <c:choose>
+                    <c:when test="${user.name eq null}">
+                        <a href="/login" class="dropdown-toggle">
+                            sign in
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                ${user.name}
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+
 
                 <c:choose>
                     <c:when test="${user.name eq null}">
@@ -103,7 +93,7 @@
                         <a href="/attendance/checkin">签到考勤</a>
                     </li>
                     <li>
-                        <a href="index-2.html">历史记录</a>
+                        <a href="/attendance/record">历史记录</a>
                     </li>
                 </ul>
             </li>
@@ -135,9 +125,5 @@
         </ul>
     </div>
 </div>
-<script src="/assets/js/jquery-min.js"></script>
-<script src="/assets/js/popper.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/jquery.app.js"></script>
-<script src="/assets/js/main.js"></script>
+
 </html>
