@@ -123,13 +123,22 @@ public class DepartmentServiceImpl implements DepartmentService {
             for (var user : originUsers) {
                 if (nowUsers.stream().noneMatch((u) -> u.getId().equals(user.getId()))) {
                     departmentUserMapper.delete(user.getId(), department.getId());
+                    departmentManagerMapper.delete(user.getId(), department.getId());
                 }
             }
         }
 
         if (department.getManagers() != null) {
-            for (var manager : department.getManagers()) {
+            var originManages = departmentManagerMapper.selectByDepartmentId(department.getId());
+            var nowManagers = department.getManagers();
+            for (var manager : nowManagers) {
                 departmentManagerMapper.insert(manager.getId(), department.getId());
+            }
+
+            for (var manager : originManages) {
+                if (nowManagers.stream().noneMatch((u) -> u.getId().equals(manager.getId()))) {
+                    departmentManagerMapper.delete(manager.getId(), department.getId());
+                }
             }
         }
 
@@ -143,9 +152,9 @@ public class DepartmentServiceImpl implements DepartmentService {
                 departmentLeaveRequestMapper.insert(leaveRequest.getId(), department.getId());
             }
             for (var request : originLeaveRequests) {
-               if ( nowLeaveRequests.stream().noneMatch((r)->r.getId().equals(request.getId()))) {
-                   leaveRequestService.deleteById(request.getId());
-               }
+                if (nowLeaveRequests.stream().noneMatch((r) -> r.getId().equals(request.getId()))) {
+                    leaveRequestService.deleteById(request.getId());
+                }
             }
         }
     }
