@@ -1,9 +1,6 @@
 package org.fairysoftw.fairyhr.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,6 +43,7 @@ public class User {
     private List<Schedule> leaves;
     @Nullable
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<LeaveRequest> leaveRequests;
     @NonNull
     private boolean deleted;
