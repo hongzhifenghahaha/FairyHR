@@ -34,7 +34,7 @@
                         <h4 class="card-title">Sign In</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal m-t-20" type="post" action="/login">
+                        <form class="form-horizontal m-t-20" action="/login" method="post">
                             <div class="form-group">
                                 <input class="form-control" type="text" required="" placeholder="User ID" name="userid">
                             </div>
