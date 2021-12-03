@@ -1,7 +1,9 @@
 spring:
+  profiles:
+    active: test
   flyway:
     url: jdbc:mysql://127.0.0.1:3306/fairyhr?serverTimezone=UTC&useSSL=false
-    user: root
+    user: admin
     password: admin
     enabled: false
     baseline-on-migrate: true
@@ -16,7 +18,30 @@ spring:
       prefix: /WEB-INF/view/
       suffix: .jsp
 
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl:
   mapper-locations: classpath:mappers/*.xml
+
+---
+
+#测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  flyway:
+    url: jdbc:mysql://git.npu5v5.cn:3307/fairyhr_test?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=True
+    username: root
+    password: admin
+    locations: classpath:db/test/migration,classpath:db/test/migration/mysql
+  datasource:
+    url: jdbc:mysql://git.npu5v5.cn:3307/fairyhr_test
+    username: root
+    password: admin
+
+logging:
+  level:
+    org.fairysoftw.fairyhr.mapper: debug

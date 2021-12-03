@@ -3,6 +3,8 @@ package org.fairysoftw.fairyhr.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.util.Date;
 
@@ -10,13 +12,24 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LeaveRequest {
+    @NonNull
+    private String id;
+    @NonNull
     private User user;
-    private Date start_time;
-    private Date end_time;
-    private Date summit_time;
+    @NonNull
+    private Date startTime;
+    @NonNull
+    private Date endTime;
+    @NonNull
+    private Date submitTime;
+    @Nullable
     private String reason;
+    @Nullable
     private String status;
+    @Nullable
     private User checker;
-    private Date check_time;
-    private String check_opinion;
+    @Nullable
+    private Date checkTime;
+    @Nullable
+    private String checkOpinion;
 }
