@@ -32,7 +32,7 @@ public class HomeController {
         if (session.getAttribute("user")==null){
             return "redirect:/login";
         }
-        return "home";
+        return "redirect:/attendance/checkin";
         //homeService.getSchedulesString().get(0);
     }
 

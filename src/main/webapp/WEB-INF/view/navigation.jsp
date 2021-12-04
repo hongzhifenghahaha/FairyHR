@@ -11,11 +11,21 @@
 
 <div class="header navbar">
     <div class="header-container">
-        <div class="nav-logo">
-            <a href="index.html" class="sub-title">
-                <span class="title">FAIRYHR</span>
+        <div class="nav-logo" style="width: 400px">
+            <a href="/home">
+                <span class="logo">
+                      <img src="/assets/img/title.png" alt="" height="60px">
+                </span>
+
+            </a>
+            <a href="/home">
+                <span class="logo">
+                      <img src="/assets/img/title2.png" alt="" height="60px">
+                </span>
+
             </a>
         </div>
+
         <ul class="nav-right">
             <li class="user-profile dropdown dropdown-animated scale-left">
 

@@ -107,10 +107,6 @@
                                                                     <c:set var="isManager" value="true" scope="page"/>
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <a href="/user/profile/${user_tmp.id}">
-                                                                <button type="button" class="btn btn-link">more info
-                                                                </button>
-                                                            </a>
                                                             <c:if test="${user_tmp.id eq user.id}">
                                                                 <button type="button" class="btn btn-light btn-rounded">
                                                                     me
@@ -137,7 +133,16 @@
                                                                     manager
                                                                 </button>
                                                             </c:if>
-
+                                                            <div class="btn-group dropup m-b-10" style="float:right;">
+                                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                                </button>
+                                                                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(103px, -198px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                    <a class="dropdown-item" href="/user/profile/${user_tmp.id}">profile</a>
+                                                                    <a class="dropdown-item" href="/attendance/record/${user_tmp.id}">Attendence Record</a>
+                                                                    <a class="dropdown-item" href="/leave/record/${user_tmp.id}">Leave Requests</a>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

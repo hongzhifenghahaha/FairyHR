@@ -40,19 +40,20 @@ public class LeaveRequestController {
         User user = userService.selectById((String) session.getAttribute("id"));
         List<LeaveRequest> leaveRequestList = user.getLeaveRequests();
 
-        List<LeaveRequest> unchecked=new ArrayList<>();
-        List<LeaveRequest> checked=new ArrayList<>();
+        List<LeaveRequest> unchecked = new ArrayList<>();
+        List<LeaveRequest> checked = new ArrayList<>();
 
-        for (LeaveRequest lr:leaveRequestList){
-            if (lr.getChecker()==null){
+        for (LeaveRequest lr : leaveRequestList) {
+            if (lr.getChecker() == null) {
                 unchecked.add(lr);
-            }else {
+            } else {
                 checked.add(lr);
             }
         }
 
-        session.setAttribute("checked_request",checked);
-        session.setAttribute("unchecked_request",unchecked);
+        session.setAttribute("checked_request", checked);
+        session.setAttribute("unchecked_request", unchecked);
+        session.setAttribute("no_add", "0");
         return "leave/leaveRecords";
     }
 
@@ -101,6 +102,31 @@ public class LeaveRequestController {
         }
         departmentService.update(department);
         return "redirect:/leave/record";
+    }
+
+    @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
+    public String getLeaveRecordPage(@PathVariable(value = "id") String id, HttpSession session, HttpServletRequest request) {
+        //添加leave list to jsp
+        User user = userService.selectById(id);
+        List<LeaveRequest> leaveRequestList = user.getLeaveRequests();
+
+        List<LeaveRequest> unchecked = new ArrayList<>();
+        List<LeaveRequest> checked = new ArrayList<>();
+
+        for (LeaveRequest lr : leaveRequestList) {
+            if (lr.getChecker() == null) {
+                unchecked.add(lr);
+            } else {
+                checked.add(lr);
+            }
+        }
+
+        session.setAttribute("checked_request", checked);
+        session.setAttribute("unchecked_request", unchecked);
+
+        session.setAttribute("no_add","1");
+        request.setAttribute("user_checked",user);
+        return "leave/leaveRecords";
     }
 
 
