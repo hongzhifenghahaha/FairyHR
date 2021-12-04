@@ -40,7 +40,7 @@
                                     <form class="form" id="leave" action="/leave/add" method="post">
                                         <div class="form-row">
                                             <div class="form-group col-lg-12">
-                                                <label for="firstname" class="col-xl-2">所属部门编号: </label>
+                                                <label for="firstname" class="col-xl-2">所属部门: </label>
                                                 <c:forEach items="${departs}" var="de">
 <%--                                                    <div class="col-xl-3">--%>
                                                         ${de}<input type="radio"  name="depart"
