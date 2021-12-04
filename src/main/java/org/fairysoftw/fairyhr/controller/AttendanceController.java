@@ -96,4 +96,27 @@ public class AttendanceController {
 
         return "attend/attendanceRecords";
     }
+
+    @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
+    public String gotoAttendanceRecordByUserID(@PathVariable(value = "id")String id, HttpSession session) {
+
+        User user = userService.selectById(id);
+//        System.out.println(user);
+        List<String[]> attendences = new ArrayList<>();
+        List<User> managingUser = new ArrayList<>();
+
+        if (user != null) {
+            user = userService.selectById(user.getId());
+            if (user.getAttendanceTimes() != null) {
+                for (AttendanceTime at : user.getAttendanceTimes())
+                    attendences.add(new String[]{user.getId(), user.getName(),
+                            new SimpleDateFormat("yyyy-MM-dd").format(at.getTime()),
+                            new SimpleDateFormat("HH:mm:ss").format(at.getTime())});
+            }//改为十二小时制
+
+        }
+        session.setAttribute("attendances", attendences);
+
+        return "attend/attendanceRecords";
+    }
 }

@@ -58,11 +58,10 @@
                                                     <td>${o.phoneNumber}</td>
                                                     <td>${o.emailAddr}</td>
                                                     <td>
-                                                        <form method="get" action="/department/addOldUser/${o.id}">
-                                                            <button type="submit" class="btn btn-light btn-rounded">
-                                                                add
-                                                            </button>
-                                                        </form>
+                                                        <button type="submit" class="btn btn-light btn-rounded"
+                                                                onclick="add_users('${o.id}')">
+                                                            add
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -111,6 +110,18 @@
 
             <script src="/assets/js/datatables.init.js"></script>
 
+            <script>
+                function add_users(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"user_id": id},
+                        url: "/department/addOldUser",
+                        complete: function() {
+                            location.reload();
+                        }
+                    });
+                }
+            </script>
 
             <ct:footer/>
         </div>

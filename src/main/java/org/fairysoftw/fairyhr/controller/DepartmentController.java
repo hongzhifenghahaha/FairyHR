@@ -139,12 +139,23 @@ public class DepartmentController {
         return "department/addOthers";
     }
 
-    @RequestMapping(value = "/addOldUser/{id}", method = GET)
-    public String addOldUser(@PathVariable("id") String user_id, HttpSession session) throws IOException {
+    @RequestMapping(value = "/addOldUser", method = POST)
+    public void addOldUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String user_id = request.getParameter("user_id");
         User user = userService.selectById(user_id);
         Department department = (Department) session.getAttribute("department");
         department.getUsers().add(user);
         departmentService.update(department);
-        return "redirect:/department/addOldUser";
+        List<User> others=(List<User>) session.getAttribute("others");
+        others.remove(user);
+        response.getWriter().write("complete");
+    }
+
+    @RequestMapping(value = "/changeName", method = POST)
+    public String changeDepartmentName(@RequestParam(value = "de_name") String de_name, HttpSession session) throws IOException {
+        Department department = (Department) session.getAttribute("department");
+        department.setName(de_name);
+        departmentService.update(department);
+        return "redirect:/department/" + department.getId();
     }
 }

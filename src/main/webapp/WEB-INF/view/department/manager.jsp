@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -42,8 +43,8 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">
-
-                                            <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled">
+                                            <form action="/department/changeName" method="post">
+                                                <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled"></form>
                                             <button type="button" class="btn btn-outline-primary" style="float: right" onclick="
                                             document.getElementById('changeName').removeAttribute('disabled')">Edit</button>
                                         </h5>
@@ -107,10 +108,6 @@
                                                                     <c:set var="isManager" value="true" scope="page"/>
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <a href="/user/profile/${user_tmp.id}">
-                                                                <button type="button" class="btn btn-link">more info
-                                                                </button>
-                                                            </a>
                                                             <c:if test="${user_tmp.id eq user.id}">
                                                                 <button type="button" class="btn btn-light btn-rounded">
                                                                     me
@@ -137,7 +134,16 @@
                                                                     manager
                                                                 </button>
                                                             </c:if>
-
+                                                            <div class="btn-group dropup m-b-10" style="float:right;">
+                                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                                </button>
+                                                                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(103px, -198px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                    <a class="dropdown-item" href="/user/profile/${user_tmp.id}">profile</a>
+                                                                    <a class="dropdown-item" href="/attendance/record/${user_tmp.id}">Attendence Record</a>
+                                                                    <a class="dropdown-item" href="/leave/record/${user_tmp.id}">Leave Requests</a>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -247,12 +253,11 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/assignUser",
+                        url: "/department/addOldUser/",
                         complete: function() {
                             location.reload();
                         }
                     });
-                }
                 }
             </script>
             <c:import url="../footer.jsp"/>

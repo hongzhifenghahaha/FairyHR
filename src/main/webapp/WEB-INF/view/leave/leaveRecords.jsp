@@ -36,11 +36,14 @@
                                 <div class="card-header border-bottom">
                                     <div class="row">
 
-                                        <h4 class="card-title col-md-1">请假申请</h4>
+                                        <h4 class="card-title col-md-1">
+                                            <c:if test="${no_add eq '1'}">${user_checked.name}的</c:if>请假申请</h4>
                                         <div class="col-md-10"></div>
                                         <div class="col-md-1">
-                                            <a class="lni-plus" style="float:right;" href="/leave/add"
-                                               style="background-color: #e22a6f">新增请假</a>
+                                            <c:if test="${no_add eq '0'}">
+                                                <a class="lni-plus" style="float:right;" href="/leave/add"
+                                                   style="background-color: #e22a6f">新增请假</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
