@@ -80,13 +80,13 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="dropdown-toggle">
-<span class="icon-holder">
-<i class="lni-dashboard"></i>
-</span>
+                    <span class="icon-holder">
+                        <i class="lni-dashboard"></i>
+                    </span>
                     <span class="title">考勤管理</span>
                     <span class="arrow">
-<i class="lni-chevron-right"></i>
-</span>
+                        <i class="lni-chevron-right"></i>
+                    </span>
                 </a>
                 <ul class="dropdown-menu sub-down">
                     <li>
@@ -97,14 +97,12 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown open">
+            <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="/leave/record">
-<span class="icon-holder">
-<i class="lni-cloud"></i>
-</span>
+                    <span class="icon-holder">
+                    <i class="lni-cloud"></i>
+                    </span>
                     <span class="title">请假管理</span>
-                    <span class="arrow">
-</span>
                 </a>
             </li>
             <c:if test="${!(user eq null)}">
@@ -112,12 +110,10 @@
             </c:if>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="/department">
-<span class="icon-holder">
-<i class="lni-layers"></i>
-</span>
+                    <span class="icon-holder">
+                    <i class="lni-layers"></i>
+                    </span>
                     <span class="title">部门管理</span>
-                    <span class="arrow">
-</span>
                 </a>
             </li>
         </ul>

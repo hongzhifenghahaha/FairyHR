@@ -12,9 +12,4 @@
         <tag-class>org.fairysoftw.fairyhr.tag.FooterTag</tag-class>
         <body-content>empty</body-content>
     </tag>
-    <tag>
-        <name>header</name>
-        <tag-class>org.fairysoftw.fairyhr.tag.HeaderTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
 </taglib>
