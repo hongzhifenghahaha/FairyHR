@@ -43,14 +43,9 @@
                                     <div class="card-body">
                                         <h5 class="card-title">
 
-                                            <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled" onkeydown="function x() {
-                                              if (event.keyCode==13){
-
-                                              }
-                                            }">
-                                            <button type="button" class="btn btn-inverse-secondary" style="float: left" onclick="function x() {
-                                            document.getElementById('changeName').removeAttribute('disabled');
-                                            }">Edit</button>
+                                            <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled">
+                                            <button type="button" class="btn btn-outline-primary" style="float: right" onclick="
+                                            document.getElementById('changeName').removeAttribute('disabled')">Edit</button>
                                         </h5>
                                         <div class="row">
                                             <div class="col-6 m-t-20">
@@ -257,6 +252,7 @@
                             location.reload();
                         }
                     });
+                }
                 }
             </script>
             <c:import url="../footer.jsp"/>
