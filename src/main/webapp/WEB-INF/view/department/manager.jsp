@@ -169,27 +169,31 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${requestScope.leaves}" var="l">
-                                            <tr>
-                                                <td>${l.user.name} (${l.user.id})</td>
-                                                <td>
-                                                        ${l.startTime}
-                                                </td>
-                                                <td>
-                                                        ${l.endTime}
+                                            <c:if test="${(l.checker eq null)}">
+                                                <tr>
+                                                    <td>${l.user.name} (${l.user.id})</td>
+                                                    <td>
+                                                            ${l.startTime}
+                                                    </td>
+                                                    <td>
+                                                            ${l.endTime}
 
-                                                </td>
-                                                <td>
-                                                        ${l.reason}
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-light btn-rounded">
-                                                        reject
-                                                    </button>
-                                                    <button type="button" class="btn btn-info btn-rounded">
-                                                        pass
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                            ${l.reason}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-light btn-rounded"
+                                                        onclick="reject_request('${l.id}')">
+                                                            reject
+                                                        </button>
+                                                        <button type="button" class="btn btn-info btn-rounded"
+                                                        onclick="pass_request('${l.id}')">
+                                                            pass
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </c:if>
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -253,6 +257,27 @@
                         }
                     });
                 }
+
+                function pass_request(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"request_id": id},
+                        url: "/department/passRequest",
+                        complete: function() {
+                            location.reload();
+                        }
+                    });
+                }
+
+                function reject_request(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"request_id": id},
+                        url: "/department/rejectRequest",
+                        complete: function() {
+                            location.reload();
+                        }
+                    });
                 }
             </script>
             <c:import url="../footer.jsp"/>

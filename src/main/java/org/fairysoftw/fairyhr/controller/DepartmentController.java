@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -146,5 +147,47 @@ public class DepartmentController {
         department.getUsers().add(user);
         departmentService.update(department);
         return "redirect:/department/addOldUser";
+    }
+
+    @RequestMapping(value = "/passRequest", method = POST)
+    public void passRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        var manager_id = (String) session.getAttribute("id");
+        var request_id = (String) request.getParameter("request_id");
+        var department = departmentService.selectById(
+                ((Department) session.getAttribute("department")).getId());
+        if (department != null && department.getLeaveRequests() != null) {
+            var leaveRequests = department.getLeaveRequests()
+                    .stream().filter((l) -> l.getId().equals(request_id))
+                    .toList();
+            for(var leaveRequest: leaveRequests) {
+                leaveRequest.setChecker(userService.selectById(manager_id));
+                leaveRequest.setCheckTime(new Date());
+                leaveRequest.setStatus("审核通过");
+                leaveRequest.setCheckOpinion("TODO: 设置审核意见");
+            }
+            departmentService.update(department);
+        }
+        response.getWriter().write("success");
+    }
+
+    @RequestMapping(value = "/rejectRequest", method = POST)
+    public void rejectRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        var manager_id = (String) session.getAttribute("id");
+        var request_id = (String) request.getParameter("request_id");
+        var department = departmentService.selectById(
+                ((Department) session.getAttribute("department")).getId());
+        if (department != null && department.getLeaveRequests() != null) {
+            var leaveRequests = department.getLeaveRequests()
+                    .stream().filter((l) -> l.getId().equals(request_id))
+                    .toList();
+            for(var leaveRequest: leaveRequests) {
+                leaveRequest.setChecker(userService.selectById(manager_id));
+                leaveRequest.setCheckTime(new Date());
+                leaveRequest.setStatus("审核不通过");
+                leaveRequest.setCheckOpinion("TODO: 设置审核意见");
+            }
+            departmentService.update(department);
+        }
+        response.getWriter().write("success");
     }
 }
