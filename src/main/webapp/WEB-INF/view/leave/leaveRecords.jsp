@@ -128,6 +128,9 @@
                                                                                     <th>Start Time</th>
                                                                                     <th>End Time</th>
                                                                                     <th>Checker</th>
+                                                                                    <th>Status</th>
+                                                                                    <th>CheckOpinion</th>
+                                                                                    <th>CheckTime</th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -140,6 +143,9 @@
                                                                                         <td>${lr1.startTime}</td>
                                                                                         <td>${lr1.endTime}</td>
                                                                                         <td>${lr1.checker.name} (${lr1.checker.id})</td>
+                                                                                        <td>${lr1.status}</td>
+                                                                                        <td>${lr1.checkOpinion}</td>
+                                                                                        <td>${lr1.checkTime}</td>
                                                                                     </tr>
                                                                                 </c:forEach>
                                                                                 </tbody>
