@@ -20,17 +20,30 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * 数据库的四个Service接口的测试类，进行单元测试，集成测试和逻辑覆盖。
+ * 使用的Spring环境为“test”，
+ * 具有事务性和回滚功能，测试执行后不会对数据库产生任何影响，即该测试具有无后效性。
+ *
+ * @version 2.0
+ */
 @SpringBootTest()
 @Profile("test")
 @MapperScan("org.fairysoftw.fairyhr.mapper")
 @Transactional
 @Rollback
 class ServiceTest {
+    /*
+    被测试的4个Service类。
+     */
     private final DepartmentService departmentService;
     private final LeaveRequestService leaveRequestService;
     private final ScheduleService scheduleService;
     private final UserService userService;
 
+    /*
+    多表关联的Mapper类，用于检查Service执行对应的操作后，是否在Mapper中也有相应操作。
+     */
     private final UserAttendanceScheduleMapper userAttendanceScheduleMapper;
     private final UserAttendanceLeaveMapper userAttendanceLeaveMapper;
     private final UserAttendanceTimeMapper userAttendanceTimeMapper;
@@ -38,11 +51,16 @@ class ServiceTest {
     private final DepartmentLeaveRequestMapper departmentLeaveRequestMapper;
     private final DepartmentManagerMapper departmentManagerMapper;
 
+    /*
+    SimpleDateFormat类用于生成对应格式的Date
+     */
     private final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 
-
+    /**
+     * 构造函数，会自动装配service对应的实体
+     */
     @Autowired
     ServiceTest(DepartmentService departmentService, LeaveRequestService leaveRequestService, ScheduleService scheduleService, UserService userService, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, DepartmentUserMapper departmentUserMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, DepartmentManagerMapper departmentManagerMapper) {
         this.departmentService = departmentService;
@@ -58,18 +76,23 @@ class ServiceTest {
         this.departmentManagerMapper = departmentManagerMapper;
     }
 
+    /**
+     * ScheduleService的测试类，主要测试它的增删改查功能是否正常。
+     * 具有Rollback注解，使其不会对下面的其他测试产生影响。
+     * @throws ParseException SimpleDateFormat在日期转换出错时会抛出这个异常。
+     */
     @Rollback
     @Test
     void scheduleServiceTest() throws ParseException {
 
-//        void scheduleServiceSelectAllTest
+//      测试selectAll()方法
         assertTrue(scheduleService.selectAll().size() > 0);
 
-//        void scheduleServiceSelectByIdTest
+//      测试selectById()方法
         assertNotNull(scheduleService.selectById("0"));
         assertEquals(sdf3.parse("09:00:00"), scheduleService.selectById("1").getStartTime());
 
-//        void scheduleServiceInsertTest
+//      测试insert()方法
         Schedule schedule1 = new Schedule("11", sdf3.parse("10:00:00"), sdf3.parse("18:30:00"), null, null, ScheduleFrequency.WEEKLY, 1);
         assertEquals(1, scheduleService.insert(schedule1));
         assertEquals(schedule1, scheduleService.selectById("11"));
@@ -78,7 +101,7 @@ class ServiceTest {
         assertEquals(1, scheduleService.insert(schedule2));
         assertEquals(schedule2, scheduleService.selectById("12"));
 
-//        void scheduleServiceUpdateTest
+//      测试update()方法
         Schedule schedule3 = scheduleService.selectById("11");
         assertNotNull(schedule3);
         schedule3.setFrequencyValue(3);
@@ -86,33 +109,37 @@ class ServiceTest {
         assertEquals(3, scheduleService.selectById("11").getFrequencyValue());
         assertEquals(schedule3, scheduleService.selectById("11"));
 
-//        void scheduleServiceDeleteTest
+//      测试deleteById()方法
         assertEquals(1, scheduleService.deleteById("11"));
         assertEquals(1, scheduleService.deleteById("12"));
         assertNull(scheduleService.selectById("11"));
         assertNull(scheduleService.selectById("12"));
-
     }
 
 
+    /**
+     * UserService的测试类，主要测试它的增删改查功能是否正常。
+     * 具有Rollback注解，使其不会对下面的其他测试产生影响。
+     * @throws ParseException SimpleDateFormat在日期转换出错时会抛出这个异常。
+     */
     @Rollback
     @Test
     void userServiceTest() throws ParseException {
 
-//        void userServiceSelectAllTest
+//      测试SelectAll()方法
         assertTrue(userService.selectAll().size() > 0);
 
-//        void userSelectByIdTest
+//      测试selectById()方法
         assertEquals("张三", userService.selectById("0").getName());
         assertEquals("李四", userService.selectById("1").getName());
         assertEquals("王五", userService.selectById("2").getName());
 
-//        void userServiceInsertOnceTest
+//      在user所有的关联外部实体的属性都为null的情况下，测试insert()方法
         User user2 = new User("6", "ls2", "12345", "ls2", "54321", "ls2@gmail.com", "Beijing", "宣发部成员", null, null, null, null, false);
         assertEquals(1, userService.insert(user2));
         assertEquals("ls2@gmail.com", userService.selectById("6").getEmailAddr());
 
-//        void userServiceInsertCascadeTest
+//      测试insert()方法的级联插入功能
         ArrayList<AttendanceTime> attendanceTimes = new ArrayList<>();
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         AttendanceTime attendanceTime1 = new AttendanceTime(s.parse("2021-10-01 09:00:00"));
@@ -147,7 +174,7 @@ class ServiceTest {
         assertEquals(schedules, userService.selectById("7").getSchedules());
         assertEquals(leaves, userService.selectById("7").getLeaves());
 
-//        void userServiceInsertListTest
+//      测试insert()插入一个user列表
         ArrayList<User> users = new ArrayList<>();
         User user3 = new User("8", "ls4", "12345", "ls4", "54321", "ls4@gmail.com", "Beijing", "宣发部成员", null, null, null, null, false);
         User user4 = new User("9", "ls5", "12345", "ls5", "54321", "ls5@gmail.com", "Beijing", "宣发部成员", null, null, null, null, false);
@@ -157,10 +184,8 @@ class ServiceTest {
         assertEquals(2, userService.insert(users));
         assertEquals("ls4@gmail.com", userService.selectById("8").getEmailAddr());
         assertEquals("ls5@gmail.com", userService.selectById("9").getEmailAddr());
-//        assertEquals(user3, userService.selectById("8"));
-//        assertEquals(user4, userService.selectById("9"));
 
-//        void userServiceUpdateTest
+//      测试update()方法
         User user5 = userService.selectById("8");
         assertNotNull(user5);
         user5.setPassword("ls4444");
@@ -168,7 +193,7 @@ class ServiceTest {
         assertEquals(user5, userService.selectById("8"));
 
 
-//        void userServiceDeleteWithoutLeaveRequestAndDepartmentTest
+//      测试delete()方法的级联删除功能
         assertEquals(1, userService.deleteById("6"));
         assertEquals(1, userService.deleteById("8"));
         assertEquals(1, userService.deleteById("9"));
@@ -193,17 +218,22 @@ class ServiceTest {
     }
 
 
+    /**
+     * LeaveRequestService的测试类，主要测试它的增删改查功能是否正常。
+     * 具有Rollback注解，使其不会对下面的其他测试产生影响。
+     * @throws ParseException SimpleDateFormat在日期转换出错时会抛出这个异常。
+     */
     @Rollback
     @Test
     void leaveRequestServiceTest() throws ParseException {
 
-//        void leaveRequestServiceSelectAllTest
+//      测试selectAll()方法
         assertTrue(leaveRequestService.selectAll().size() > 0);
 
-//        void leaveRequestServiceSelectByIdTest
+//      测试selectById()方法
         assertEquals("参加朋友婚宴", leaveRequestService.selectById("0").getReason());
 
-//        void leaveRequestServiceInsertWithNewUser
+//      测试LeaveRequest带有新创建的user时，insert()方法的级联插入功能
         User user1 = new User("6", "zs2", "12345", "zs2", "54321", "zs2@gmail.com", "ShangHai", "研发部成员", null, null, null, null, false);
         assertEquals(1, userService.insert(user1));
         LeaveRequest leaveRequest1 = new LeaveRequest("1", user1,
@@ -214,7 +244,7 @@ class ServiceTest {
         assertEquals(sdf2.parse("2021-11-23 10:00:00"), leaveRequestService.selectById("1").getStartTime());
         assertEquals(userService.selectById("6"), leaveRequestService.selectById("1").getUser());
 
-//        void leaveRequestServiceInsertWithExistUserTest
+//      测试leaveRequestService直接带现存的user时，insert()方法的插入功能
         LeaveRequest leaveRequest2 = new LeaveRequest("2", userService.selectById("3"),
                 sdf2.parse("2021-11-23 10:00:00"),
                 sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2", "待审核", null, null, null);
@@ -223,7 +253,7 @@ class ServiceTest {
         assertTrue(userService.selectById("3").equals(leaveRequestService.selectById("2").getUser()));
         assertEquals(sdf2.parse("2021-11-23 10:00:00"), leaveRequestService.selectById("2").getStartTime());
 
-//        void leaveRequestServiceInsertListTest
+//      测试insert()一个leaveRequest列表
         ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
 
         LeaveRequest leaveRequest3 = new LeaveRequest("3", userService.selectById("2"),
@@ -245,7 +275,7 @@ class ServiceTest {
         assertEquals(userService.selectById("1"), leaveRequestService.selectById("4").getUser());
 
 
-//        void leaveRequestServiceUpdateTest
+//      测试update()方法
         LeaveRequest leaveRequest5 = leaveRequestService.selectById("2");
         assertNotNull(leaveRequest5);
         leaveRequest5.setReason("sick222");
@@ -253,7 +283,7 @@ class ServiceTest {
         assertEquals("sick222", leaveRequestService.selectById("2").getReason());
         assertEquals(leaveRequest5, leaveRequestService.selectById("2"));
 
-//        void leaveRequestServiceDeleteTest
+//      测试delete()方法的级联删除功能
         assertEquals(1, leaveRequestService.deleteById("1"));
         assertEquals(1, leaveRequestService.deleteById("2"));
         assertEquals(1, leaveRequestService.deleteById("3"));
@@ -269,24 +299,29 @@ class ServiceTest {
     }
 
 
+    /**
+     * DepartmentService的测试类，主要测试它的增删改查功能是否正常。
+     * 具有Rollback注解，使其不会对下面的其他测试产生影响。
+     * @throws ParseException SimpleDateFormat在日期转换出错时会抛出这个异常。
+     */
     @Rollback
     @Test
     void departmentServiceTest() throws ParseException {
 
-//        void departmentServiceSelectAllTest
+//      测试selectAll()方法
         assertTrue(departmentService.selectAll().size() > 0);
 
-//        void departmentServiceSelectByIdTest
+//      测试selectById()方法
         assertEquals("青青股份有限公司", departmentService.selectById("0").getName());
         assertEquals("研发部", departmentService.selectById("1").getName());
 
-//        void departmentServiceInsertOnceTest
+//      测试用insert()方法插入一个不与其他外部实体管理的department
         Department parentDepartment1 = departmentService.selectById("0");
         Department department1 = new Department("6", "后勤部", parentDepartment1, false, null, null, null);
         departmentService.insert(department1);
         assertEquals("后勤部", departmentService.selectById("6").getName());
 
-//        void departmentServiceInsertCascadeTest
+//      测试insert()方法的级联插入功能
         Department parentDepartment2 = departmentService.selectById("6");
 
         ArrayList<User> managers = new ArrayList<>();
@@ -326,7 +361,7 @@ class ServiceTest {
         assertTrue(departmentService.selectByUserId("14").contains(departmentService.selectById("7")) && departmentService.selectByUserId("14").size() == 1);
         assertTrue(departmentService.selectByUserId("15").contains(departmentService.selectById("7")) && departmentService.selectByUserId("14").size() == 1);
 
-//        void departmentServiceUpdateTest
+//      测试update()方法
         Department department3 = departmentService.selectById("6");
         assertNotNull(department3);
         department3.setName("科创部");
@@ -339,7 +374,7 @@ class ServiceTest {
         assertEquals(1, departmentService.update(department4));
         assertEquals(department4, departmentService.selectById("7"));
 
-//        void departmentServiceDeleteTest
+//      测试delete()方法的级联删除功能
         assertEquals(1, departmentService.deleteById("6"));
         assertTrue(departmentService.selectById("6").isDeleted());
         assertEquals(0, departmentManagerMapper.selectByDepartmentId("6").size());
