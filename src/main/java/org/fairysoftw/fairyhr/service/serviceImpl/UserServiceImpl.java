@@ -11,8 +11,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * {@link org.fairysoftw.fairyhr.service.UserService}的逻辑实现类，
+ * 通过MyBatis与数据库的交互，具体的交互在mapper中实现。
+ *
+ * @version 1.0
+ */
 @Service
 public class UserServiceImpl implements UserService {
+    /*
+    用到的一些mapper类和service类
+     */
     private final UserMapper userMapper;
     private final UserAttendanceScheduleMapper userAttendanceScheduleMapper;
     private final UserAttendanceLeaveMapper userAttendanceLeaveMapper;
@@ -21,6 +30,9 @@ public class UserServiceImpl implements UserService {
     private final ScheduleService scheduleService;
     private final LeaveRequestService leaveRequestService;
 
+    /**
+     * 构造函数，通过spring实现自动装配。
+     */
     @Autowired
     public UserServiceImpl(UserMapper userMapper, UserAttendanceScheduleMapper userAttendanceScheduleMapper, UserAttendanceLeaveMapper userAttendanceLeaveMapper, UserAttendanceTimeMapper userAttendanceTimeMapper, DepartmentUserMapper departmentUserMapper, ScheduleService scheduleService, LeaveRequestService leaveRequestService) {
         this.userMapper = userMapper;
@@ -32,6 +44,9 @@ public class UserServiceImpl implements UserService {
         this.leaveRequestService = leaveRequestService;
     }
 
+    /*
+    覆写方法的注释详见对应的接口，这里不再重复写注释。
+     */
 
     @Override
     public List<User> selectAll() {
@@ -87,6 +102,13 @@ public class UserServiceImpl implements UserService {
         return ret;
     }
 
+    /**
+     * 级联插入user。
+     * <br><br>
+     * 即插入user之后，也会把它的schedule列表，leave列表，attendanceTime列表中的所有元素都插入到数据库中（如果它们不在数据库中）
+     *
+     * @param user 执行级联插入操作的user
+     */
     private void insertCascade(User user) {
         if (user == null) {
             return;
@@ -110,6 +132,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 级联更新user。
+     * <br><br>
+     * 即更新user之后，也会把它的schedule列表，leave列表，attendanceTime列表中的所有元素在数据库中更新。
+     * <br><br>
+     * 注意，user的delete操作之后也会执行updateCascade操作，所以如果是删除user,其关联的实体也会被执行删除操作。
+     * 删除user的时候会同时删除该用户的请假记录与考勤纪律，而不会删除与该用户关联的时间表，只是它们的关联关系被删除了。
+     *
+     * @param user 执行级联更新操作的user
+     */
     private void updateCascade(User user) {
         if (user == null) {
             return;
