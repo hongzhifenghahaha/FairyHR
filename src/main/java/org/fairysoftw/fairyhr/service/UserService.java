@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * 与{@link org.fairysoftw.fairyhr.model.User}的增删改查相关的接口类
+ *
+ * @version 1.0
+ */
 @Repository
 public interface UserService {
     /**

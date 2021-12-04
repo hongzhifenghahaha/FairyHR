@@ -11,18 +11,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * {@link org.fairysoftw.fairyhr.service.LeaveRequestService}的逻辑实现类，
+ * 通过MyBatis与数据库的交互，具体的交互在mapper中实现。
+ *
+ * @version 1.0
+ */
 @Service
 public class LeaveRequestServiceImpl implements LeaveRequestService {
+    /*
+    用到的一些mapper类和service类
+     */
     private final LeaveRequestMapper leaveRequestMapper;
     private final DepartmentLeaveRequestMapper departmentLeaveRequestMapper;
     private final UserService userService;
 
+    /**
+     * 构造函数，通过spring实现自动装配。
+     */
     @Autowired
     public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, @Lazy UserService userService) {
         this.leaveRequestMapper = leaveRequestMapper;
         this.departmentLeaveRequestMapper = departmentLeaveRequestMapper;
         this.userService = userService;
     }
+
+    /*
+    覆写方法的注释详见对应的接口，这里不再重复写注释。
+     */
 
     @Override
     public List<LeaveRequest> selectAll() {
