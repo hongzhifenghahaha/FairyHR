@@ -41,7 +41,17 @@
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">${department.name}</h5>
+                                        <h5 class="card-title">
+
+                                            <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled" onkeydown="function x() {
+                                              if (event.keyCode==13){
+
+                                              }
+                                            }">
+                                            <button type="button" class="btn btn-inverse-secondary" style="float: left" onclick="function x() {
+                                            document.getElementById('changeName').removeAttribute('disabled');
+                                            }">Edit</button>
+                                        </h5>
                                         <div class="row">
                                             <div class="col-6 m-t-20">
                                                 <h3 class="text-primary">${department.id}</h3>
@@ -65,7 +75,12 @@
                                                     <li>
                                                         <a class="lni-plus" style="float:right;"
                                                            href="/department/register"
-                                                           style="background-color: #e22a6f">添加新用户</a>
+                                                           style="background-color: #e22a6f">创建新用户</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="lni-plus" style="float:right;"
+                                                           href="/department/addOldUser"
+                                                           style="background-color: #e22a6f">添加已有用户</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -81,33 +96,43 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach items="${requestScope.users}" var="user">
+                                                <c:forEach items="${requestScope.users}" var="user_tmp">
                                                     <tr>
-                                                        <td>${user.name}</td>
-                                                        <td>${user.id}</td>
+                                                        <td>${user_tmp.name}</td>
+                                                        <td>${user_tmp.id}</td>
                                                         <td>
-                                                            <c:if test="${!(user.position eq null)}">
-                                                                ${user.position}
+                                                            <c:if test="${!(user_tmp.position eq null)}">
+                                                                ${user_tmp.position}
                                                             </c:if>
                                                         </td>
                                                         <td>
-                                                            <a href="/user/profile/${user.id}">
-                                                                <button type="button" class="btn btn-link">more info
-                                                                </button>
-                                                            </a>
-                                                            <button type="button" class="btn btn-light btn-rounded"
-                                                                    onclick="delete_user('${user.id}')">
-                                                                delete
-                                                            </button>
                                                             <c:set var="isManager" value="false" scope="page"/>
                                                             <c:forEach items="${requestScope.managers}" var="manager">
-                                                                <c:if test="${manager.id eq user.id}">
+                                                                <c:if test="${manager.id eq user_tmp.id}">
                                                                     <c:set var="isManager" value="true" scope="page"/>
                                                                 </c:if>
                                                             </c:forEach>
+                                                            <a href="/user/profile/${user_tmp.id}">
+                                                                <button type="button" class="btn btn-link">more info
+                                                                </button>
+                                                            </a>
+                                                            <c:if test="${user_tmp.id eq user.id}">
+                                                                <button type="button" class="btn btn-light btn-rounded">
+                                                                    me
+                                                                </button>
+                                                            </c:if>
+                                                            <c:if test="${!(user_tmp.id eq user.id)}">
+                                                                <c:if test="${!(isManager eq true)}">
+                                                                    <button type="button" class="btn btn-light btn-rounded" onclick="delete_user('${user_tmp.id}')">
+                                                                        delete
+                                                                    </button>
+                                                                </c:if>
+
+                                                            </c:if>
+
                                                             <c:if test="${isManager eq false}">
                                                                 <button type="button" class="btn btn-info btn-rounded"
-                                                                        onclick="assign_user('${user.id}')">
+                                                                        onclick="assign_user('${user_tmp.id}')">
                                                                     assign
                                                                 </button>
                                                             </c:if>
@@ -150,7 +175,7 @@
                                         <tbody>
                                         <c:forEach items="${requestScope.leaves}" var="l">
                                             <tr>
-                                                <td>${l.user.name} (${user.id})</td>
+                                                <td>${l.user.name} (${l.user.id})</td>
                                                 <td>
                                                         ${l.startTime}
                                                 </td>

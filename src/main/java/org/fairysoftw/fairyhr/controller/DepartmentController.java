@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -98,6 +100,9 @@ public class DepartmentController {
 
     @RequestMapping(value = "/deleteUser", method = POST)
     public void deleteUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        System.out.println(request.getParameter("user_id"));
+        System.out.println(userService.selectById(request.getParameter("user_id")));
+        User user = userService.selectById((String) session.getAttribute("id"));
         Department department = (Department) session.getAttribute("department");
         department.getUsers().removeIf((u) -> u.getId().equals(request.getParameter("user_id")));
         departmentService.update(department);
@@ -108,6 +113,8 @@ public class DepartmentController {
 
     @RequestMapping(value = "/assignUser", method = POST)
     public void assignUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        System.out.println(request.getParameter("user_id"));
+        System.out.println(userService.selectById(request.getParameter("user_id")));
         response.getWriter().write("success");
         Department department = (Department) session.getAttribute("department");
         department.getManagers().add(userService.selectById(request.getParameter("user_id")));
@@ -117,4 +124,27 @@ public class DepartmentController {
         request.setAttribute("managers", department.getManagers());
     }
 
+    @RequestMapping(value = "/addOldUser", method = GET)
+    public String addOldUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        User user = userService.selectById((String) session.getAttribute("id"));
+        Department department = (Department) session.getAttribute("department");
+        List<User> our_d = department.getUsers();
+        List<User> others = new ArrayList<>();
+        for (User u : userService.selectAll()) {
+            if (!our_d.contains(u)) {
+                others.add(u);
+            }
+        }
+        session.setAttribute("others", others);
+        return "department/addOthers";
+    }
+
+    @RequestMapping(value = "/addOldUser/{id}", method = GET)
+    public String addOldUser(@PathVariable("id") String user_id, HttpSession session) throws IOException {
+        User user = userService.selectById(user_id);
+        Department department = (Department) session.getAttribute("department");
+        department.getUsers().add(user);
+        departmentService.update(department);
+        return "redirect:/department/addOldUser";
+    }
 }

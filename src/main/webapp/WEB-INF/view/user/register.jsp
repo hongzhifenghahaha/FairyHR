@@ -38,35 +38,35 @@
                                           action="/department/register" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User ID</label>
-                                            <input type="text" class="form-control" name="id">
+                                            <input type="text" class="form-control" name="id" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User Name</label>
                                             <input type="text" class="form-control" id="exampleInputUsername1"
-                                                   name="name">
+                                                   name="name" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Phone Number</label>
-                                            <input type="text" class="form-control" name="phone">
+                                            <input type="text" class="form-control" name="phone" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Email Address</label>
                                             <input type="email" class="form-control" id="exampleInputEmail1"
-                                                   name="email">
+                                                   name="email" required="required">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Resident ID</label>
-                                            <input type="text" class="form-control" name="resident">
+                                            <input type="text" class="form-control" name="resident" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Address</label>
-                                            <input type="text" class="form-control" name="address">
+                                            <input type="text" class="form-control" name="address" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Password</label>
                                             <input type="password" class="form-control" id="exampleInputPassword1"
-                                                   name="password">
+                                                   name="password" required="required">
                                         </div>
                                         <button type="submit" class="btn btn-common mr-3">Submit</button>
 
