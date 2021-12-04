@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ct" uri="customTag"%>
 <head>
     <title>FairyHR</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
@@ -35,49 +34,49 @@
                                     <p class="card-description">
                                         updating your info in the box
                                     </p>
-                                    <form class="forms-sample" action="/user/profile/update/${requestScope.profile_user.id}" method="post">
+                                    <form class="forms-sample"
+                                          action="/department/register" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User ID</label>
-                                            <input type="text" class="form-control" value="${requestScope.profile_user.id}" name="id">
+                                            <input type="text" class="form-control" name="id">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User Name</label>
                                             <input type="text" class="form-control" id="exampleInputUsername1"
-                                                   value="${requestScope.profile_user.name}" name="name">
+                                                   name="name">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Phone Number</label>
-                                            <input type="text" class="form-control" value="${requestScope.profile_user.phoneNumber}" name="phone">
+                                            <input type="text" class="form-control" name="phone">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Email Address</label>
                                             <input type="email" class="form-control" id="exampleInputEmail1"
-                                                   value="${requestScope.profile_user.emailAddr}" name="email">
+                                                   name="email">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Resident ID</label>
-                                            <input type="text" class="form-control" value="${requestScope.profile_user.residentId}" name="resident">
+                                            <input type="text" class="form-control" name="resident">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Address</label>
-                                            <input type="text" class="form-control" value="${requestScope.profile_user.address}" name="address">
+                                            <input type="text" class="form-control" name="address">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Password</label>
                                             <input type="password" class="form-control" id="exampleInputPassword1"
-                                                   value="${requestScope.profile_user.password}" name="password">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputUsername1">position</label>
-                                            <input type="text" class="form-control" value="${requestScope.profile_user.position}" readonly>
+                                                   name="password">
                                         </div>
                                         <button type="submit" class="btn btn-common mr-3">Submit</button>
 
                                     </form>
-                                    <form action="/user/profile/${requestScope.profile_user.id}" method="get">
-                                    <button class="btn btn-light">Return</button>
+                                    <form action="/department/${department.id}" method="get">
+                                        <button class="btn btn-light">Return</button>
                                     </form>
+                                    <c:if test="${!(msg eq null)}">
+                                        <label  style="color: #e22a6f">${msg}</label>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +85,7 @@
                 </div>
             </div>
 
-        <ct:footer/>
+            <c:import url="../footer.jsp"/>
 
         </div>
     </div>

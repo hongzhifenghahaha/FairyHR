@@ -2,25 +2,35 @@ package org.fairysoftw.fairyhr.controller;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
+import org.fairysoftw.fairyhr.model.Department;
+import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.DepartmentService;
+import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
+    private final UserService userService;
 
     @Autowired
-    public DepartmentController(DepartmentService departmentService) {
+    public DepartmentController(DepartmentService departmentService, UserService userService) {
         this.departmentService = departmentService;
+        this.userService = userService;
     }
 
     @RequestMapping(method = GET)
@@ -44,11 +54,67 @@ public class DepartmentController {
         httpServletRequest.setAttribute("model", model);
         departmentService.selectAll();
 
-        return "department";
+        return "department/department";
     }
 
     @RequestMapping(value = "/{id}", method = GET)
-    public String getDepartment(@PathVariable(value = "id") String id) {
-        return "department";
+    public String getDepartment(@PathVariable(value = "id") String id, HttpSession session,
+                                HttpServletRequest request) {
+        Department department = departmentService.selectById(id);
+        session.setAttribute("department", department);
+        request.setAttribute("user_num", department.getUsers().size());
+        request.setAttribute("leaves", department.getLeaveRequests());
+        request.setAttribute("users", department.getUsers());
+        request.setAttribute("managers", department.getManagers());
+        return "department/manager";
     }
+
+    @RequestMapping(value = "/register", method = GET)
+    public String getRegisterPage() {
+
+        return "user/register";
+    }
+
+    @RequestMapping(value = "/register", method = POST)
+    public String addUser(@RequestParam(value = "id") String id, HttpSession session,
+                          @RequestParam(value = "name", defaultValue = "") String name,
+                          @RequestParam(value = "phone", defaultValue = "") String phone,
+                          @RequestParam(value = "email", defaultValue = "") String email,
+                          @RequestParam(value = "resident", defaultValue = "") String resident,
+                          @RequestParam(value = "address", defaultValue = "") String address,
+                          @RequestParam(value = "password", defaultValue = "") String password) {
+        for (User u : userService.selectAll()) {
+            if (u.getId().equals(id)) {
+                session.setAttribute("msg", "the id has existed, please try another id.");
+                return "user/register";
+            }
+        }
+        Department department = (Department) session.getAttribute("department");
+        User user = new User(id, name, phone, password, resident, email, address, null, null, null, null, null, false);
+        department.getUsers().add(user);
+        departmentService.update(department);
+        return "redirect:/department/" + department.getId();
+    }
+
+    @RequestMapping(value = "/deleteUser", method = POST)
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        Department department = (Department) session.getAttribute("department");
+        department.getUsers().removeIf((u) -> u.getId().equals(request.getParameter("user_id")));
+        departmentService.update(department);
+        request.setAttribute("user_num", department.getUsers().size());
+        request.setAttribute("users", department.getUsers());
+        request.setAttribute("managers", department.getManagers());
+    }
+
+    @RequestMapping(value = "/assignUser", method = POST)
+    public void assignUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        response.getWriter().write("success");
+        Department department = (Department) session.getAttribute("department");
+        department.getManagers().add(userService.selectById(request.getParameter("user_id")));
+        departmentService.update(department);
+        request.setAttribute("user_num", department.getUsers().size());
+        request.setAttribute("users", department.getUsers());
+        request.setAttribute("managers", department.getManagers());
+    }
+
 }

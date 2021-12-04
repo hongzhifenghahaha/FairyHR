@@ -29,7 +29,7 @@ public class HomeController {
     @GetMapping("/")
     public String getHome(HttpSession session)
     {
-        if (session.getAttribute("id")==null){
+        if (session.getAttribute("user")==null){
             return "redirect:/login";
         }
         return "home";
@@ -37,7 +37,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String getLoginPage(){
+    public String getLoginPage(HttpSession session){
+        session.setAttribute("msg","");
         return "login";
     }
 
@@ -82,6 +83,7 @@ public class HomeController {
     public String Logout(HttpSession session){
         session.removeAttribute("user");
         session.removeAttribute("id");
+        session.removeAttribute("department");
         return "login";
     }
 }

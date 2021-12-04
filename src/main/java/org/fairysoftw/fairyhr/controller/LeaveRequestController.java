@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.controller;
 
 import org.fairysoftw.fairyhr.model.*;
 import org.fairysoftw.fairyhr.service.DepartmentService;
+import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONException;
