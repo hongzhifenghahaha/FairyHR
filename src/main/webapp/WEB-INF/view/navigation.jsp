@@ -51,13 +51,13 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="#">
+                                <a href="/user/profile/${id}">
                                     <i class="lni-user"></i>
                                     <span>Profile</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="/logout">
                                     <i class="lni-lock"></i>
                                     <span>Logout</span>
                                 </a>
@@ -98,7 +98,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown open">
-                <a class="dropdown-toggle" href="#">
+                <a class="dropdown-toggle" href="/leave/record">
 <span class="icon-holder">
 <i class="lni-cloud"></i>
 </span>

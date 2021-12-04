@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -26,8 +27,11 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String getHome()
+    public String getHome(HttpSession session)
     {
+        if (session.getAttribute("id")==null){
+            return "redirect:/login";
+        }
         return "home";
         //homeService.getSchedulesString().get(0);
     }
@@ -41,7 +45,13 @@ public class HomeController {
     public String proccessLogin(@RequestParam(value = "userid",defaultValue = "") String userid,
                                 @RequestParam(value = "password",defaultValue = "") String password,
                                 HttpSession session,
-                                HttpServletResponse response) throws IOException {
+                                HttpServletResponse  response,
+                                HttpServletRequest request) throws IOException {
+        //如果原本有账号登录,退出账号
+        if (session.getAttribute("id")!=null){
+            session.removeAttribute("user");
+            session.removeAttribute("id");
+        }
         User user =  userService.selectById(userid);
 
         if (user!=null && user.getPassword()!=null){
@@ -58,16 +68,20 @@ public class HomeController {
                 return "redirect:/";
             }
         }
-        response.setCharacterEncoding("utf-8");
-        PrintWriter out = response.getWriter();
-        out.print("<script>alert('user info is wrong, please check your input.'); window.location='login' </script>");
-        out.flush();
-        out.close();
+        request.setAttribute("msg","user info is wrong, please check your input.");
+
         return "login";
     }
 
     @RequestMapping(value = "/error",method = RequestMethod.GET)
     public String getErrorPage(){
         return "nonuse";
+    }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String Logout(HttpSession session){
+        session.removeAttribute("user");
+        session.removeAttribute("id");
+        return "login";
     }
 }

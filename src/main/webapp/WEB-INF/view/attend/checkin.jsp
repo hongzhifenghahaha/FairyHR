@@ -44,8 +44,38 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6 col-xl-6 m-b-10">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title">今日签到</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Attendence Time</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach items="${today_checkin}" var="today">
+                                                <tr>
+                                                    <th scope="row">*</th>
+                                                    <td>${today.time}</td>
+                                                </tr>
+                                            </c:forEach>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
+
                 </div>
             </div>
             <c:import url="../footer.jsp" />

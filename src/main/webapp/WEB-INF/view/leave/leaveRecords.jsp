@@ -35,9 +35,11 @@
                                 <div class="card-header border-bottom">
                                     <div class="row">
 
-                                    <h4 class="card-title">请假申请</h4>
+                                        <h4 class="card-title col-md-1">请假申请</h4>
+                                        <div class="col-md-10"></div>
                                         <div class="col-md-1">
-                                            <a class="lni-plus" style="float:right;" href="/leave/add"></a>
+                                            <a class="lni-plus" style="float:right;" href="/leave/add"
+                                               style="background-color: #e22a6f">新增请假</a>
                                         </div>
                                     </div>
                                 </div>
@@ -69,20 +71,26 @@
                                                                                    class="table table-bordered">
                                                                                 <thead>
                                                                                 <tr>
-                                                                                    <th>ID</th>
-                                                                                    <th>Name</th>
-                                                                                    <th>Date</th>
-                                                                                    <th>AttendenceTime</th>
+                                                                                    <th>Submit Time</th>
+                                                                                    <th>User ID</th>
+                                                                                    <th>User Name</th>
+                                                                                    <th>Start Time</th>
+                                                                                    <th>End Time</th>
+                                                                                    <th>Reason</th>
+                                                                                    <th>Status</th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                <c:forEach items="${attendances}"
-                                                                                           var="at">
+                                                                                <c:forEach items="${unchecked_request}"
+                                                                                           var="lr">
                                                                                     <tr>
-                                                                                        <td>${at[0]}</td>
-                                                                                        <td>${at[1]}</td>
-                                                                                        <td>${at[2]}</td>
-                                                                                        <td>${at[3]}</td>
+                                                                                        <td>${lr.submitTime}</td>
+                                                                                        <td>${lr.user.id}</td>
+                                                                                        <td>${lr.user.name}</td>
+                                                                                        <td>${lr.startTime}</td>
+                                                                                        <td>${lr.endTime}</td>
+                                                                                        <td>${lr.reason}</td>
+                                                                                        <td>${lr.status}</td>
                                                                                     </tr>
                                                                                 </c:forEach>
                                                                                 </tbody>
@@ -113,20 +121,24 @@
                                                                                    class="table table-bordered">
                                                                                 <thead>
                                                                                 <tr>
-                                                                                    <th>ID</th>
-                                                                                    <th>Name</th>
-                                                                                    <th>Date</th>
-                                                                                    <th>AttendenceTime</th>
+                                                                                    <th>Submit Time</th>
+                                                                                    <th>User ID</th>
+                                                                                    <th>User Name</th>
+                                                                                    <th>Start Time</th>
+                                                                                    <th>End Time</th>
+                                                                                    <th>Checker</th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                <c:forEach items="${attendances}"
-                                                                                           var="at">
+                                                                                <c:forEach items="${checked_request}"
+                                                                                           var="lr1">
                                                                                     <tr>
-                                                                                        <td>${at[0]}</td>
-                                                                                        <td>${at[1]}</td>
-                                                                                        <td>${at[2]}</td>
-                                                                                        <td>${at[3]}</td>
+                                                                                        <td>${lr1.submitTime}</td>
+                                                                                        <td>${lr1.user.id}</td>
+                                                                                        <td>${lr1.user.name}</td>
+                                                                                        <td>${lr1.startTime}</td>
+                                                                                        <td>${lr1.endTime}</td>
+                                                                                        <td>${lr1.checker.name} (${lr1.checker.id})</td>
                                                                                     </tr>
                                                                                 </c:forEach>
                                                                                 </tbody>

@@ -6,5 +6,6 @@
                     href="http://www.scnoob.com">菜鸟素材</a> - Collect from <a href="http://www.scnoob.com/moban">网页模板</a></span>
 
         </div>
+        <div id="datatable"></div>
     </div>
 </footer>

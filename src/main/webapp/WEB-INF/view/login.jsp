@@ -50,6 +50,10 @@
                             <div class="form-group text-center m-t-20">
                                 <button class="btn btn-common btn-block" type="submit">Log In</button>
                             </div>
+
+                            <c:if test="${!(msg eq null)}">
+                                <label for="username" style="color: #e22a6f">${msg}</label>
+                            </c:if>
                         </form>
                     </div>
                 </div>

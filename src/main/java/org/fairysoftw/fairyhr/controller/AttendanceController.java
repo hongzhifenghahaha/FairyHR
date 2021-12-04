@@ -37,12 +37,22 @@ public class AttendanceController {
     }
 
    @RequestMapping(value = "/checkin",method = RequestMethod.GET)
-    public String getCheckInPage(){
+    public String getCheckInPage(HttpSession session){
+       User user = userService.selectById((String) session.getAttribute("id"));
+       List<AttendanceTime> today_checkin=new ArrayList<>();
+       for (AttendanceTime at:user.getAttendanceTimes()){
+           DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+           String dates=df.format(at.getTime());
+           if (dates.equals(df.format(new Date()))){
+               today_checkin.add(at);
+           }
+       }
+       session.setAttribute("today_checkin",today_checkin);
         return "attend/checkin";
     }
 
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-    public void userCheckIn(HttpSession session, HttpServletResponse response) throws IOException {//不作跳转
+    public String userCheckIn(HttpSession session, HttpServletResponse response,HttpServletRequest request) throws IOException {//不作跳转
         User user = userService.selectById((String) session.getAttribute("id"));
         if (user.getAttendanceTimes() == null) {
             ArrayList<AttendanceTime> times = new ArrayList<AttendanceTime>();
@@ -52,11 +62,16 @@ public class AttendanceController {
             user.getAttendanceTimes().add(new AttendanceTime(new Date()));
         }
         userService.update(user);
-        response.setCharacterEncoding("utf-8");
-        PrintWriter out = response.getWriter();
-        out.print("<script>alert('checkin success'); window.location='/attendance/checkin' </script>");
-        out.flush();
-        out.close();
+        List<AttendanceTime> today_checkin=new ArrayList<>();
+        for (AttendanceTime at:user.getAttendanceTimes()){
+            DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+            String dates=df.format(at.getTime());
+            if (dates.equals(df.format(new Date()))){
+                today_checkin.add(at);
+            }
+        }
+        session.setAttribute("today_checkin",today_checkin);
+        return "redirect:/attendance/checkin";
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)

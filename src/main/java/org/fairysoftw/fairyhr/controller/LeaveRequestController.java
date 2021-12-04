@@ -34,19 +34,36 @@ public class LeaveRequestController {
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
-    public String getLeaveRecordPage() {
+    public String getLeaveRecordPage(HttpSession session) {
+        //添加leave list to jsp
+        User user = userService.selectById((String) session.getAttribute("id"));
+        List<LeaveRequest> leaveRequestList = user.getLeaveRequests();
+
+        List<LeaveRequest> unchecked=new ArrayList<>();
+        List<LeaveRequest> checked=new ArrayList<>();
+
+        for (LeaveRequest lr:leaveRequestList){
+            if (lr.getChecker()==null){
+                unchecked.add(lr);
+            }else {
+                checked.add(lr);
+            }
+        }
+
+        session.setAttribute("checked_request",checked);
+        session.setAttribute("unchecked_request",unchecked);
         return "leave/leaveRecords";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddLeavePage(HttpSession session) {
-        User user=userService.selectById((String)session.getAttribute("id"));
-        List<Department> departmentList=departmentService.selectByUserId(user.getId());
-        List<String> departs=new ArrayList<>();
-        for (Department d:departmentList){
+        User user = userService.selectById((String) session.getAttribute("id"));
+        List<Department> departmentList = departmentService.selectByUserId(user.getId());
+        List<String> departs = new ArrayList<>();
+        for (Department d : departmentList) {
             departs.add(d.getId());
         }
-        session.setAttribute("departs",departs);
+        session.setAttribute("departs", departs);
         return "leave/addLeave";
     }
 
@@ -58,31 +75,31 @@ public class LeaveRequestController {
                                   @RequestParam(value = "depart", defaultValue = "") String depart,
                                   @RequestParam(value = "reason", defaultValue = "") String reason,
                                   HttpSession session) throws ParseException {
-        if (start_date.length()<2||end_date.length()<2||start_time.length()<2||end_time.length()<2){
-            session.setAttribute("msg","please fill all the time box.");
+        if (start_date.length() < 2 || end_date.length() < 2 || start_time.length() < 2 || end_time.length() < 2) {
+            session.setAttribute("msg", "please fill all the time box.");
             return "leave/addLeave";
         }
-        DateFormat df=new SimpleDateFormat("yyyy-MM-dd/HH:mm");
-        Date date1=df.parse(start_date+"/"+start_time);
-        Date date2=df.parse(end_date+"/"+end_time);
-        if (date2.before(new Date())&&date1.after(date2)){
-            session.setAttribute("msg","be sure the start_time is earlier than end_time and end_time is later than now the time.");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd/HH:mm");
+        Date date1 = df.parse(start_date + "/" + start_time);
+        Date date2 = df.parse(end_date + "/" + end_time);
+        if (date2.before(new Date()) && date1.after(date2)) {
+            session.setAttribute("msg", "be sure the start_time is earlier than end_time and end_time is later than now the time.");
             return "leave/addLeave";
         }
         /*更新数据库 depart depart=待更新数据库*/
         Department department = departmentService.selectById(depart);
         LeaveRequest leaveRequest = new LeaveRequest(UUID.randomUUID().toString(),
-                userService.selectById((String)session.getAttribute("id")),
-                date1,date2,new Date(), reason, "待审核" , null, null, null);
-        if(department.getLeaveRequests()==null){
+                userService.selectById((String) session.getAttribute("id")),
+                date1, date2, new Date(), reason, "待审核", null, null, null);
+        if (department.getLeaveRequests() == null) {
             ArrayList<LeaveRequest> myLeaveRequest = new ArrayList<LeaveRequest>();
             myLeaveRequest.add(leaveRequest);
-            department.setLeaveRequests((List)myLeaveRequest);
+            department.setLeaveRequests((List) myLeaveRequest);
         } else {
             department.getLeaveRequests().add(leaveRequest);
         }
         departmentService.update(department);
-        return "leave/leaveRecords";
+        return "redirect:/leave/record";
     }
 
 
