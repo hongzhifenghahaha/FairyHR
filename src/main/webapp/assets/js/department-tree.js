@@ -40,8 +40,7 @@ function init() {
 
     myDiagram.isReadOnly = true;
 
-    var levelColors = ["#AC193D", "#2672EC", "#8C0095", "#5133AB",
-        "#008299", "#D24726", "#008A00", "#094AB2"];
+    var levelColors = ["#494949", "#F13974"];
 
     // override TreeLayout.commitNodes to also modify the background brush based on the tree depth level
     myDiagram.layout.commitNodes = function () {
@@ -97,10 +96,6 @@ function init() {
             {doubleClick: nodeDoubleClick},
             // for sorting, have the Node.text be the data.name
             new go.Binding("text", "name"),
-            // bind the Part.layerName to control the Node's layer depending on whether it isSelected
-            new go.Binding("layerName", "isSelected", function (sel) {
-                return sel ? "Foreground" : "";
-            }).ofObject(),
             // define the node's outer shape
             $(go.Shape, "Rectangle",
                 {
@@ -109,28 +104,21 @@ function init() {
                     portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer"
                 }),
             $(go.Panel, "Horizontal",
-                $(go.Picture,
-                    {
-                        name: "Picture",
-                        desiredSize: new go.Size(39, 50),
-                        margin: new go.Margin(6, 8, 6, 8),
-                    }),
                 $(go.Panel, "Table",
                     {
                         maxSize: new go.Size(150, 999),
-                        margin: new go.Margin(6, 10, 0, 3),
-                        defaultAlignment: go.Spot.Left
+                        minSize: new go.Size(140, 80),
+                        defaultAlignment: go.Spot.Center
                     },
-                    $(go.RowColumnDefinition, {column: 2, width: 4}),
                     $(go.TextBlock, textStyle(),  // the name
                         {
                             name: "NAMETB",
                             font: "12pt Segoe UI,sans-serif",
-                            editable: false, isMultiline: false,
-                            minSize: new go.Size(10, 16),
+                            editable: false,
+                            isMultiline: false,
                             alignment: go.Spot.Center
                         },
-                        new go.Binding("text", "name").makeTwoWay()),
+                        new go.Binding("text", "name")),
                 )  // end Table Panel
             ) // end Horizontal Panel
         );  // end Node

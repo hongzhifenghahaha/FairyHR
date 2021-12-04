@@ -35,7 +35,7 @@
                 <div id="sample">
                     <script src="/assets/js/department-tree.js"></script>
                     <div id="myDiagramDiv"
-                         style="background-color: #d5d5d5; border: solid 1px black; height: 500px"></div>
+                         style="background-color: #d5d5d5; border: solid 1px black; height: 90%"></div>
                 </div>
             </div>
             <ct:footer/>
