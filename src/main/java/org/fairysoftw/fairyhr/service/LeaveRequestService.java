@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.service;
 
 import org.fairysoftw.fairyhr.model.Department;
 import org.fairysoftw.fairyhr.model.LeaveRequest;
+import org.fairysoftw.fairyhr.model.LeaveRequestType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
@@ -87,4 +88,10 @@ public interface LeaveRequestService {
      * @return 删除的记录条数
      */
     int deleteByUserId(String user_id);
+
+    List<String> selectAllType();
+
+    int insertType(String name);
+
+    int deleteType(String name);
 }

@@ -37,6 +37,11 @@ CREATE TABLE IF NOT EXISTS user
     deleted      BOOLEAN     NOT NULL
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS leave_request_type
+(
+    name    VARCHAR(30) PRIMARY KEY
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS leave_request
 (
     id            VARCHAR(30) PRIMARY KEY,
@@ -46,6 +51,7 @@ CREATE TABLE IF NOT EXISTS leave_request
     submit_time   DATETIME    not null,
     reason        TEXT,
     status        TINYTEXT,
+    request_type  VARCHAR(30),
     checker_id    VARCHAR(30),
     check_time    DATETIME,
     check_opinion TEXT,

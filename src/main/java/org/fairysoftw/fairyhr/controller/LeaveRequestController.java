@@ -92,7 +92,7 @@ public class LeaveRequestController {
         Department department = departmentService.selectById(depart);
         LeaveRequest leaveRequest = new LeaveRequest(UUID.randomUUID().toString(),
                 userService.selectById((String) session.getAttribute("id")),
-                date1, date2, new Date(), reason, "待审核", null, null, null);
+                date1, date2, new Date(), reason, "公事", "待审核", null, null, null);//TODO: 请假类型
         if (department.getLeaveRequests() == null) {
             ArrayList<LeaveRequest> myLeaveRequest = new ArrayList<LeaveRequest>();
             myLeaveRequest.add(leaveRequest);

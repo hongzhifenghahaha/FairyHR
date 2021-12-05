@@ -31,9 +31,11 @@ VALUES (0, '张三', 'zs', '12345678901', '234667199701010000', 'zs@gmail.com', 
        (5, '刘泡泡', 'lpp', '12345678901', '234667199701010000', 'ls@gmail.com', '上海市市辖区浦东新区外高桥保税区005号607室', '宣发部部长',
         FALSE);
 
+INSERT INTO leave_request_type(name) VALUES('公事'),('私事');
+
 -- leave_request
-INSERT INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id)
-VALUES (0, 5, '2021-11-22 09:00:00', '2021-11-22 17:00:00', '2021-11-20 22:00:00', '参加朋友婚宴', '待审核', NULL);
+INSERT INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, request_type, status, checker_id)
+VALUES (0, 5, '2021-11-22 09:00:00', '2021-11-22 17:00:00', '2021-11-20 22:00:00', '参加朋友婚宴','公事', '待审核', NULL);
 
 -- department_user
 INSERT INTO department_user(user_id, d_id)
