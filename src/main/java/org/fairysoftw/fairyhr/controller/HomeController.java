@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * 系统主页控制类
@@ -110,7 +109,7 @@ public class HomeController {
      */
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String getErrorPage() {
-        return "nonuse";
+        return "error";
     }
 
     /**

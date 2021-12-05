@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="ct" uri="customTag" %>
 <head>
     <title>FairyHR</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
@@ -86,7 +87,7 @@
                 </div>
             </div>
 
-            <c:import url="../footer.jsp"/>
+            <ct:footer/>
 
         </div>
     </div>
