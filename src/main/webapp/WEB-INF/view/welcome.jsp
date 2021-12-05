@@ -32,6 +32,7 @@
                     <div class="row" style="background-color: white">
                         <div class="col-xl-6">
                             <div class="card-body" style="padding-top: 200px;padding-left: 100px;">
+                                <h5 style="font-family: 'Mukti Narrow';font-size: 30px;">User ${user.name}</h5>
                                 <h5 style="font-family: 'Mukti Narrow';font-size: 30px;">Welcome to FairyHR</h5>
                                 <p class="card-text">Designed to provide you with convenience in attendance and company management</p>
                                 <a href="/attendance/checkin" class="btn btn-common">Check In For Today</a>

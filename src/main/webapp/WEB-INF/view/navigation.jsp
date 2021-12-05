@@ -88,7 +88,7 @@
             </li>
         </ul>
         <ul class="nav-left" style="float: right">
-            <p class="sub-nav" style="padding-top: 18px" >
+            <p class="sub-nav" style="padding-top: 18px">
                 Welcome
             </p>
         </ul>
@@ -129,15 +129,6 @@
                     <span class="title">请假管理</span>
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="/department">
-                    <span class="icon-holder">
-                    <i class="lni-layers"></i>
-                    </span>
-                    <span class="title">部门管理</span>
-                </a>
-            </li>
-<%--            ${position}
             <c:if test="${position eq 'manager'}">
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="/department">
@@ -147,7 +138,18 @@
                         <span class="title">部门管理</span>
                     </a>
                 </li>
-            </c:if>--%>
+            </c:if>
+            <%--            ${position}
+                        <c:if test="${position eq 'manager'}">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="/department">
+                                <span class="icon-holder">
+                                <i class="lni-layers"></i>
+                                </span>
+                                    <span class="title">部门管理</span>
+                                </a>
+                            </li>
+                        </c:if>--%>
         </ul>
     </div>
 </div>
