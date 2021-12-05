@@ -36,7 +36,8 @@
                     <div class="card-body">
                         <form class="form-horizontal m-t-20" action="/login" method="post">
                             <div class="form-group">
-                                <input class="form-control" type="text" required="" placeholder="User ID" name="userid">
+                                <input class="form-control" type="text" required=""
+                                       onkeyup="value=value.replace(/[^a-zA-Z\d-]/g,'')" placeholder="User ID" name="userid">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" required="" placeholder="Password" name="password">

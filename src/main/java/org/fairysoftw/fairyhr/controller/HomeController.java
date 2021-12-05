@@ -1,5 +1,6 @@
 package org.fairysoftw.fairyhr.controller;
 
+import org.fairysoftw.fairyhr.model.Department;
 import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.DepartmentService;
 import org.fairysoftw.fairyhr.service.UserService;
@@ -21,69 +22,84 @@ public class HomeController {
     private final DepartmentService departmentService;
 
     @Autowired
-    HomeController(UserService userService, DepartmentService departmentService){
+    HomeController(UserService userService, DepartmentService departmentService) {
         this.userService = userService;
         this.departmentService = departmentService;
     }
 
     @GetMapping("/")
-    public String getHome(HttpSession session)
-    {
-        if (session.getAttribute("user")==null){
+    public String getHome(HttpSession session) {
+        if (session.getAttribute("user") == null) {
             return "redirect:/login";
         }
-        return "redirect:/attendance/checkin";
+        return "welcome";
         //homeService.getSchedulesString().get(0);
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String getLoginPage(HttpSession session){
-        session.setAttribute("msg","");
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String getLoginPage(HttpSession session) {
+        session.setAttribute("msg", "");
         return "login";
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String proccessLogin(@RequestParam(value = "userid",defaultValue = "") String userid,
-                                @RequestParam(value = "password",defaultValue = "") String password,
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String proccessLogin(@RequestParam(value = "userid", defaultValue = "") String userid,
+                                @RequestParam(value = "password", defaultValue = "") String password,
                                 HttpSession session,
-                                HttpServletResponse  response,
+                                HttpServletResponse response,
                                 HttpServletRequest request) throws IOException {
         //如果原本有账号登录,退出账号
-        if (session.getAttribute("id")!=null){
+        if (session.getAttribute("id") != null) {
             session.removeAttribute("user");
             session.removeAttribute("id");
         }
-        User user =  userService.selectById(userid);
+        User user = userService.selectById(userid);
 
-        if (user!=null && user.getPassword()!=null){
-            if(user.getPassword().equals(password)){
+        if (user != null && user.getPassword() != null) {
+            if (user.getPassword().equals(password)) {
                 //todo:直接存user到session似乎不太好
-                session.setAttribute("user",user);
-                session.setAttribute("id",userid);
+                session.setAttribute("user", user);
+                session.setAttribute("id", userid);
                 Cookie cookieId = new Cookie("id", userid);
                 Cookie cookieName = new Cookie("userName", user.getName());
-                cookieId.setMaxAge(60*60*2);
-                cookieName.setMaxAge(60*60*2);
+                cookieId.setMaxAge(60 * 60 * 2);
+                cookieName.setMaxAge(60 * 60 * 2);
                 response.addCookie(cookieId);
                 response.addCookie(cookieName);
+
+                boolean isManager = false;
+                for (Department d : departmentService.selectByUserId(userid)) {
+                    for (User u : d.getManagers()) {
+                        if (u.getId().equals(userid)) {
+                            isManager = true;
+                        }
+                    }
+                }
+                if (isManager) {
+                    session.setAttribute("position", "manager");
+                } else {
+                    session.setAttribute("position", "user");
+                }
                 return "redirect:/";
             }
         }
-        request.setAttribute("msg","user info is wrong, please check your input.");
+        request.setAttribute("msg", "user info is wrong, please check your input.");
 
         return "login";
     }
 
-    @RequestMapping(value = "/error",method = RequestMethod.GET)
-    public String getErrorPage(){
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String getErrorPage() {
         return "nonuse";
     }
 
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public String Logout(HttpSession session){
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String Logout(HttpSession session) {
         session.removeAttribute("user");
         session.removeAttribute("id");
         session.removeAttribute("department");
+        session.removeAttribute("position");
+        session.setAttribute("msg", "");
         return "login";
     }
 }

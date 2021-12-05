@@ -11,21 +11,30 @@
 
 <div class="header navbar">
     <div class="header-container">
-        <div class="nav-logo" style="width: 400px">
-            <a href="/home">
+        <div class="nav-logo" style="width: 300px;">
+            <a href="/">
                 <span class="logo">
                       <img src="/assets/img/title.png" alt="" height="60px">
                 </span>
 
             </a>
-            <a href="/home">
+            <a href="/">
                 <span class="logo">
                       <img src="/assets/img/title2.png" alt="" height="60px">
                 </span>
 
             </a>
         </div>
-
+        <ul class="nav-left" style="padding-top: 20px;">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="lni-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="lni-menu"></i>
+                </a>
+            </li>
+        </ul>
         <ul class="nav-right">
             <li class="user-profile dropdown dropdown-animated scale-left">
 
@@ -36,7 +45,7 @@
                         </a>
                     </c:when>
                     <c:otherwise>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #e22a6f">
                                 ${user.name}
                         </a>
                     </c:otherwise>
@@ -78,6 +87,11 @@
 
             </li>
         </ul>
+        <ul class="nav-left" style="float: right">
+            <p class="sub-nav" style="padding-top: 18px">
+                Welcome
+            </p>
+        </ul>
     </div>
 </div>
 
@@ -108,24 +122,57 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="/leave/record">
+                <c:choose>
+                    <c:when test="${position eq 'user'}">
+                        <a class="dropdown-toggle" href="/leave/record">
                     <span class="icon-holder">
                     <i class="lni-cloud"></i>
                     </span>
-                    <span class="title">请假管理</span>
-                </a>
+                            <span class="title">请假申请</span>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="#" class="dropdown-toggle">
+                    <span class="icon-holder">
+                        <i class="lni-dashboard"></i>
+                    </span>
+                            <span class="title">请假管理</span>
+                            <span class="arrow">
+                        <i class="lni-chevron-right"></i>
+                    </span>
+                        </a>
+                        <ul class="dropdown-menu sub-down">
+                            <li>
+                                <a href="/leave/record">请假申请</a>
+                            </li>
+                            <li>
+                                <a href="/leave/type">类型管理</a>
+                            </li>
+                        </ul>
+                    </c:otherwise>
+                </c:choose>
             </li>
-            <c:if test="${!(user eq null)}">
-
-            </c:if>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="/department">
+            <c:if test="${position eq 'manager'}">
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="/department">
                     <span class="icon-holder">
                     <i class="lni-layers"></i>
                     </span>
-                    <span class="title">部门管理</span>
-                </a>
-            </li>
+                        <span class="title">部门管理</span>
+                    </a>
+                </li>
+            </c:if>
+            <%--            ${position}
+                        <c:if test="${position eq 'manager'}">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="/department">
+                                <span class="icon-holder">
+                                <i class="lni-layers"></i>
+                                </span>
+                                    <span class="title">部门管理</span>
+                                </a>
+                            </li>
+                        </c:if>--%>
         </ul>
     </div>
 </div>
