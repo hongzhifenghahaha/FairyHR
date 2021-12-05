@@ -38,7 +38,8 @@
                                           action="/department/register" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User ID</label>
-                                            <input type="text" class="form-control" name="id" required="required">
+                                            <input type="text" class="form-control"  name="id"
+                                                   onkeyup="value=value.replace(/[^a-zA-Z\d-]/g,'')" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User Name</label>
