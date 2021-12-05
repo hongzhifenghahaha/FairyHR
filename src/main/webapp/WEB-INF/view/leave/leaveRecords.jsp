@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="ct" uri="customTag"%>
+<%@ taglib prefix="taglib" uri="customTag" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -87,15 +88,14 @@
                                                                                 <tbody>
                                                                                 <c:forEach items="${unchecked_request}"
                                                                                            var="lr">
-                                                                                    <tr>
-                                                                                        <td>${lr.submitTime}</td>
-                                                                                        <td>${lr.user.id}</td>
-                                                                                        <td>${lr.user.name}</td>
-                                                                                        <td>${lr.startTime}</td>
-                                                                                        <td>${lr.endTime}</td>
-                                                                                        <td>${lr.reason}</td>
-                                                                                        <td>${lr.status}</td>
-                                                                                    </tr>
+                                                                                    <taglib:uncheckedLeaveListItem submitTime="${lr.submitTime}"
+                                                                                                          id="${lr.user.id}"
+                                                                                                          name="${lr.user.name}"
+                                                                                                          startTime="${lr.startTime}"
+                                                                                                          endTime="${lr.endTime}"
+                                                                                                          reason="${lr.reason}"
+                                                                                                          status="${lr.status}"
+                                                                                    > </taglib:uncheckedLeaveListItem>
                                                                                 </c:forEach>
                                                                                 </tbody>
                                                                             </table>

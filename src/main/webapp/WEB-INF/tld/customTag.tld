@@ -12,4 +12,69 @@
         <tag-class>org.fairysoftw.fairyhr.tag.FooterTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+    <tag>
+        <name>uncheckedLeaveListItem</name>
+        <tag-class>org.fairysoftw.fairyhr.tag.LeaveListItemTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>item</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>org.fairysoftw.fairyhr.model.LeaveRequest</type>
+        </attribute>
+        <attribute>
+            <name>submitTime</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>id</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>startTime</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>endTime</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>reason</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>status</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>checkedLeaveListItem</name>
+        <tag-class>org.fairysoftw.fairyhr.tag.CheckedLeaveListItemTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>item</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>org.fairysoftw.fairyhr.model.LeaveRequest</type>
+        </attribute>
+
+    </tag>
+
 </taglib>
