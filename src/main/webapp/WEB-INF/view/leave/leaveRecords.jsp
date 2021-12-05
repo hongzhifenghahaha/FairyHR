@@ -88,14 +88,8 @@
                                                                                 <tbody>
                                                                                 <c:forEach items="${unchecked_request}"
                                                                                            var="lr">
-                                                                                    <taglib:uncheckedLeaveListItem submitTime="${lr.submitTime}"
-                                                                                                          id="${lr.user.id}"
-                                                                                                          name="${lr.user.name}"
-                                                                                                          startTime="${lr.startTime}"
-                                                                                                          endTime="${lr.endTime}"
-                                                                                                          reason="${lr.reason}"
-                                                                                                          status="${lr.status}"
-                                                                                    > </taglib:uncheckedLeaveListItem>
+                                                                                    <taglib:LeaveListItemTag item="${lr}">
+                                                                                    </taglib:LeaveListItemTag>
                                                                                 </c:forEach>
                                                                                 </tbody>
                                                                             </table>
@@ -139,7 +133,9 @@
                                                                                 <tbody>
                                                                                 <c:forEach items="${checked_request}"
                                                                                            var="lr1">
-                                                                                    <tr>
+                                                                                    <taglib:checkedLeaveListItem item="${lr1}">
+                                                                                    </taglib:checkedLeaveListItem>
+                                                                                    <%--<tr>
                                                                                         <td>${lr1.submitTime}</td>
                                                                                         <td>${lr1.user.id}</td>
                                                                                         <td>${lr1.user.name}</td>
@@ -149,7 +145,7 @@
                                                                                         <td>${lr1.status}</td>
                                                                                         <td>${lr1.checkOpinion}</td>
                                                                                         <td>${lr1.checkTime}</td>
-                                                                                    </tr>
+                                                                                    </tr>--%>
                                                                                 </c:forEach>
                                                                                 </tbody>
                                                                             </table>

@@ -20,7 +20,16 @@ import java.net.http.HttpResponse;
  */
 public class LeaveListItemTag extends SimpleTagSupport {
 
-    private String submitTime;
+    private LeaveRequest item;
+
+    public void setItem(LeaveRequest item) {
+        this.item = item;
+    }
+
+    public LeaveRequest getItem() {
+        return item;
+    }
+    /*private String submitTime;
     private String id;
     private String name;
     private String startTime;
@@ -53,19 +62,19 @@ public class LeaveListItemTag extends SimpleTagSupport {
 
     public void setStatus(String status) {
         this.status = status;
-    }
+    }*/
 
 
     @Override
     public void doTag() throws JspException, IOException {
         var context = "<tr>"+
-                "<td>"+submitTime+"</td>"+
-                "<td>"+id+"</td>"+
-                "<td>"+name+"</td>"+
-                "<td>"+startTime+"</td>"+
-                "<td>"+endTime+"</td>"+
-                "<td>"+reason+"</td>"+
-                "<td>"+status+"</td>"+
+                "<td>"+item.getSubmitTime()+"</td>"+
+                "<td>"+item.getUser().getId()+"</td>"+
+                "<td>"+item.getUser().getName()+"</td>"+
+                "<td>"+item.getStartTime()+"</td>"+
+                "<td>"+item.getEndTime()+"</td>"+
+                "<td>"+item.getReason()+"</td>"+
+                "<td>"+item.getStatus()+"</td>"+
                 "</tr>"
                 ;
         JspWriter out = getJspContext().getOut();

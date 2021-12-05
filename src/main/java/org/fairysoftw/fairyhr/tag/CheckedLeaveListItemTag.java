@@ -18,6 +18,9 @@ public class CheckedLeaveListItemTag extends SimpleTagSupport {
         this.item = item;
     }
 
+    public LeaveRequest getItem() {
+        return item;
+    }
 
     @Override
     public void doTag() throws JspException, IOException {
