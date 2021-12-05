@@ -35,7 +35,8 @@
                                           action="/department/${department.id}/add" method="post" id="prevent">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Department ID</label>
-                                            <input type="text" class="form-control" name="id" required="required">
+                                            <input type="text" onkeyup="value=value.replace(/[^a-zA-Z\d-]/g,'')"
+                                                   class="form-control" name="id" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Department Name</label>
