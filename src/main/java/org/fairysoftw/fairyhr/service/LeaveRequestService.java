@@ -89,9 +89,23 @@ public interface LeaveRequestService {
      */
     int deleteByUserId(String user_id);
 
+    /**
+     * 选出所有的请假申请类型
+     * @return 返回类型名列表
+     */
     List<String> selectAllType();
 
+    /**
+     * 插入请假申请类型
+     * @param name 类型名
+     * @return 返回插入的记录条数
+     */
     int insertType(String name);
 
+    /**
+     * 删除请假申请类型
+     * @param name 类型名
+     * @return 返回删除的记录条数
+     */
     int deleteType(String name);
 }
