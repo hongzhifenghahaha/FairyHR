@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="card-body">
                                     <form class="forms-sample"
-                                          action="/department/add" method="post" id="prevent">
+                                          action="/department/${department.id}/add" method="post" id="prevent">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Department ID</label>
                                             <input type="text" class="form-control" name="id" required="required">

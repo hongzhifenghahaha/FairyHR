@@ -133,5 +133,11 @@ public class LeaveRequestController {
         return "leave/leaveRecords";
     }
 
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public String getLeaveRecordPage(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        session.setAttribute("types",leaveRequestService.selectAllType());
+        return "leave/typeController";
+    }
+
 
 }

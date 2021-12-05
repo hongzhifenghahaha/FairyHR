@@ -66,7 +66,8 @@
                                             <h4 class="card-title" style="padding-left: 10px">
                                                 子部门管理</h4>
                                             <div class="col-xl-10">
-                                                <a class="lni-plus" style="float:right;" href="/department/add"
+                                                <a class="lni-plus" style="float:right;"
+                                                   href="/department/${department.id}/add"
                                                    style="background-color: #e22a6f">新增子部门</a>
                                             </div>
                                         </div>
@@ -117,12 +118,12 @@
                                                 <ul>
                                                     <li>
                                                         <a class="lni-plus" style="float:right;"
-                                                           href="/department/register"
+                                                           href="/department/${department.id}/register"
                                                            style="background-color: #e22a6f">创建新用户</a>
                                                     </li>
                                                     <li>
                                                         <a class="lni-plus" style="float:right;"
-                                                           href="/department/addOldUser"
+                                                           href="/department/${department.id}/addOldUser"
                                                            style="background-color: #e22a6f">添加已有用户</a>
                                                     </li>
                                                 </ul>
@@ -251,44 +252,6 @@
                                                             ${l.type}
                                                     </td>
                                                     <td>
-                                                            <%--    &lt;%&ndash;               <button type="button" class="btn btn-light btn-rounded"
-                                                                               onclick="reject_request('${l.id}')">
-                                                                                   reject
-                                                                               </button>
-
-
-                                                                               <button type="button" class="btn btn-info btn-rounded"
-                                                                               onclick="pass_request('${l.id}')">
-                                                                                   pass
-                                                                               </button>
-                       &ndash;%&gt;
-                                                            <div class="btn-group dropup m-b-10" style="float:right;">
-                                                                <button type="button" class="btn btn-common dropdown-toggle"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false"
-                                                                        style="background-color: #0275d8">审核
-                                                                </button>
-                                                                <div class="dropdown-menu" x-placement="top-start"
-                                                                     style="position: absolute; transform: translate3d(103px, -198px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                                    <div class="col-12">
-                                                                        <input type="text" placeholder="请输入审核意见"
-                                                                               name="check_opinion" required/>
-                                                                        <br>
-                                                                    </div>
-                                                                    <div class="row" style="padding-left: 60px">
-                                                                        <button type="button"
-                                                                                class="btn btn-light btn-rounded"
-                                                                                onclick="reject_request('${l.id}')">
-                                                                            reject
-                                                                        </button>
-                                                                        <button type="button"
-                                                                                class="btn btn-info btn-rounded"
-                                                                                onclick="pass_request('${l.id}')">
-                                                                            pass
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>--%>
                                                         <button type="button"
                                                                 class="btn btn-common waves-effect waves-light"
                                                                 data-toggle="modal" data-target=".bs-example-modal-lg"
@@ -371,7 +334,7 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/deleteUser",
+                        url: "/department/${department.id}/deleteUser",
                         complete: function () {
                             location.reload();
                         }
@@ -382,7 +345,7 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/assignUser",
+                        url: "/department/${department.id}/assignUser",
                         complete: function () {
                             location.reload();
                         }
@@ -396,7 +359,7 @@
                             "request_id": document.getElementById("opinion").getAttribute("user_id"),
                             "opinion": document.getElementById("opinion").value
                         },
-                        url: "/department/passRequest",
+                        url: "/department/${department.id}/passRequest",
                         complete: function () {
                             location.reload();
                         }
@@ -410,7 +373,7 @@
                             "request_id": document.getElementById("opinion").getAttribute("user_id"),
                             "opinion": document.getElementById("opinion").value
                         },
-                        url: "/department/rejectRequest",
+                        url: "/department/${department.id}/rejectRequest",
                         complete: function () {
                             location.reload();
                         }
@@ -421,13 +384,12 @@
                     $.ajax({
                         type: "post",
                         data: {"department_id": id},
-                        url: "/department/delete",
+                        url: "/department/${department.id}/delete",
                         dataType: "json",
-                        complete: function(data) {
-                            if(data.responseJSON.hasChild) {
+                        complete: function (data) {
+                            if (data.responseJSON.hasChild) {
                                 window.alert("该部门有子部门,删除失败");
-                            }
-                            else {
+                            } else {
                                 location.reload();
                             }
                         }
@@ -437,6 +399,22 @@
                 function set_id(id) {
                     document.getElementById("opinion").setAttribute("user_id", id);
                 }
+
+                $('#changeName').bind('keypress', function (event) {
+                    if (event.keyCode == "13") {
+                        alert('你输入的内容为：' + $('#changeName').val());
+                        $.ajax({
+                            type: "post",
+                            data: {"de_name": $('#changeName').val()},
+                            url: "/department/${department.id}/changeName",
+                            dataType: "json",
+                            complete: function (data) {
+                            }
+                        });
+                    }
+                });
+
+
             </script>
 
             <c:import url="../footer.jsp"/>

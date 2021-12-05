@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.controller;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
+import org.apache.catalina.Session;
 import org.fairysoftw.fairyhr.model.Department;
 import org.fairysoftw.fairyhr.model.User;
 import org.fairysoftw.fairyhr.service.DepartmentService;
@@ -82,14 +83,15 @@ public class DepartmentController {
         return "department/manager";
     }
 
-    @RequestMapping(value = "/register", method = GET)
-    public String getRegisterPage() {
+    @RequestMapping(value = "/{id}/register", method = GET)
+    public String getRegisterPage(@PathVariable(value = "id")String id) {
 
         return "user/register";
     }
 
-    @RequestMapping(value = "/register", method = POST)
-    public String addUser(@RequestParam(value = "id") String id, HttpSession session,
+    @RequestMapping(value = "/{id}/register", method = POST)
+    public String addUser(@PathVariable(value = "id")String d_id,
+                          @RequestParam(value = "id") String id, HttpSession session,
                           @RequestParam(value = "name", defaultValue = "") String name,
                           @RequestParam(value = "phone", defaultValue = "") String phone,
                           @RequestParam(value = "email", defaultValue = "") String email,
@@ -109,8 +111,9 @@ public class DepartmentController {
         return "redirect:/department/" + department.getId();
     }
 
-    @RequestMapping(value = "/deleteUser", method = POST)
-    public void deleteUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id}/deleteUser", method = POST)
+    public void deleteUser(@PathVariable(value = "id")String id,
+                           HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         System.out.println(request.getParameter("user_id"));
         System.out.println(userService.selectById(request.getParameter("user_id")));
         User user = userService.selectById((String) session.getAttribute("id"));
@@ -122,8 +125,9 @@ public class DepartmentController {
         request.setAttribute("managers", department.getManagers());
     }
 
-    @RequestMapping(value = "/assignUser", method = POST)
-    public void assignUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id/assignUser", method = POST)
+    public void assignUser(@PathVariable(value = "id")String id,
+                           HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         System.out.println(request.getParameter("user_id"));
         System.out.println(userService.selectById(request.getParameter("user_id")));
         response.getWriter().write("success");
@@ -135,8 +139,8 @@ public class DepartmentController {
         request.setAttribute("managers", department.getManagers());
     }
 
-    @RequestMapping(value = "/addOldUser", method = GET)
-    public String addOldUser(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id}/addOldUser", method = GET)
+    public String addOldUser(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         User user = userService.selectById((String) session.getAttribute("id"));
         Department department = (Department) session.getAttribute("department");
         List<User> our_d = department.getUsers();
@@ -158,8 +162,8 @@ public class DepartmentController {
         return "department/addOthers";
     }
 
-    @RequestMapping(value = "/addOldUser", method = POST)
-    public void addOldUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{id}/addOldUser", method = POST)
+    public void addOldUser(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user_id = request.getParameter("user_id");
         User user = userService.selectById(user_id);
         Department department = (Department) session.getAttribute("department");
@@ -170,23 +174,23 @@ public class DepartmentController {
         response.getWriter().write("complete");
     }
 
-    @RequestMapping(value = "/deleteRover", method = POST)
-    public void deleteRoverUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{id}/deleteRover", method = POST)
+    public void deleteRoverUser(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user_id = request.getParameter("user_id");
         userService.deleteById(user_id);
         response.getWriter().write("complete");
     }
 
-    @RequestMapping(value = "/changeName", method = POST)
-    public String changeDepartmentName(@RequestParam(value = "de_name") String de_name, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id}/changeName", method = POST)
+    public String changeDepartmentName(@PathVariable(value = "id")String id,@RequestParam(value = "de_name") String de_name, HttpSession session) throws IOException {
         Department department = (Department) session.getAttribute("department");
         department.setName(de_name);
         departmentService.update(department);
         return "redirect:/department/" + department.getId();
     }
 
-    @RequestMapping(value = "/passRequest", method = POST)
-    public void passRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id}/passRequest", method = POST)
+    public void passRequest(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         var manager_id = (String) session.getAttribute("id");
         var request_id = (String) request.getParameter("request_id");
         var department = departmentService.selectById(
@@ -208,8 +212,8 @@ public class DepartmentController {
         response.getWriter().write("success");
     }
 
-    @RequestMapping(value = "/rejectRequest", method = POST)
-    public void rejectRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/{id}/rejectRequest", method = POST)
+    public void rejectRequest(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         var manager_id = (String) session.getAttribute("id");
         var request_id = (String) request.getParameter("request_id");
         var department = departmentService.selectById(
@@ -231,8 +235,8 @@ public class DepartmentController {
         response.getWriter().write("success");
     }
 
-    @RequestMapping(value = "/delete", method = POST)
-    public void deleteSubDepartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{id}/delete", method = POST)
+    public void deleteSubDepartment(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String department_id = request.getParameter("department_id");
         System.out.println(department_id);
 //        departmentService.deleteById(department_id);//todo:遍历
@@ -246,16 +250,17 @@ public class DepartmentController {
     }
 
     //必须输入不能重复的姓名和id 必须选择一个新管理员
-    @RequestMapping(value = "/add", method = POST)
-    public String addSubDepartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
+    @RequestMapping(value = "/{id}/add", method = POST)
+    public String addSubDepartment(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String new_id = request.getParameter("id");
         String name = request.getParameter("name");
         String[] new_managers = request.getParameterValues("new_managers");
+        Department department=(Department) session.getAttribute("department");
 
         //判断
         boolean create = true;
         for (Department d : departmentService.selectAll()) {
-            if (d.getId().equals(id)) {
+            if (d.getId().equals(new_id)) {
                 session.setAttribute("msg", "the department id has existed, please try another id.");
                 create = false;
             }
@@ -268,7 +273,7 @@ public class DepartmentController {
         }
 
         if (!create) {
-            return "redirect:/department/add";
+            return "redirect:/department/"+department.getId()+"/add";
         }
         List<User> managers = new ArrayList<>();
         Department father = ((Department) session.getAttribute("department"));
@@ -287,8 +292,8 @@ public class DepartmentController {
         return "redirect:/department/" + father.getId();
     }
 
-    @RequestMapping(value = "/add", method = GET)
-    public String getAddSubDepartmentPage(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{id}/add", method = GET)
+    public String getAddSubDepartmentPage(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<User> candidates = new ArrayList<>();
         Department father = ((Department) session.getAttribute("department"));
         for (User u : userService.selectAll()) {

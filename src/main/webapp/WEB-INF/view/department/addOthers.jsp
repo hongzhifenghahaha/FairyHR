@@ -43,21 +43,32 @@
                                         <table id="datatable" class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th>Department ID</th>
-                                                <th>Department Name</th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Phone Number</th>
+                                                <th>Email</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach items="${sub_departments}" var="sub">
+                                            <c:forEach items="${others}" var="o">
                                                 <tr>
-                                                    <td>${sub.id}</td>
-                                                    <td>${sub.name}</td>
+                                                    <td>${o.id}</td>
+                                                    <td>${o.name}</td>
+                                                    <td>${o.phoneNumber}</td>
+                                                    <td>${o.emailAddr}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-light btn-rounded"
-                                                                onclick="delete_user('${sub.id}')">
-                                                            delete
+                                                                onclick="add_users('${o.id}')">
+                                                            add
                                                         </button>
+
+
+                                                        <c:forEach items="${rover}" var="r">
+                                                            <c:if test="${r.id eq o.id}">
+
+                                                            </c:if>
+                                                        </c:forEach>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -112,17 +123,17 @@
                         type: "post",
                         data: {"user_id": id},
                         url: "/department/addOldUser",
-                        complete: function () {
+                        complete: function() {
                             location.reload();
                         }
                     });
                 }
 
-                function delete_user(id) {
+                function delete_department(id) {
                     $.ajax({
                         type: "post",
                         data: {"department_id": id},
-                        url: "/department/deleteUser",
+                        url: "/department/delete",
                         complete: function () {
                             location.reload();
                         }

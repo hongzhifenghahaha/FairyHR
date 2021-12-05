@@ -12,13 +12,13 @@
 <div class="header navbar">
     <div class="header-container">
         <div class="nav-logo" style="width: 300px;">
-            <a href="/home">
+            <a href="/">
                 <span class="logo">
                       <img src="/assets/img/title.png" alt="" height="60px">
                 </span>
 
             </a>
-            <a href="/home">
+            <a href="/">
                 <span class="logo">
                       <img src="/assets/img/title2.png" alt="" height="60px">
                 </span>
@@ -122,12 +122,35 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="/leave/record">
+                <c:choose>
+                    <c:when test="${position eq 'user'}">
+                        <a class="dropdown-toggle" href="/leave/record">
                     <span class="icon-holder">
                     <i class="lni-cloud"></i>
                     </span>
-                    <span class="title">请假管理</span>
-                </a>
+                            <span class="title">请假申请</span>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="#" class="dropdown-toggle">
+                    <span class="icon-holder">
+                        <i class="lni-dashboard"></i>
+                    </span>
+                            <span class="title">请假管理</span>
+                            <span class="arrow">
+                        <i class="lni-chevron-right"></i>
+                    </span>
+                        </a>
+                        <ul class="dropdown-menu sub-down">
+                            <li>
+                                <a href="/leave/record">请假申请</a>
+                            </li>
+                            <li>
+                                <a href="/leave/type">类型管理</a>
+                            </li>
+                        </ul>
+                    </c:otherwise>
+                </c:choose>
             </li>
             <c:if test="${position eq 'manager'}">
                 <li class="nav-item dropdown">

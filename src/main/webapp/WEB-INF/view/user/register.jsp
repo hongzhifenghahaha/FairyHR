@@ -35,7 +35,7 @@
                                         updating your info in the box
                                     </p>
                                     <form class="forms-sample"
-                                          action="/department/register" method="post">
+                                          action="/department/${department.id}/register" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User ID</label>
                                             <input type="text" class="form-control" name="id" required="required">
