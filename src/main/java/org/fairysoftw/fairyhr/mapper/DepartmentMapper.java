@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 映射类,实现{@link Department}类与数据库中的department表。
+ * 映射类,实现{@link Department}类与数据库中的department表的映射。
  *
  * @version 1.0
  */
