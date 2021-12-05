@@ -11,6 +11,8 @@ import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Service
+@Transactional
 public class DepartmentServiceImpl implements DepartmentService {
     /*
     用到的一些mapper类和service类
@@ -97,6 +100,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Rollback
     public int deleteById(String id) {
         var department = departmentMapper.selectById(id);
         if(department != null) {
@@ -104,7 +108,9 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.getUsers().clear();
             department.getManagers().clear();
             department.setDeleted(true);
-            return this.update(department);
+            department.setDepartment(null);
+            this.update(department);
+            return departmentMapper.deleteById(id);
         }
         else {
             return 0;

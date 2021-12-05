@@ -129,9 +129,6 @@
                     <span class="title">请假管理</span>
                 </a>
             </li>
-            <c:if test="${!(user eq null)}">
-
-            </c:if>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="/department">
                     <span class="icon-holder">
@@ -140,6 +137,17 @@
                     <span class="title">部门管理</span>
                 </a>
             </li>
+<%--            ${position}
+            <c:if test="${position eq 'manager'}">
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="/department">
+                    <span class="icon-holder">
+                    <i class="lni-layers"></i>
+                    </span>
+                        <span class="title">部门管理</span>
+                    </a>
+                </li>
+            </c:if>--%>
         </ul>
     </div>
 </div>

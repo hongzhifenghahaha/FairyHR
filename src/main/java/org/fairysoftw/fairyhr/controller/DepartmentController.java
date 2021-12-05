@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -189,6 +191,8 @@ public class DepartmentController {
         var request_id = (String) request.getParameter("request_id");
         var department = departmentService.selectById(
                 ((Department) session.getAttribute("department")).getId());
+        var opinion = (String) request.getParameter("opinion");
+        System.out.println(opinion);
         if (department != null && department.getLeaveRequests() != null) {
             var leaveRequests = department.getLeaveRequests()
                     .stream().filter((l) -> l.getId().equals(request_id))
@@ -197,7 +201,7 @@ public class DepartmentController {
                 leaveRequest.setChecker(userService.selectById(manager_id));
                 leaveRequest.setCheckTime(new Date());
                 leaveRequest.setStatus("审核通过");
-                leaveRequest.setCheckOpinion("TODO: 设置审核意见");
+                leaveRequest.setCheckOpinion(opinion);
             }
             departmentService.update(department);
         }
@@ -210,6 +214,8 @@ public class DepartmentController {
         var request_id = (String) request.getParameter("request_id");
         var department = departmentService.selectById(
                 ((Department) session.getAttribute("department")).getId());
+        var opinion = (String) request.getParameter("opinion");
+        System.out.println(opinion);
         if (department != null && department.getLeaveRequests() != null) {
             var leaveRequests = department.getLeaveRequests()
                     .stream().filter((l) -> l.getId().equals(request_id))
@@ -218,7 +224,7 @@ public class DepartmentController {
                 leaveRequest.setChecker(userService.selectById(manager_id));
                 leaveRequest.setCheckTime(new Date());
                 leaveRequest.setStatus("审核不通过");
-                leaveRequest.setCheckOpinion("TODO: 设置审核意见");
+                leaveRequest.setCheckOpinion(opinion);
             }
             departmentService.update(department);
         }
@@ -229,8 +235,14 @@ public class DepartmentController {
     public void deleteSubDepartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String department_id = request.getParameter("department_id");
         System.out.println(department_id);
-        departmentService.deleteById(department_id);
-        response.getWriter().write("complete");
+//        departmentService.deleteById(department_id);//todo:遍历
+        JSONObject o = new JSONObject();
+        boolean hasChild = departmentService.selectAll().stream().anyMatch((d)->d.getDepartment()!=null && d.getDepartment().getId().equals(department_id));
+        if(!hasChild) {
+            departmentService.deleteById(department_id);
+        }
+        o.put("hasChild", hasChild);
+        response.getWriter().write(o.toJSONString());
     }
 
     //必须输入不能重复的姓名和id 必须选择一个新管理员
@@ -286,7 +298,7 @@ public class DepartmentController {
                     isExist = true;
                 }
             }
-            if (!isExist){
+            if (!isExist) {
                 candidates.add(u);
             }
         }

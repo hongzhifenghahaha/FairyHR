@@ -55,7 +55,7 @@
                                                     <td>${sub.name}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-light btn-rounded"
-                                                                onclick="delete_department('${sub.id}')">
+                                                                onclick="delete_user('${sub.id}')">
                                                             delete
                                                         </button>
                                                     </td>
@@ -118,11 +118,11 @@
                     });
                 }
 
-                function delete_department(id) {
+                function delete_user(id) {
                     $.ajax({
                         type: "post",
                         data: {"department_id": id},
-                        url: "/department/delete",
+                        url: "/department/deleteUser",
                         complete: function () {
                             location.reload();
                         }

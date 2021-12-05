@@ -66,7 +66,13 @@ public class HomeController {
                 cookieName.setMaxAge(60*60*2);
                 response.addCookie(cookieId);
                 response.addCookie(cookieName);
-                return "redirect:/";
+                if (departmentService.selectByUserId(userid).isEmpty()){
+                    session.setAttribute("position","user");
+                }else {
+                    System.out.println("has info");
+                    session.setAttribute("position","manager");
+                }
+                    return "redirect:/";
             }
         }
         request.setAttribute("msg","user info is wrong, please check your input.");
@@ -84,6 +90,7 @@ public class HomeController {
         session.removeAttribute("user");
         session.removeAttribute("id");
         session.removeAttribute("department");
+        session.removeAttribute("position");
         return "login";
     }
 }
