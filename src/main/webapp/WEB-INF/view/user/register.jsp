@@ -28,7 +28,7 @@
                         <div class="col-lg-12 col-md-12 col-xs-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">update profile</h4>
+                                    <h4 class="card-title">为本部门创建一个新用户</h4>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-description">

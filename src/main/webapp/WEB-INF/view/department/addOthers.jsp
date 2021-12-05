@@ -63,12 +63,19 @@
                                                             add
                                                         </button>
 
-
-                                                        <c:forEach items="${rover}" var="r">
+                                                        <c:set var="isRover" value="false" scope="page" />
+                                                        <c:forEach items="${rovers}" var="r">
                                                             <c:if test="${r.id eq o.id}">
-
+                                                                  <c:set var="isRover" value="true" scope="page" />
                                                             </c:if>
                                                         </c:forEach>
+
+                                                        <c:if test="${isRover eq 'true'}">
+                                                            <button type="submit" class="btn btn-light btn-rounded"
+                                                                    onclick="delete_user('${o.id}')">
+                                                                delete
+                                                            </button>
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -122,18 +129,18 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/addOldUser",
+                        url: "/department/${department.id}/addOldUser",
                         complete: function() {
                             location.reload();
                         }
                     });
                 }
 
-                function delete_department(id) {
+                function delete_user(id) {
                     $.ajax({
                         type: "post",
-                        data: {"department_id": id},
-                        url: "/department/delete",
+                        data: {"user_id": id},
+                        url: "/department/${department.id}/deleteRover",
                         complete: function () {
                             location.reload();
                         }

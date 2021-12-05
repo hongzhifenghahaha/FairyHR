@@ -63,13 +63,13 @@
                                         </div>
                                         <div class="row">
 
-                                            <h4 class="card-title" style="padding-left: 10px">
+                                            <h4 class="card-title" style="padding-left: 10px; float: left">
                                                 子部门管理</h4>
-                                            <div class="col-xl-10">
-                                                <a class="lni-plus" style="float:right;"
+
+                                                <a class="lni-plus" style="float:right; margin-left: 400px"
                                                    href="/department/${department.id}/add"
                                                    style="background-color: #e22a6f">新增子部门</a>
-                                            </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
@@ -402,7 +402,7 @@
 
                 $('#changeName').bind('keypress', function (event) {
                     if (event.keyCode == "13") {
-                        alert('你输入的内容为：' + $('#changeName').val());
+                        alert('更改部门名成功：' + $('#changeName').val());
                         $.ajax({
                             type: "post",
                             data: {"de_name": $('#changeName').val()},
