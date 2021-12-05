@@ -338,7 +338,7 @@ public class DepartmentController {
                 managers.add(u);
             }
         }
-        departmentService.insert(new Department(id, name, father, false, managers, managers, null));
+        departmentService.insert(new Department(new_id, name, father, false, managers, managers, null));
         return "redirect:/department/" + father.getId();
     }
 
