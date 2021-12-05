@@ -21,48 +21,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-
-    <script>
-        function readtext(datas) {
-            var date1=$("#startDate").val();
-            var y1=date1.split("-")[0];
-            var m1=date1.split("-")[1];
-            var d1=date1.split("-")[2];
-            var time1=new Date(y1,m1,d1);
-
-            var date2=$("#endDate").val();
-            var y2=date1.split("-")[0];
-            var m2=date1.split("-")[1];
-            var d2=date1.split("-")[2];
-            var time2=new Date(y2,m2,d2);
-
-
-            var filteredDates = new Array()
-            var count=0;
-            for(let item in datas) {
-                var date = new Date(item[2]);
-                if (Date.parse(item[2]) > Date.parse(date1) && Date.parse(item[2]) < Date.parse(date2)){
-                    filteredDates[count]=item;
-                    count++;
-                }
-            };
-            sessionStorage.setItem('filteredDates',JSON.stringify(filteredDates))
-        }
-
-        function load1(datas) {
-
-            var filteredDates = new Array()
-            var count=0;
-            for(let item in datas) {
-                var date = new Date(item[2]);
-                    filteredDates[count]=item;
-                    count++;
-            };
-            sessionStorage.setItem('filteredDates',JSON.stringify(filteredDates))
-        }
-    </script>
 </head>
-<body onload="load1('${attendances}')">
+<body>
 <div class="app header-default side-nav-dark">
     <div class="layout">
         <c:import url="../navigation.jsp"/>
@@ -75,20 +35,6 @@
                                 <div class="card">
                                     <div class="card-header border-bottom">
                                         <h4 class="card-title">签到记录</h4>
-                                        <%--<form action="/attendanceRange" method="get">--%>
-                                        <div class="form-group col-lg-6">
-                                            <label for="startDate">开始日期</label>
-                                            <input type="date" class="form-control" id="startDate"
-                                                   name="start_date">
-                                        </div>
-                                        <div class="form-group col-lg-6">
-                                            <label for="endDate">截至日期</label>
-                                            <input type="date" class="form-control" id="endDate"
-                                                   name="start_date">
-                                        </div>
-                                        <input type="button"  class="btn btn-outline-primary" onclick="readtext('${attendances}')">Primary</input>
-                                        <%--</form>--%>
-
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -102,7 +48,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach items="${filteredDates}" var="at">
+                                                <c:forEach items="${attendances}" var="at">
                                                     <tr>
                                                         <td>${at[0]}</td>
                                                         <td>${at[1]}</td>
