@@ -74,6 +74,7 @@ public class LeaveListItemTag extends SimpleTagSupport {
                 "<td>"+item.getStartTime()+"</td>"+
                 "<td>"+item.getEndTime()+"</td>"+
                 "<td>"+item.getReason()+"</td>"+
+                "<td>"+item.getType()+"</td>"+
                 "<td>"+item.getStatus()+"</td>"+
                 "</tr>"
                 ;
