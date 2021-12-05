@@ -29,31 +29,42 @@
                         <div class="col-lg-6 col-xl-6 m-b-10">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">类型列表</h4>
-                                    <a class="lni-plus" style="float:right;" href="/leave/add">新增类型</a>
+                                    <h4 class="card-title">请假类型</h4>
+                                    <button type="button"
+                                            class="btn btn-outline-info waves-effect waves-light" style="float: right"
+                                            data-toggle="modal" data-target=".bs-example-modal-lg">添加请假类型
+                                    </button>
                                 </div>
-                                <div class="card-body pre-scrollable" style="max-width: 800px">
+                                <div class="card-body pre-scrollable" style="max-height: 800px">
+
                                     <div class="table-responsive">
-                                        <table class="table col-6">
+                                        <table class="table mb-0">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>类型</th>
-                                                <th> </th>>
+                                                <th>Type Name</th>
+                                                <th></th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <c:forEach items="${types}" var="t">
                                                 <tr>
-                                                    <th scope="row">*</th>
-                                                    <td>${t}</td>
-                                                    <td> <button type="button" class="btn btn-light btn-rounded" onclick="delete_type('${t}')">
-                                                        delete
-                                                    </button></td>
+                                                    <td>
+                                                            *
+                                                    </td>
+                                                    <td>
+                                                            ${t}
+                                                    </td>
+
+                                                    <td>
+                                                        <button id="type_naming" type="button" class="btn btn-light btn-rounded"
+                                                                onclick="delete_type()" type_name="${t}">
+                                                            delete
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -65,7 +76,32 @@
 
                 </div>
             </div>
-            <c:import url="../footer.jsp" />
+            <c:import url="../footer.jsp"/>
+            <div class="col-sm-6 col-md-3 m-t-30">
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">创建新类型</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                <input id="new_name" type="text" placeholder="请输入审批意见" style="width: 100%" required/>
+                                <div class="row" style="padding-left: 40%">
+                                    <button type="button"
+                                            class="btn btn-light btn-rounded"
+                                            onclick="add_type()">
+                                        提交
+                                    </button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -76,4 +112,34 @@
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.app.js"></script>
 <script src="/assets/js/main.js"></script>
+
+<script>
+    function delete_type(){
+        $.ajax({
+            type: "post",
+            data: {"type_name": document.getElementById("type_naming").getAttribute("type_name")},
+            url: "/leave/type/delete",
+            dataType: "json",
+            complete: function (data) {
+                location.reload();
+            }
+        });
+    }
+
+    function add_type(){
+        if (document.getElementById("new_name").value == ""){
+            window.alert("输入的新类型不能为空");
+        }else{
+            $.ajax({
+                type: "post",
+                data: {"type_name": document.getElementById("new_name").value},
+                url: "/leave/type/add",
+                dataType: "json",
+                complete: function (data) {
+                    location.reload();
+                }
+            });
+        }
+    }
+</script>
 </html>

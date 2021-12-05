@@ -139,5 +139,19 @@ public class LeaveRequestController {
         return "leave/typeController";
     }
 
+    @RequestMapping(value = "/type/delete", method = RequestMethod.POST)
+    public void deleteType(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameter("type_name"));
+        leaveRequestService.deleteType(request.getParameter("type_name"));
+        response.getWriter().println("complete");
+    }
+
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST)
+    public void addType(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameter("type_name"));
+        leaveRequestService.insertType(request.getParameter("type_name"));
+        response.getWriter().println("complete");
+    }
+
 
 }
