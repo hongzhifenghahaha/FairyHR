@@ -228,6 +228,7 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Reason</th>
+                                            <th>Type</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -245,6 +246,9 @@
                                                     </td>
                                                     <td>
                                                             ${l.reason}
+                                                    </td>
+                                                    <td>
+                                                            ${l.type}
                                                     </td>
                                                     <td>
                                                             <%--    &lt;%&ndash;               <button type="button" class="btn btn-light btn-rounded"

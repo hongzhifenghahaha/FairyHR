@@ -81,6 +81,7 @@
                                                                                     <th>Start Time</th>
                                                                                     <th>End Time</th>
                                                                                     <th>Reason</th>
+                                                                                    <th>Type</th>
                                                                                     <th>Status</th>
                                                                                 </tr>
                                                                                 </thead>
@@ -94,6 +95,7 @@
                                                                                         <td>${lr.startTime}</td>
                                                                                         <td>${lr.endTime}</td>
                                                                                         <td>${lr.reason}</td>
+                                                                                        <td>${lr.type}</td>
                                                                                         <td>${lr.status}</td>
                                                                                     </tr>
                                                                                 </c:forEach>
