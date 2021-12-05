@@ -33,7 +33,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/fairyhr_test?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=True
     locations: classpath:db/test/migration,classpath:db/test/migration/mysql
   datasource:
-    url: jdbc:mysql://git.npu5v5.cn:3307/fairyhr_test
+    url: jdbc:mysql://127.0.0.1:3306/fairyhr_test
 
 logging:
   level:
