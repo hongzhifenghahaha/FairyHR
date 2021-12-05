@@ -15,18 +15,29 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 系统主页控制类
+ *
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/")
 public class HomeController {
     private final UserService userService;
     private final DepartmentService departmentService;
 
+    /**
+     * 构造函数，通过Spring自动装配。
+     */
     @Autowired
     HomeController(UserService userService, DepartmentService departmentService) {
         this.userService = userService;
         this.departmentService = departmentService;
     }
 
+    /**
+     * 首页
+     */
     @GetMapping("/")
     public String getHome(HttpSession session) {
         if (session.getAttribute("user") == null) {
@@ -36,12 +47,18 @@ public class HomeController {
         //homeService.getSchedulesString().get(0);
     }
 
+    /**
+     * 用户登录
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(HttpSession session) {
         session.setAttribute("msg", "");
         return "login";
     }
 
+    /**
+     * 登录请求
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String proccessLogin(@RequestParam(value = "userid", defaultValue = "") String userid,
                                 @RequestParam(value = "password", defaultValue = "") String password,
@@ -88,11 +105,17 @@ public class HomeController {
         return "login";
     }
 
+    /**
+     * 错误页面
+     */
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String getErrorPage() {
         return "nonuse";
     }
 
+    /**
+     * 处理登出操作
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String Logout(HttpSession session) {
         session.removeAttribute("user");

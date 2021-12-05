@@ -27,18 +27,29 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+/**
+ * 部门主页控制类
+ *
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
     private final UserService userService;
 
+    /**
+     * 构造函数，通过Spring自动装配
+     */
     @Autowired
     public DepartmentController(DepartmentService departmentService, UserService userService) {
         this.departmentService = departmentService;
         this.userService = userService;
     }
 
+    /**
+     * 显示树状结构的部门
+     */
     @RequestMapping(method = GET)
     public String getDepartmentTree(HttpSession session, HttpServletRequest httpServletRequest) {
         var userId = (String) session.getAttribute("id");
@@ -63,6 +74,9 @@ public class DepartmentController {
         return "department/department";
     }
 
+    /**
+     * 通过id获取部门详情
+     */
     @RequestMapping(value = "/{id}", method = GET)
     public String getDepartment(@PathVariable(value = "id") String id, HttpSession session,
                                 HttpServletRequest request) {
@@ -83,12 +97,18 @@ public class DepartmentController {
         return "department/manager";
     }
 
+    /**
+     * 注册用户
+     */
     @RequestMapping(value = "/{id}/register", method = GET)
     public String getRegisterPage(@PathVariable(value = "id")String id) {
 
         return "user/register";
     }
 
+    /**
+     * 处理注册请求
+     */
     @RequestMapping(value = "/{id}/register", method = POST)
     public String addUser(@PathVariable(value = "id")String d_id,
                           @RequestParam(value = "id") String id, HttpSession session,
@@ -111,6 +131,9 @@ public class DepartmentController {
         return "redirect:/department/" + department.getId();
     }
 
+    /**
+     * 处理删除请求
+     */
     @RequestMapping(value = "/{id}/deleteUser", method = POST)
     public void deleteUser(@PathVariable(value = "id")String id,
                            HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
@@ -125,6 +148,9 @@ public class DepartmentController {
         request.setAttribute("managers", department.getManagers());
     }
 
+    /**
+     * 处理签到请求
+     */
     @RequestMapping(value = "/{id/assignUser", method = POST)
     public void assignUser(@PathVariable(value = "id")String id,
                            HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
@@ -139,6 +165,9 @@ public class DepartmentController {
         request.setAttribute("managers", department.getManagers());
     }
 
+    /**
+     * 添加曾有的用户
+     */
     @RequestMapping(value = "/{id}/addOldUser", method = GET)
     public String addOldUser(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         User user = userService.selectById((String) session.getAttribute("id"));
@@ -162,6 +191,9 @@ public class DepartmentController {
         return "department/addOthers";
     }
 
+    /**
+     * 处理添加请求
+     */
     @RequestMapping(value = "/{id}/addOldUser", method = POST)
     public void addOldUser(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user_id = request.getParameter("user_id");
@@ -174,6 +206,9 @@ public class DepartmentController {
         response.getWriter().write("complete");
     }
 
+    /**
+     * 处理删除请求
+     */
     @RequestMapping(value = "/{id}/deleteRover", method = POST)
     public void deleteRoverUser(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user_id = request.getParameter("user_id");
@@ -181,6 +216,9 @@ public class DepartmentController {
         response.getWriter().write("complete");
     }
 
+    /**
+     * 处理修改姓名请求
+     */
     @RequestMapping(value = "/{id}/changeName", method = POST)
     public String changeDepartmentName(@PathVariable(value = "id")String id,@RequestParam(value = "de_name") String de_name, HttpSession session) throws IOException {
         Department department = (Department) session.getAttribute("department");
@@ -189,6 +227,9 @@ public class DepartmentController {
         return "redirect:/department/" + department.getId();
     }
 
+    /**
+     * 通过请求
+     */
     @RequestMapping(value = "/{id}/passRequest", method = POST)
     public void passRequest(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         var manager_id = (String) session.getAttribute("id");
@@ -212,6 +253,9 @@ public class DepartmentController {
         response.getWriter().write("success");
     }
 
+    /**
+     * 拒绝申请
+     */
     @RequestMapping(value = "/{id}/rejectRequest", method = POST)
     public void rejectRequest(@PathVariable(value = "id")String id,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         var manager_id = (String) session.getAttribute("id");
@@ -235,6 +279,9 @@ public class DepartmentController {
         response.getWriter().write("success");
     }
 
+    /**
+     * 删除子部门
+     */
     @RequestMapping(value = "/{id}/delete", method = POST)
     public void deleteSubDepartment(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String department_id = request.getParameter("department_id");
@@ -249,6 +296,9 @@ public class DepartmentController {
         response.getWriter().write(o.toJSONString());
     }
 
+    /**
+     * 新增子部门
+     */
     //必须输入不能重复的姓名和id 必须选择一个新管理员
     @RequestMapping(value = "/{id}/add", method = POST)
     public String addSubDepartment(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -292,6 +342,9 @@ public class DepartmentController {
         return "redirect:/department/" + father.getId();
     }
 
+    /**
+     * 为子部门增加新页面
+     */
     @RequestMapping(value = "/{id}/add", method = GET)
     public String getAddSubDepartmentPage(@PathVariable(value = "id")String id,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<User> candidates = new ArrayList<>();

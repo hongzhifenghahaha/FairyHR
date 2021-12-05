@@ -23,6 +23,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 用户主页控制类
+ *
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -30,24 +35,36 @@ public class UserController {
     private final UserService userService;
     private final DepartmentService departmentService;
 
+    /**
+     * 构造函数，通过Spring自动装配
+     */
     @Autowired
     UserController(UserService userService, DepartmentService departmentService) {
         this.userService = userService;
         this.departmentService = departmentService;
     }
 
+    /**
+     * 获取用户信息
+     */
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
     public String getProfilePage(@PathVariable(value = "id") String id, HttpServletRequest request) {
         request.setAttribute("profile_user", userService.selectById(id));
         return "user/profile";
     }
 
+    /**
+     * 获取信息更新页
+     */
     @RequestMapping(value = "/profile/update/{id}", method = RequestMethod.GET)
     public String getUpdatePage(@PathVariable(value = "id") String id, HttpServletRequest request) {
         request.setAttribute("profile_user", userService.selectById(id));
         return "user/update";
     }
 
+    /**
+     * 处理信息更新请求
+     */
     @RequestMapping(value = "/profile/update/{id}", method = RequestMethod.POST)
     public String updateProfile(@PathVariable(value = "id") String id, HttpServletRequest request,
                                 @RequestParam(value = "name", defaultValue = "") String name,
@@ -66,7 +83,7 @@ public class UserController {
         user.setPassword(password);
         userService.update(user);
         if ((User) session.getAttribute("user") != null && user.getId().equals(((User) session.getAttribute("user")).getId())) {
-             session.setAttribute("user",user);
+            session.setAttribute("user",user);
         }
         return "redirect:/user/profile/" + id;
 
