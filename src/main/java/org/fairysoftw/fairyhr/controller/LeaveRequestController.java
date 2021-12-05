@@ -21,6 +21,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 请假申请控制类
+ *
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/leave")
 public class LeaveRequestController {
@@ -29,6 +34,9 @@ public class LeaveRequestController {
     private final DepartmentService departmentService;
     private final LeaveRequestService leaveRequestService;
 
+    /**
+     * 构造函数，通过Spring自动装配
+     */
     @Autowired
     LeaveRequestController(UserService userService, DepartmentService departmentService, LeaveRequestService leaveRequestService) {
         this.userService = userService;
@@ -36,6 +44,9 @@ public class LeaveRequestController {
         this.leaveRequestService = leaveRequestService;
     }
 
+    /**
+     * 记录申请
+     */
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     public String getLeaveRecordPage(HttpSession session) {
         //添加leave list to jsp
@@ -59,6 +70,9 @@ public class LeaveRequestController {
         return "leave/leaveRecords";
     }
 
+    /**
+     * 新增请假
+     */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddLeavePage(HttpSession session) {
         User user = userService.selectById((String) session.getAttribute("id"));
@@ -72,6 +86,9 @@ public class LeaveRequestController {
         return "leave/addLeave";
     }
 
+    /**
+     * 处理请假申请
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addLeaveRequest(@RequestParam(value = "start_date", defaultValue = "") String start_date,
                                   @RequestParam(value = "end_date", defaultValue = "00:00") String end_date,
@@ -108,6 +125,9 @@ public class LeaveRequestController {
         return "redirect:/leave/record";
     }
 
+    /**
+     * 记录特定用户的请假
+     */
     @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
     public String getLeaveRecordPage(@PathVariable(value = "id") String id, HttpSession session, HttpServletRequest request) {
         //添加leave list to jsp
@@ -133,12 +153,18 @@ public class LeaveRequestController {
         return "leave/leaveRecords";
     }
 
+    /**
+     * 请假类型
+     */
     @RequestMapping(value = "/type", method = RequestMethod.GET)
     public String getLeaveRecordPage(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.setAttribute("types",leaveRequestService.selectAllType());
         return "leave/typeController";
     }
 
+    /**
+     * 处理请假类型请求
+     */
     @RequestMapping(value = "/type/delete", method = RequestMethod.POST)
     public void deleteType(HttpServletRequest request,HttpServletResponse response) throws IOException {
         System.out.println(request.getParameter("type_name"));
@@ -146,6 +172,9 @@ public class LeaveRequestController {
         response.getWriter().println("complete");
     }
 
+    /**
+     * 新增请假类型
+     */
     @RequestMapping(value = "/type/add", method = RequestMethod.POST)
     public void addType(HttpServletRequest request,HttpServletResponse response) throws IOException {
         System.out.println(request.getParameter("type_name"));

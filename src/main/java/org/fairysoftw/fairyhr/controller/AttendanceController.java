@@ -23,6 +23,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 考勤主页控制类
+ *
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
@@ -30,27 +35,36 @@ public class AttendanceController {
     private final UserService userService;
     private final DepartmentService departmentService;
 
+    /**
+     * 构造函数，通过Spring自动装配
+     */
     @Autowired
     AttendanceController(UserService userService, DepartmentService departmentService){
         this.userService = userService;
         this.departmentService = departmentService;
     }
 
-   @RequestMapping(value = "/checkin",method = RequestMethod.GET)
+    /**
+     * 获取考勤页面
+     */
+    @RequestMapping(value = "/checkin",method = RequestMethod.GET)
     public String getCheckInPage(HttpSession session){
-       User user = userService.selectById((String) session.getAttribute("id"));
-       List<AttendanceTime> today_checkin=new ArrayList<>();
-       for (AttendanceTime at:user.getAttendanceTimes()){
-           DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-           String dates=df.format(at.getTime());
-           if (dates.equals(df.format(new Date()))){
-               today_checkin.add(at);
-           }
-       }
-       session.setAttribute("today_checkin",today_checkin);
+        User user = userService.selectById((String) session.getAttribute("id"));
+        List<AttendanceTime> today_checkin=new ArrayList<>();
+        for (AttendanceTime at:user.getAttendanceTimes()){
+            DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+            String dates=df.format(at.getTime());
+            if (dates.equals(df.format(new Date()))){
+                today_checkin.add(at);
+            }
+        }
+        session.setAttribute("today_checkin",today_checkin);
         return "attend/checkin";
     }
 
+    /**
+     * 处理考勤请求
+     */
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
     public String userCheckIn(HttpSession session, HttpServletResponse response,HttpServletRequest request) throws IOException {//不作跳转
         User user = userService.selectById((String) session.getAttribute("id"));
@@ -74,6 +88,9 @@ public class AttendanceController {
         return "redirect:/attendance/checkin";
     }
 
+    /**
+     * 记录考勤
+     */
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     public String gotoAttendanceRecord(HttpSession session) {
 
@@ -97,6 +114,9 @@ public class AttendanceController {
         return "attend/attendanceRecords";
     }
 
+    /**
+     * 处理特定用户的考勤
+     */
     @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
     public String gotoAttendanceRecordByUserID(@PathVariable(value = "id")String id, HttpSession session) {
 
