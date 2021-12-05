@@ -40,7 +40,7 @@
                         <div class="col-lg-5 col-md-12 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body pre-scrollable">
                                         <h5 class="card-title">
 
                                             <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled">
@@ -57,6 +57,49 @@
                                                 <p class="text-muted">部门人数</p>
                                             </div>
                                         </div>
+                                        <div class="row">
+
+                                            <h4 class="card-title" style="padding-left: 10px">
+                                                子部门管理</h4>
+                                            <div class="col-xl-10">
+                                                <a class="lni-plus" style="float:right;" href="/department/add"
+                                                   style="background-color: #e22a6f">新增子部门</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Department ID</th>
+                                                                    <th>Department Name</th>
+                                                                    <th> </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <c:forEach items="${requestScope.deletableDepartments}"
+                                                                           var="dd">
+                                                                    <tr>
+                                                                        <td>${dd.id}</td>
+                                                                        <td>${dd.name}</td>
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-light btn-rounded"
+                                                                                    onclick="delete_department('${dd.id}')">
+                                                                                delete
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -93,8 +136,8 @@
                                                 <tbody>
                                                 <c:forEach items="${requestScope.users}" var="user_tmp">
                                                     <tr>
-                                                        <td>${user_tmp.name}</td>
-                                                        <td>${user_tmp.id}</td>
+                                                        <td style="word-wrap:break-word;word-break:break-all;max-width: 200px;">${user_tmp.name}</td>
+                                                        <td style="word-wrap:break-word;word-break:break-all;max-width: 200px;">${user_tmp.id}</td>
                                                         <td>
                                                             <c:if test="${!(user_tmp.position eq null)}">
                                                                 ${user_tmp.position}
@@ -192,10 +235,14 @@
                                                         onclick="reject_request('${l.id}')">
                                                             reject
                                                         </button>
+
+
                                                         <button type="button" class="btn btn-info btn-rounded"
                                                         onclick="pass_request('${l.id}')">
                                                             pass
                                                         </button>
+
+                                                        <div id="add">
                                                     </td>
                                                 </tr>
                                             </c:if>
@@ -279,6 +326,17 @@
                         type: "post",
                         data: {"request_id": id},
                         url: "/department/rejectRequest",
+                        complete: function() {
+                            location.reload();
+                        }
+                    });
+                }
+
+                function delete_department(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"department_id": id},
+                        url: "/department/delete",
                         complete: function() {
                             location.reload();
                         }

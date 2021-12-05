@@ -43,24 +43,20 @@
                                         <table id="datatable" class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Phone Number</th>
-                                                <th>Email</th>
+                                                <th>Department ID</th>
+                                                <th>Department Name</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach items="${others}" var="o">
+                                            <c:forEach items="${sub_departments}" var="sub">
                                                 <tr>
-                                                    <td>${o.id}</td>
-                                                    <td>${o.name}</td>
-                                                    <td>${o.phoneNumber}</td>
-                                                    <td>${o.emailAddr}</td>
+                                                    <td>${sub.id}</td>
+                                                    <td>${sub.name}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-light btn-rounded"
-                                                                onclick="add_users('${o.id}')">
-                                                            add
+                                                                onclick="delete_department('${sub.id}')">
+                                                            delete
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -116,7 +112,18 @@
                         type: "post",
                         data: {"user_id": id},
                         url: "/department/addOldUser",
-                        complete: function() {
+                        complete: function () {
+                            location.reload();
+                        }
+                    });
+                }
+
+                function delete_department(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"department_id": id},
+                        url: "/department/delete",
+                        complete: function () {
                             location.reload();
                         }
                     });

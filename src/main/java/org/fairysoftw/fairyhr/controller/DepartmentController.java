@@ -69,6 +69,14 @@ public class DepartmentController {
         request.setAttribute("leaves", department.getLeaveRequests());
         request.setAttribute("users", department.getUsers());
         request.setAttribute("managers", department.getManagers());
+
+        List<Department> subs = new ArrayList<>();
+        for (Department d : departmentService.selectAll()) {
+            if (d.getDepartment() != null && d.getDepartment().equals(department)) {//如果d是本部门的下级部门
+                subs.add(d);
+            }
+        }
+        request.setAttribute("deletableDepartments", subs);
         return "department/manager";
     }
 
@@ -137,6 +145,14 @@ public class DepartmentController {
             }
         }
         session.setAttribute("others", others);
+
+        List<User> rovers = new ArrayList<>();
+        for (User u : userService.selectAll()) {
+            if (departmentService.selectByUserId(u.getId()).isEmpty()) {
+                rovers.add(u);
+            }
+        }
+        session.setAttribute("rovers", rovers);
         return "department/addOthers";
     }
 
@@ -147,8 +163,15 @@ public class DepartmentController {
         Department department = (Department) session.getAttribute("department");
         department.getUsers().add(user);
         departmentService.update(department);
-        List<User> others=(List<User>) session.getAttribute("others");
+        List<User> others = (List<User>) session.getAttribute("others");
         others.remove(user);
+        response.getWriter().write("complete");
+    }
+
+    @RequestMapping(value = "/deleteRover", method = POST)
+    public void deleteRoverUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String user_id = request.getParameter("user_id");
+        userService.deleteById(user_id);
         response.getWriter().write("complete");
     }
 
@@ -170,7 +193,7 @@ public class DepartmentController {
             var leaveRequests = department.getLeaveRequests()
                     .stream().filter((l) -> l.getId().equals(request_id))
                     .toList();
-            for(var leaveRequest: leaveRequests) {
+            for (var leaveRequest : leaveRequests) {
                 leaveRequest.setChecker(userService.selectById(manager_id));
                 leaveRequest.setCheckTime(new Date());
                 leaveRequest.setStatus("审核通过");
@@ -191,7 +214,7 @@ public class DepartmentController {
             var leaveRequests = department.getLeaveRequests()
                     .stream().filter((l) -> l.getId().equals(request_id))
                     .toList();
-            for(var leaveRequest: leaveRequests) {
+            for (var leaveRequest : leaveRequests) {
                 leaveRequest.setChecker(userService.selectById(manager_id));
                 leaveRequest.setCheckTime(new Date());
                 leaveRequest.setStatus("审核不通过");
@@ -200,5 +223,77 @@ public class DepartmentController {
             departmentService.update(department);
         }
         response.getWriter().write("success");
+    }
+
+    @RequestMapping(value = "/delete", method = POST)
+    public void deleteSubDepartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String department_id = request.getParameter("department_id");
+        System.out.println(department_id);
+        departmentService.deleteById(department_id);
+        response.getWriter().write("complete");
+    }
+
+    //必须输入不能重复的姓名和id 必须选择一个新管理员
+    @RequestMapping(value = "/add", method = POST)
+    public String addSubDepartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String[] new_managers = request.getParameterValues("new_managers");
+
+        //判断
+        boolean create = true;
+        for (Department d : departmentService.selectAll()) {
+            if (d.getId().equals(id)) {
+                session.setAttribute("msg", "the department id has existed, please try another id.");
+                create = false;
+            }
+        }
+        for (Department d : departmentService.selectAll()) {
+            if (d.getName().equals(name)) {
+                session.setAttribute("msg", "the department name has existed, please try another name.");
+                create = false;
+            }
+        }
+
+        if (!create) {
+            return "redirect:/department/add";
+        }
+        List<User> managers = new ArrayList<>();
+        Department father = ((Department) session.getAttribute("department"));
+        for (User u : father.getManagers()) {
+            managers.add(u);
+        }
+        if (new_managers != null) {
+            for (String m_id : new_managers) {//更新管理员职位
+                User u = userService.selectById(m_id);
+                u.setPosition(u.getPosition() + " " + name + "长");
+                userService.update(u);
+                managers.add(u);
+            }
+        }
+        departmentService.insert(new Department(id, name, father, false, managers, managers, null));
+        return "redirect:/department/" + father.getId();
+    }
+
+    @RequestMapping(value = "/add", method = GET)
+    public String getAddSubDepartmentPage(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<User> candidates = new ArrayList<>();
+        Department father = ((Department) session.getAttribute("department"));
+        for (User u : userService.selectAll()) {
+            boolean isExist = false;
+            for (User m : father.getManagers()) {
+                if (m.getId().equals(u.getId())) {
+                    isExist = true;
+                }
+            }
+            if (!isExist){
+                candidates.add(u);
+            }
+        }
+        for (User u : candidates) {
+            System.out.println(u);
+        }
+        request.setAttribute("candidates", candidates);
+        return "department/addDepartment";
     }
 }

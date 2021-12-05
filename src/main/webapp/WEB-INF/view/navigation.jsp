@@ -11,7 +11,7 @@
 
 <div class="header navbar">
     <div class="header-container">
-        <div class="nav-logo" style="width: 400px">
+        <div class="nav-logo" style="width: 300px;">
             <a href="/home">
                 <span class="logo">
                       <img src="/assets/img/title.png" alt="" height="60px">
@@ -25,7 +25,16 @@
 
             </a>
         </div>
-
+        <ul class="nav-left" style="padding-top: 20px;">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="lni-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="lni-menu"></i>
+                </a>
+            </li>
+        </ul>
         <ul class="nav-right">
             <li class="user-profile dropdown dropdown-animated scale-left">
 
@@ -36,7 +45,7 @@
                         </a>
                     </c:when>
                     <c:otherwise>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #e22a6f">
                                 ${user.name}
                         </a>
                     </c:otherwise>
@@ -77,6 +86,11 @@
                 </c:choose>
 
             </li>
+        </ul>
+        <ul class="nav-left" style="float: right">
+            <p class="sub-nav" style="padding-top: 18px" >
+                Welcome
+            </p>
         </ul>
     </div>
 </div>
