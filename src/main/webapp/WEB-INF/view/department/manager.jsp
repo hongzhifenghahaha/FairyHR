@@ -48,7 +48,8 @@
                                                    name="de_name" value="${department.name}" disabled="disabled">
                                             <button type="button" class="btn btn-outline-primary" style="float: right"
                                                     onclick="
-                                            document.getElementById('changeName').removeAttribute('disabled')">Edit
+                                            document.getElementById('changeName').removeAttribute('disabled');
+                                            document.getElementById('changeName').focus();">Edit
                                             </button>
                                         </h5>
                                         <div class="row">
@@ -402,7 +403,8 @@
 
                 $('#changeName').bind('keypress', function (event) {
                     if (event.keyCode == "13") {
-                        alert('你输入的内容为：' + $('#changeName').val());
+                        document.getElementById('changeName').setAttribute("disabled", "disabled");
+                        document.activeElement.blur();
                         $.ajax({
                             type: "post",
                             data: {"de_name": $('#changeName').val()},
