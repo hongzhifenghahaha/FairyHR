@@ -2,6 +2,7 @@ package org.fairysoftw.fairyhr.service.serviceImpl;
 
 import org.fairysoftw.fairyhr.mapper.DepartmentLeaveRequestMapper;
 import org.fairysoftw.fairyhr.mapper.LeaveRequestMapper;
+import org.fairysoftw.fairyhr.mapper.LeaveRequestTypeMapper;
 import org.fairysoftw.fairyhr.model.LeaveRequest;
 import org.fairysoftw.fairyhr.service.LeaveRequestService;
 import org.fairysoftw.fairyhr.service.UserService;
@@ -23,6 +24,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     用到的一些mapper类和service类
      */
     private final LeaveRequestMapper leaveRequestMapper;
+    private final LeaveRequestTypeMapper leaveRequestTypeMapper;
     private final DepartmentLeaveRequestMapper departmentLeaveRequestMapper;
     private final UserService userService;
 
@@ -30,8 +32,9 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
      * 构造函数，通过spring实现自动装配。
      */
     @Autowired
-    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, @Lazy UserService userService) {
+    public LeaveRequestServiceImpl(LeaveRequestMapper leaveRequestMapper, LeaveRequestTypeMapper leaveRequestTypeMapper, DepartmentLeaveRequestMapper departmentLeaveRequestMapper, @Lazy UserService userService) {
         this.leaveRequestMapper = leaveRequestMapper;
+        this.leaveRequestTypeMapper = leaveRequestTypeMapper;
         this.departmentLeaveRequestMapper = departmentLeaveRequestMapper;
         this.userService = userService;
     }
@@ -85,5 +88,20 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
             ret += deleteById(request.getId());
         }
         return ret;
+    }
+
+    @Override
+    public List<String> selectAllType() {
+        return leaveRequestTypeMapper.selectAll();
+    }
+
+    @Override
+    public int insertType(String name) {
+        return leaveRequestTypeMapper.insert(name);
+    }
+
+    @Override
+    public int deleteType(String name) {
+        return leaveRequestTypeMapper.delete(name);
     }
 }

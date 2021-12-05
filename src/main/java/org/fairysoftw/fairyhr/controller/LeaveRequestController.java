@@ -27,11 +27,13 @@ public class LeaveRequestController {
 
     private final UserService userService;
     private final DepartmentService departmentService;
+    private final LeaveRequestService leaveRequestService;
 
     @Autowired
-    LeaveRequestController(UserService userService, DepartmentService departmentService) {
+    LeaveRequestController(UserService userService, DepartmentService departmentService, LeaveRequestService leaveRequestService) {
         this.userService = userService;
         this.departmentService = departmentService;
+        this.leaveRequestService = leaveRequestService;
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
@@ -66,6 +68,7 @@ public class LeaveRequestController {
             departs.add(d.getId());
         }
         session.setAttribute("departs", departs);
+        session.setAttribute("types", leaveRequestService.selectAllType());
         return "leave/addLeave";
     }
 
@@ -76,6 +79,7 @@ public class LeaveRequestController {
                                   @RequestParam(value = "end_time", defaultValue = "00:00") String end_time,
                                   @RequestParam(value = "depart", defaultValue = "") String depart,
                                   @RequestParam(value = "reason", defaultValue = "") String reason,
+                                  @RequestParam(value = "type", defaultValue = "") String type,
                                   HttpSession session) throws ParseException {
         if (start_date.length() < 2 || end_date.length() < 2 || start_time.length() < 2 || end_time.length() < 2) {
             session.setAttribute("msg", "please fill all the time box.");
@@ -92,7 +96,7 @@ public class LeaveRequestController {
         Department department = departmentService.selectById(depart);
         LeaveRequest leaveRequest = new LeaveRequest(UUID.randomUUID().toString(),
                 userService.selectById((String) session.getAttribute("id")),
-                date1, date2, new Date(), reason, "待审核", null, null, null);
+                date1, date2, new Date(), reason, type, "待审核", null, null, null);
         if (department.getLeaveRequests() == null) {
             ArrayList<LeaveRequest> myLeaveRequest = new ArrayList<LeaveRequest>();
             myLeaveRequest.add(leaveRequest);
@@ -127,6 +131,26 @@ public class LeaveRequestController {
         session.setAttribute("no_add","1");
         request.setAttribute("user_checked",user);
         return "leave/leaveRecords";
+    }
+
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public String getLeaveRecordPage(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        session.setAttribute("types",leaveRequestService.selectAllType());
+        return "leave/typeController";
+    }
+
+    @RequestMapping(value = "/type/delete", method = RequestMethod.POST)
+    public void deleteType(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameter("type_name"));
+        leaveRequestService.deleteType(request.getParameter("type_name"));
+        response.getWriter().println("complete");
+    }
+
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST)
+    public void addType(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameter("type_name"));
+        leaveRequestService.insertType(request.getParameter("type_name"));
+        response.getWriter().println("complete");
     }
 
 

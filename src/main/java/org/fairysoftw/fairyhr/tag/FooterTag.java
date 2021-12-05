@@ -5,7 +5,15 @@ import javax.servlet.jsp.tagext.*;
 import java.io.IOException;
 
 
+/**
+ * 页脚tag，使用SimpleTag来实现这个功能
+ *
+ * @version 1.0
+ */
 public class FooterTag extends SimpleTagSupport {
+    /**
+     * 打印页脚。
+     */
     public void doTag() throws JspException, IOException {
         var context = """
                 <footer class="content-footer">

@@ -56,7 +56,7 @@ public class UserController {
                                 @RequestParam(value = "resident", defaultValue = "") String resident,
                                 @RequestParam(value = "address", defaultValue = "") String address,
                                 @RequestParam(value = "password", defaultValue = "") String password,
-                                HttpServletResponse response) throws IOException {
+                                HttpSession session) throws IOException {
         User user = userService.selectById(id);
         user.setName(name);
         user.setPhoneNumber(phone);
@@ -65,6 +65,9 @@ public class UserController {
         user.setAddress(address);
         user.setPassword(password);
         userService.update(user);
+        if ((User) session.getAttribute("user") != null && user.getId().equals(((User) session.getAttribute("user")).getId())) {
+             session.setAttribute("user",user);
+        }
         return "redirect:/user/profile/" + id;
 
     }

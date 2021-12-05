@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ct" uri="customTag"%>
+<%@ taglib prefix="ct" uri="customTag" %>
 <head>
     <title>FairyHR</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
@@ -42,9 +42,9 @@
                                             <div class="form-group col-lg-12">
                                                 <label for="firstname" class="col-xl-2">所属部门: </label>
                                                 <c:forEach items="${departs}" var="de">
-<%--                                                    <div class="col-xl-3">--%>
-                                                        ${de}<input type="radio"  name="depart"
-                                                               value="${de}" checked="checked">
+                                                    <%--                                                    <div class="col-xl-3">--%>
+                                                    ${de}<input type="radio" name="depart"
+                                                                value="${de}" checked="checked">
                                                 </c:forEach>
                                             </div>
                                             <div class="form-group col-lg-6">
@@ -68,7 +68,15 @@
                                                 <input type="text" class="form-control" id="username" name="reason">
                                                 <label for="username">请假原因</label>
                                             </div>
-
+                                            <div class="form-group col-lg-12">
+                                                <select name="type" aria-controls="datatable"
+                                                        class="form-control">
+                                                    <c:forEach items="${types}" var="type">
+                                                        <option value="${type}">${type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                                <label for="username">请假类型</label>
+                                            </div>
                                             <div class="form-group col-lg-12 text-righ">
                                                 <button type="submit" class="btn btn-common">Submit</button>
                                             </div>

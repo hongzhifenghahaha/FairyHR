@@ -238,7 +238,7 @@ class ServiceTest {
         assertEquals(1, userService.insert(user1));
         LeaveRequest leaveRequest1 = new LeaveRequest("1", user1,
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2", "公事", "待审核", null, null, null);//TODO: 请假类型
         assertEquals(1, leaveRequestService.insert(leaveRequest1));
         assertEquals("sick2", leaveRequestService.selectById("1").getReason());
         assertEquals(sdf2.parse("2021-11-23 10:00:00"), leaveRequestService.selectById("1").getStartTime());
@@ -247,7 +247,7 @@ class ServiceTest {
 //      测试leaveRequestService直接带现存的user时，insert()方法的插入功能
         LeaveRequest leaveRequest2 = new LeaveRequest("2", userService.selectById("3"),
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick2", "公事", "待审核", null, null, null);//TODO: 请假类型
         assertEquals(1, leaveRequestService.insert(leaveRequest2));
         assertEquals(leaveRequest2, leaveRequestService.selectById("2"));
         assertTrue(userService.selectById("3").equals(leaveRequestService.selectById("2").getUser()));
@@ -258,11 +258,11 @@ class ServiceTest {
 
         LeaveRequest leaveRequest3 = new LeaveRequest("3", userService.selectById("2"),
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick3", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick3", "公事", "待审核", null, null, null);//TODO: 请假类型
 
         LeaveRequest leaveRequest4 = new LeaveRequest("4", userService.selectById("1"),
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick4", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick4", "公事", "待审核", null, null, null);//TODO: 请假类型
         leaveRequests.add(leaveRequest3);
         leaveRequests.add(leaveRequest4);
 
@@ -337,11 +337,11 @@ class ServiceTest {
         ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
         LeaveRequest leaveRequest1 = new LeaveRequest("6", userService.selectById("3"),
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick6", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick6", "公事", "待审核", null, null, null);//TODO: 请假类型
 
         LeaveRequest leaveRequest2 = new LeaveRequest("7", userService.selectById("4"),
                 sdf2.parse("2021-11-23 10:00:00"),
-                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick7", "待审核", null, null, null);
+                sdf2.parse("2021-11-23 17:00:00"), sdf2.parse("2021-11-22 10:00:00"), "sick7", "公事", "待审核", null, null, null);//TODO: 请假类型
         leaveRequests.add(leaveRequest1);
         leaveRequests.add(leaveRequest2);
 

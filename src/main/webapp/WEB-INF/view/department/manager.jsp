@@ -40,12 +40,17 @@
                         <div class="col-lg-5 col-md-12 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body pre-scrollable">
                                         <h5 class="card-title">
 
-                                            <input type="text" id="changeName" style="border-style: none;background-color:transparent;border:0;" name="de_name" value="${department.name}" disabled="disabled">
-                                            <button type="button" class="btn btn-outline-primary" style="float: right" onclick="
-                                            document.getElementById('changeName').removeAttribute('disabled')">Edit</button>
+                                            <input type="text" id="changeName"
+                                                   style="border-style: none;background-color:transparent;border:0;"
+                                                   name="de_name" value="${department.name}" disabled="disabled">
+                                            <button type="button" class="btn btn-outline-primary" style="float: right"
+                                                    onclick="
+                                            document.getElementById('changeName').removeAttribute('disabled');
+                                            document.getElementById('changeName').focus();">Edit
+                                            </button>
                                         </h5>
                                         <div class="row">
                                             <div class="col-6 m-t-20">
@@ -57,6 +62,51 @@
                                                 <p class="text-muted">部门人数</p>
                                             </div>
                                         </div>
+                                        <div class="row">
+
+                                            <h4 class="card-title" style="padding-left: 10px; float: left">
+                                                子部门管理</h4>
+
+                                                <a class="lni-plus" style="float:right; margin-left: 400px"
+                                                   href="/department/${department.id}/add"
+                                                   style="background-color: #e22a6f">新增子部门</a>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Department ID</th>
+                                                                <th>Department Name</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <c:forEach items="${requestScope.deletableDepartments}"
+                                                                       var="dd">
+                                                                <tr>
+                                                                    <td>${dd.id}</td>
+                                                                    <td>${dd.name}</td>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                                class="btn btn-light btn-rounded"
+                                                                                onclick="delete_department('${dd.id}')">
+                                                                            delete
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -69,12 +119,12 @@
                                                 <ul>
                                                     <li>
                                                         <a class="lni-plus" style="float:right;"
-                                                           href="/department/register"
+                                                           href="/department/${department.id}/register"
                                                            style="background-color: #e22a6f">创建新用户</a>
                                                     </li>
                                                     <li>
                                                         <a class="lni-plus" style="float:right;"
-                                                           href="/department/addOldUser"
+                                                           href="/department/${department.id}/addOldUser"
                                                            style="background-color: #e22a6f">添加已有用户</a>
                                                     </li>
                                                 </ul>
@@ -93,8 +143,8 @@
                                                 <tbody>
                                                 <c:forEach items="${requestScope.users}" var="user_tmp">
                                                     <tr>
-                                                        <td>${user_tmp.name}</td>
-                                                        <td>${user_tmp.id}</td>
+                                                        <td style="word-wrap:break-word;word-break:break-all;max-width: 200px;">${user_tmp.name}</td>
+                                                        <td style="word-wrap:break-word;word-break:break-all;max-width: 200px;">${user_tmp.id}</td>
                                                         <td>
                                                             <c:if test="${!(user_tmp.position eq null)}">
                                                                 ${user_tmp.position}
@@ -114,7 +164,9 @@
                                                             </c:if>
                                                             <c:if test="${!(user_tmp.id eq user.id)}">
                                                                 <c:if test="${!(isManager eq true)}">
-                                                                    <button type="button" class="btn btn-light btn-rounded" onclick="delete_user('${user_tmp.id}')">
+                                                                    <button type="button"
+                                                                            class="btn btn-light btn-rounded"
+                                                                            onclick="delete_user('${user_tmp.id}')">
                                                                         delete
                                                                     </button>
                                                                 </c:if>
@@ -134,13 +186,22 @@
                                                                 </button>
                                                             </c:if>
                                                             <div class="btn-group dropup m-b-10" style="float:right;">
-                                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary dropdown-toggle"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
                                                                     <span class="sr-only">Toggle Dropdown</span>
                                                                 </button>
-                                                                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(103px, -198px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                                    <a class="dropdown-item" href="/user/profile/${user_tmp.id}">profile</a>
-                                                                    <a class="dropdown-item" href="/attendance/record/${user_tmp.id}">Attendence Record</a>
-                                                                    <a class="dropdown-item" href="/leave/record/${user_tmp.id}">Leave Requests</a>
+                                                                <div class="dropdown-menu" x-placement="top-start"
+                                                                     style="position: absolute; transform: translate3d(103px, -198px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                    <a class="dropdown-item"
+                                                                       href="/user/profile/${user_tmp.id}">profile</a>
+                                                                    <a class="dropdown-item"
+                                                                       href="/attendance/record/${user_tmp.id}">Attendence
+                                                                        Record</a>
+                                                                    <a class="dropdown-item"
+                                                                       href="/leave/record/${user_tmp.id}">Leave
+                                                                        Requests</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -169,6 +230,7 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Reason</th>
+                                            <th>Type</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -188,14 +250,15 @@
                                                             ${l.reason}
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-light btn-rounded"
-                                                        onclick="reject_request('${l.id}')">
-                                                            reject
+                                                            ${l.type}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button"
+                                                                class="btn btn-common waves-effect waves-light"
+                                                                data-toggle="modal" data-target=".bs-example-modal-lg"
+                                                                onclick="set_id('${l.id}')">审核
                                                         </button>
-                                                        <button type="button" class="btn btn-info btn-rounded"
-                                                        onclick="pass_request('${l.id}')">
-                                                            pass
-                                                        </button>
+
                                                     </td>
                                                 </tr>
                                             </c:if>
@@ -213,9 +276,36 @@
                 </div>
             </div>
 
-
             <div id="preloader">
                 <div class="loader" id="loader-1"></div>
+            </div>
+            <div class="col-sm-6 col-md-3 m-t-30">
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myLargeModalLabel">审批意见</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <input id="opinion" type="text" placeholder="请输入审批意见" style="width: 100%"/>
+                                <div class="row" style="padding-left: 40%">
+                                    <button type="button"
+                                            class="btn btn-light btn-rounded"
+                                            onclick="reject_request()">
+                                        reject
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-info btn-rounded"
+                                            onclick="pass_request()">
+                                        pass
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <script src="/assets/js/jquery-min.js"></script>
             <script src="/assets/js/popper.min.js"></script>
@@ -245,8 +335,8 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/deleteUser",
-                        complete: function() {
+                        url: "/department/${department.id}/deleteUser",
+                        complete: function () {
                             location.reload();
                         }
                     });
@@ -256,35 +346,79 @@
                     $.ajax({
                         type: "post",
                         data: {"user_id": id},
-                        url: "/department/assignUser",
-                        complete: function() {
+                        url: "/department/${department.id}/assignUser",
+                        complete: function () {
                             location.reload();
                         }
                     });
                 }
 
-                function pass_request(id) {
+                function pass_request() {
                     $.ajax({
                         type: "post",
-                        data: {"request_id": id},
-                        url: "/department/passRequest",
-                        complete: function() {
+                        data: {
+                            "request_id": document.getElementById("opinion").getAttribute("user_id"),
+                            "opinion": document.getElementById("opinion").value
+                        },
+                        url: "/department/${department.id}/passRequest",
+                        complete: function () {
                             location.reload();
                         }
                     });
                 }
 
-                function reject_request(id) {
+                function reject_request() {
                     $.ajax({
                         type: "post",
-                        data: {"request_id": id},
-                        url: "/department/rejectRequest",
-                        complete: function() {
+                        data: {
+                            "request_id": document.getElementById("opinion").getAttribute("user_id"),
+                            "opinion": document.getElementById("opinion").value
+                        },
+                        url: "/department/${department.id}/rejectRequest",
+                        complete: function () {
                             location.reload();
                         }
                     });
                 }
+
+                function delete_department(id) {
+                    $.ajax({
+                        type: "post",
+                        data: {"department_id": id},
+                        url: "/department/${department.id}/delete",
+                        dataType: "json",
+                        complete: function (data) {
+                            if (data.responseJSON.hasChild) {
+                                window.alert("该部门有子部门,删除失败");
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+
+                function set_id(id) {
+                    document.getElementById("opinion").setAttribute("user_id", id);
+                }
+
+                $('#changeName').bind('keypress', function (event) {
+                    if (event.keyCode == "13") {
+                        document.getElementById('changeName').setAttribute("disabled", "disabled");
+                        document.activeElement.blur();
+                        $.ajax({
+                            type: "post",
+                            data: {"de_name": $('#changeName').val()},
+                            url: "/department/${department.id}/changeName",
+                            dataType: "json",
+                            complete: function (data) {
+                            }
+                        });
+                    }
+                });
+
+
             </script>
+
             <c:import url="../footer.jsp"/>
         </div>
     </div>

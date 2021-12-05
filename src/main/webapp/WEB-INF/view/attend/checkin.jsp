@@ -49,7 +49,7 @@
                                 <div class="card-header border-bottom">
                                     <h4 class="card-title">今日签到</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pre-scrollable" style="max-height: 800px">
                                     <div class="table-responsive">
                                         <table class="table mb-0">
                                             <thead>

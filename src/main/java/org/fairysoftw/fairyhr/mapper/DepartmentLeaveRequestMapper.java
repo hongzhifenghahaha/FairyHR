@@ -34,6 +34,7 @@ public interface DepartmentLeaveRequestMapper {
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "submitTime", column = "submit_time"),
+            @Result(property = "type", column = "request_type"),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById")),
             @Result(property = "checkTime", column = "check_time"),
     })

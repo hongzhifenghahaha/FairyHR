@@ -7,8 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ct" uri="customTag"%>
-<%@ taglib prefix="taglib" uri="customTag" %>
+<%@ taglib prefix="ct" uri="customTag" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -82,14 +81,15 @@
                                                                                     <th>Start Time</th>
                                                                                     <th>End Time</th>
                                                                                     <th>Reason</th>
+                                                                                    <th>Type</th>
                                                                                     <th>Status</th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                 <c:forEach items="${unchecked_request}"
                                                                                            var="lr">
-                                                                                    <taglib:LeaveListItemTag item="${lr}">
-                                                                                    </taglib:LeaveListItemTag>
+                                                                                    <ct:LeaveListItemTag item="${lr}">
+                                                                                    </ct:LeaveListItemTag>
                                                                                 </c:forEach>
                                                                                 </tbody>
                                                                             </table>
@@ -133,8 +133,8 @@
                                                                                 <tbody>
                                                                                 <c:forEach items="${checked_request}"
                                                                                            var="lr1">
-                                                                                    <taglib:checkedLeaveListItem item="${lr1}">
-                                                                                    </taglib:checkedLeaveListItem>
+                                                                                    <ct:checkedLeaveListItem item="${lr1}">
+                                                                                    </ct:checkedLeaveListItem>
                                                                                     <%--<tr>
                                                                                         <td>${lr1.submitTime}</td>
                                                                                         <td>${lr1.user.id}</td>

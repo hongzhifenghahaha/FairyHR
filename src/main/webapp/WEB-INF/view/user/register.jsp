@@ -28,17 +28,18 @@
                         <div class="col-lg-12 col-md-12 col-xs-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">update profile</h4>
+                                    <h4 class="card-title">为本部门创建一个新用户</h4>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-description">
                                         updating your info in the box
                                     </p>
                                     <form class="forms-sample"
-                                          action="/department/register" method="post">
+                                          action="/department/${department.id}/register" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User ID</label>
-                                            <input type="text" class="form-control" name="id" required="required">
+                                            <input type="text" class="form-control"  name="id"
+                                                   onkeyup="value=value.replace(/[^a-zA-Z\d-]/g,'')" required="required">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">User Name</label>
