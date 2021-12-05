@@ -11,12 +11,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 /**
  * 应用配置类
+ *
+ * @version 1.0
  */
 public class WebConfig implements WebMvcConfigurer{
 
     private final LoginInterceptor loginInterceptor;
     private final ManagerInterceptor managerInterceptor;
 
+    /**
+     * 构造函数，使用Spring实现自动装配。
+     */
     @Autowired
     public WebConfig(LoginInterceptor loginInterceptor, ManagerInterceptor managerInterceptor) {
         this.loginInterceptor = loginInterceptor;
