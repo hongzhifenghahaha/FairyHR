@@ -8,7 +8,7 @@ import org.fairysoftw.fairyhr.model.Schedule;
 import java.util.List;
 
 /**
- * 映射类,实现{@link LeaveRequest}类与数据库中的leave_request表。
+ * 映射类,实现{@link LeaveRequest}类与数据库中的leave_request表的映射。
  *
  * @version 1.0
  */
