@@ -26,6 +26,7 @@ public interface LeaveRequestMapper {
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "submitTime", column = "submit_time"),
+            @Result(property = "type", column = "request_type"),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "checkTime", column = "check_time"),
     })
@@ -44,6 +45,7 @@ public interface LeaveRequestMapper {
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "submitTime", column = "submit_time"),
+            @Result(property = "type", column = "request_type"),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "checkTime", column = "check_time"),
     })
@@ -62,6 +64,7 @@ public interface LeaveRequestMapper {
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "submitTime", column = "submit_time"),
+            @Result(property = "type", column = "request_type"),
             @Result(property = "checker", column = "checker_id", one = @One(select = "org.fairysoftw.fairyhr.mapper.UserMapper.selectById", fetchType = FetchType.LAZY)),
             @Result(property = "checkTime", column = "check_time"),
     })
@@ -75,8 +78,8 @@ public interface LeaveRequestMapper {
      */
     @Insert("""
             <script>
-            INSERT IGNORE INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, status, checker_id, check_time, check_opinion)
-            VALUES(#{id}, #{user.id},#{startTime}, #{endTime}, #{submitTime}, #{reason}, #{status},
+            INSERT IGNORE INTO leave_request(id, user_id, start_time, end_time, submit_time, reason, request_type, status, checker_id, check_time, check_opinion)
+            VALUES(#{id}, #{user.id},#{startTime}, #{endTime}, #{submitTime}, #{reason}, #{type}, #{status},
             <if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>,
             #{checkTime}, #{checkOpinion})
             </script>""")
@@ -104,6 +107,7 @@ public interface LeaveRequestMapper {
             end_time = #{endTime},
             submit_time = #{submitTime},
             reason = #{reason},
+            request_type = #{type},
             status = #{status},
             checker_id = <if test='#{checker}==null'> NULL </if> <if test='#{checker}!=null'>#{checker.id}</if>,
             check_time = #{checkTime},

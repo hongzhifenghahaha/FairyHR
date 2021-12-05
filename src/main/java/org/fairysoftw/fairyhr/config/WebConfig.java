@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+/**
+ * 应用配置类
+ */
 public class WebConfig implements WebMvcConfigurer{
 
     private final LoginInterceptor loginInterceptor;
@@ -19,6 +22,10 @@ public class WebConfig implements WebMvcConfigurer{
         this.managerInterceptor = managerInterceptor;
     }
 
+    /**
+     * 配置拦截器
+     * @param registry Helps with configuring a list of mapped interceptors
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)

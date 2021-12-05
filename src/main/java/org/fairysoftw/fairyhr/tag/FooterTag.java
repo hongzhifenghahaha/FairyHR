@@ -5,6 +5,9 @@ import javax.servlet.jsp.tagext.*;
 import java.io.IOException;
 
 
+/**
+ * 页脚tag
+ */
 public class FooterTag extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         var context = """

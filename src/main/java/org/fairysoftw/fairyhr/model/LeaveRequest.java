@@ -55,6 +55,9 @@ public class LeaveRequest {
     @Nullable
     private String reason;
 
+    @NonNull
+    private String type;
+
     /**
      * 请假申请的审批状态，可为空。
      */
